@@ -26,7 +26,7 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "[excited] Welcome IN to the Firepit Hour, live from the dock at Colpoy's Bay. I'm Hayes, that's O'Dog... and Noodles has the night off."
+          "text": "[excited] All right. Here we go. The Firepit Hour. Live from the dock at Colpoy's Bay. I'm Hayes. That's O'Dog. Noodles has the night off."
         },
         {
           "speaker": "odog",
@@ -34,7 +34,18 @@
         },
         {
           "speaker": "hayes",
-          "text": "It's the cottage edition of Gerry's Percentages. Every take these guys put on record last September gets opened tonight... and every one of them ends a W, or an L. No pushes."
+          "text": "And it's Nick's birthday. Happy birthday, Nick. He's a year older. He's not any wiser. We'll get to that.",
+          "hl": [
+            "nick"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "[chuckles] One year older, one envelope closer to a Fraud tag. Blow out the candles, buddy."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Cottage edition of Gerry's Percentages. One year ago these guys put takes on the record. Sealed. Tonight we open them. Every one ends a W or an L. No pushes. Zero."
         },
         {
           "speaker": "odog",
@@ -42,7 +53,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Marshal... when you're ready. Let's open it."
+          "text": "Marshal. Whenever you're ready. Open it."
         }
       ]
     },
@@ -52,7 +63,7 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Alright. The twenty twenty-four envelope. Macklin Celebrini, goals... rookie year in San Jose."
+          "text": "All right. The 2024 envelope. Macklin Celebrini. Goals. Rookie year. San Jose."
         },
         {
           "speaker": "odog",
@@ -60,11 +71,11 @@
         },
         {
           "speaker": "hayes",
-          "text": "Justin came in at... nine.",
+          "text": "Justin. Nine.",
           "hl": [
             "justin"
           ],
-          "caption": "Justin came in at... 9."
+          "caption": "Justin. 9."
         },
         {
           "speaker": "odog",
@@ -72,7 +83,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Nick had him at fifteen. Jay... twenty-two.",
+          "text": "Nick, fifteen. Jay, twenty-two.",
           "hl": [
             "nick",
             "jay"
@@ -92,7 +103,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "The actual... Macklin Celebrini... twenty-five goals.",
+          "text": "Here's the number. Macklin Celebrini. Twenty-five goals. Twenty-five.",
           "reveal": true
         },
         {
@@ -101,7 +112,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Chris takes the W. Justin... sixteen off... wears the L. Back after this.",
+          "text": "Chris takes the W. Justin. Sixteen off. That's an L. Back after this.",
           "final": true
         }
       ]
@@ -112,7 +123,7 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "First one out of the twenty twenty-five envelope, and it's a REAL Gerry's Percentages. How many Canadian teams win a second-round series in May?"
+          "text": "First one out of the 2025 envelope. And it's a real Gerry's Percentages. Canadian teams. Second round. How many win a series in May."
         },
         {
           "speaker": "odog",
@@ -120,11 +131,11 @@
         },
         {
           "speaker": "hayes",
-          "text": "Nick put a whole BOARD on it. Zero teams, fifteen percent. One team... seventy-five. Two teams, twenty-five. Three... zero.",
+          "text": "Nick put a board on it. Zero teams, fifteen percent. One team, seventy-five. Two teams, twenty-five. Three, zero. He did the math.",
           "hl": [
             "nick"
           ],
-          "caption": "Nick put a whole BOARD on it. 0 teams, 15%. 1 team... 75%. 2 teams, 25%. 3... 0%."
+          "caption": "Nick put a board on it. 0 teams, 15%. 1 team, 75%. 2 teams, 25%. 3, 0%. He did the math."
         },
         {
           "speaker": "odog",
@@ -132,13 +143,26 @@
         },
         {
           "speaker": "hayes",
-          "text": "Chris said two, Leafs and Oilers. Justin said one or two, fifty-fifty. Jay... said three.",
+          "text": "Fifteen. Seventy-five. Twenty-five. Zero. That's a hundred and fifteen percent. A hundred and fifteen.",
+          "caption": "15. 75. 25. 0. That's 115%. 115.",
+          "hl": [
+            "nick"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "[laughs] He gave it a hundred and fifteen percent, Hayesy. That's not a board, that's a motivational poster.",
+          "caption": "He gave it 115%, Hayesy. That's not a board, that's a motivational poster."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Chris said two. Leafs and Oilers. Justin said one or two. Fifty-fifty. Jay said three.",
           "hl": [
             "chris",
             "justin",
             "jay"
           ],
-          "caption": "Chris said 2, Leafs and Oilers. Justin said 1 or 2, 50/50. Jay... said 3."
+          "caption": "Chris said 2. Leafs and Oilers. Justin said 1 or 2. 50/50. Jay said 3."
         },
         {
           "speaker": "odog",
@@ -146,9 +170,9 @@
         },
         {
           "speaker": "hayes",
-          "text": "The answer... one. The Oilers beat Vegas. The Leafs lost game seven to Florida. The Jets lost to Dallas.",
+          "text": "The answer. One. Oilers beat Vegas. Leafs lost game seven to Florida. Jets lost to Dallas. One.",
           "reveal": true,
-          "caption": "The answer... 1. The Oilers beat Vegas. The Leafs lost game 7 to Florida. The Jets lost to Dallas."
+          "caption": "The answer. 1. Oilers beat Vegas. Leafs lost game 7 to Florida. Jets lost to Dallas. 1."
         },
         {
           "speaker": "odog",
@@ -156,9 +180,9 @@
         },
         {
           "speaker": "hayes",
-          "text": "Nick had seventy-five on one. Nick takes the W. Justin... fifty-fifty doesn't count in this room. Everybody else... L.",
+          "text": "Nick had seventy-five on one. Nick takes the W. Justin, fifty-fifty. Not a number. Everybody else, L.",
           "final": true,
-          "caption": "Nick had 75% on 1. Nick takes the W. Justin... 50/50 doesn't count in this room. Everybody else... L."
+          "caption": "Nick had 75% on 1. Nick takes the W. Justin, 50/50. Not a number. Everybody else, L."
         }
       ]
     },
@@ -168,7 +192,7 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Next. Of Kansas City, Baltimore and Cincinnati... which ones make the playoffs?"
+          "text": "Next one. Kansas City. Baltimore. Cincinnati. Which of them make the playoffs."
         },
         {
           "speaker": "odog",
@@ -176,7 +200,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Nick and Chris both said Kansas City and Baltimore. Justin said Baltimore and Cincinnati.",
+          "text": "Nick and Chris. Kansas City and Baltimore. Justin. Baltimore and Cincinnati.",
           "hl": [
             "nick",
             "chris",
@@ -185,7 +209,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "And Jay. Quote... I'm gonna go spicy, and say none of the above.",
+          "text": "And Jay. Here's the quote. I'm gonna go spicy. None of the above.",
           "hl": [
             "jay"
           ]
@@ -196,8 +220,9 @@
         },
         {
           "speaker": "hayes",
-          "text": "The AFC field... Denver. New England. Jacksonville. Pittsburgh. Houston. Buffalo. The Chargers.",
-          "reveal": true
+          "text": "The AFC field. Denver. New England. Jacksonville. Pittsburgh. Houston. Buffalo. The Chargers. That's seven.",
+          "reveal": true,
+          "caption": "The AFC field. Denver. New England. Jacksonville. Pittsburgh. Houston. Buffalo. The Chargers. That's 7."
         },
         {
           "speaker": "odog",
@@ -205,7 +230,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "That's the call of the YEAR. Jay takes the W. Nick, Chris, Justin... all L.",
+          "text": "That's the call of the year. Jay takes the W. Nick. Chris. Justin. All L.",
           "final": true
         }
       ]
@@ -216,7 +241,7 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Mitch Marner. First year in Vegas... points."
+          "text": "Mitch Marner. Year one in Vegas. Points."
         },
         {
           "speaker": "odog",
@@ -224,7 +249,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Jay, one oh one. Chris, one hundred. Nick, ninety-five. Justin... ninety-two.",
+          "text": "Jay, one oh one. Chris, one hundred. Nick, ninety-five. Justin, ninety-two.",
           "hl": [
             "jay",
             "chris",
@@ -238,7 +263,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "The actual... eighty. Twenty-four goals, fifty-six assists, eighty-one games.",
+          "text": "The actual. Eighty. Twenty-four goals. Fifty-six assists. Eighty-one games. Eighty.",
           "reveal": true
         },
         {
@@ -248,7 +273,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Closest is Justin at ninety-two. Justin takes the W. Jay... twenty-one off, worst in the room. L.",
+          "text": "Closest is Justin at ninety-two. Justin takes the W. Jay. Twenty-one off. Worst in the room. L.",
           "final": true
         }
       ]
@@ -259,18 +284,18 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Rocket Richard. Who leads the league in goals?"
+          "text": "Rocket Richard. Who leads the league in goals."
         },
         {
           "speaker": "hayes",
-          "text": "Chris and Justin, McDavid. Jay, Dry-sightle. Nick... MacKinnon.",
+          "text": "Chris and Justin, McDavid. Jay, Dry-sightle. Nick, MacKinnon.",
           "hl": [
             "chris",
             "justin",
             "jay",
             "nick"
           ],
-          "caption": "Chris and Justin, McDavid. Jay, Draisaitl. Nick... MacKinnon."
+          "caption": "Chris and Justin, McDavid. Jay, Draisaitl. Nick, MacKinnon."
         },
         {
           "speaker": "odog",
@@ -278,7 +303,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "The answer... MacKinnon, fifty-three. McDavid, forty-eight. Dry-sightle... thirty-five.",
+          "text": "The answer. MacKinnon. Fifty-three. McDavid, forty-eight. Dry-sightle, thirty-five.",
           "reveal": true
         },
         {
@@ -287,7 +312,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Nick takes the W. The Oracle strikes again. Chris, Justin, Jay... L.",
+          "text": "Nick takes the W. The Oracle. Again. Chris, Justin, Jay. L.",
           "final": true
         }
       ]
@@ -298,11 +323,11 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Here's one that isn't closing tonight. Evgeni Malkin... first ballot Hall of Famer. Yes or no?"
+          "text": "This one isn't closing tonight. Evgeni Malkin. First ballot Hall of Famer. Yes or no."
         },
         {
           "speaker": "hayes",
-          "text": "Chris, yes. Justin, yes. Nick... no.",
+          "text": "Chris, yes. Justin, yes. Nick. No.",
           "hl": [
             "chris",
             "justin",
@@ -316,7 +341,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Small problem... he's still playing. Signed a one year extension for next season.",
+          "text": "Small problem. He's still playing. One year extension. Next season.",
           "reveal": true
         },
         {
@@ -326,7 +351,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "No W, no L. Carried over... moving on.",
+          "text": "No W. No L. Carried over. Moving on.",
           "final": true
         }
       ]
@@ -337,7 +362,7 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Auston Matthews, goals. This one's been in the envelope every year since twenty twenty-one."
+          "text": "Auston Matthews. Goals. This one's been in the envelope every year since 2021."
         },
         {
           "speaker": "odog",
@@ -346,7 +371,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Justin and Nick, forty-eight. Jay, forty-two. Chris... forty.",
+          "text": "Justin and Nick, forty-eight. Jay, forty-two. Chris, forty.",
           "hl": [
             "justin",
             "nick",
@@ -360,7 +385,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "The actual... twenty-seven. Sixty games. Season ended by an M C L in March.",
+          "text": "The actual. Twenty-seven. Sixty games. MCL. March. Twenty-seven.",
           "reveal": true
         },
         {
@@ -369,7 +394,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Chris at forty is closest. Chris takes the W. Justin and Nick, twenty-one off... both L. Jay, L.",
+          "text": "Chris at forty is closest. Chris takes the W. Justin and Nick, twenty-one off. Both L. Jay, L.",
           "final": true
         }
       ]
@@ -380,11 +405,11 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Willy Nylander... goals."
+          "text": "Willy Nylander. Goals."
         },
         {
           "speaker": "hayes",
-          "text": "Nick, forty-six. Jay, forty-two. Chris, forty. Justin... thirty-eight.",
+          "text": "Nick, forty-six. Jay, forty-two. Chris, forty. Justin, thirty-eight.",
           "hl": [
             "nick",
             "jay",
@@ -398,7 +423,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "The actual... thirty. Sixty-five games.",
+          "text": "The actual. Thirty. Sixty-five games.",
           "reveal": true
         },
         {
@@ -407,7 +432,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Justin at thirty-eight takes the W. Nick, sixteen off... L. Chris and Jay, L.",
+          "text": "Justin at thirty-eight. Takes the W. Nick, sixteen off. L. Chris and Jay. L.",
           "final": true
         }
       ]
@@ -418,11 +443,11 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Same guy... points."
+          "text": "Same guy. Points."
         },
         {
           "speaker": "hayes",
-          "text": "Nick, ninety-four. Justin, ninety. Jay, eighty-seven. Chris... eighty.",
+          "text": "Nick, ninety-four. Justin, ninety. Jay, eighty-seven. Chris, eighty.",
           "hl": [
             "nick",
             "justin",
@@ -436,7 +461,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "The actual... seventy-nine.",
+          "text": "The actual. Seventy-nine.",
           "reveal": true
         },
         {
@@ -445,7 +470,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Chris takes the W. Nick, fifteen off... L. Justin and Jay, L.",
+          "text": "Chris takes the W. Nick, fifteen off. L. Justin and Jay. L.",
           "final": true
         }
       ]
@@ -456,12 +481,12 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Super Bowl sixty. Who wins it?",
-          "caption": "Super Bowl LX. Who wins it?"
+          "text": "Super Bowl sixty. Who wins it.",
+          "caption": "Super Bowl LX. Who wins it."
         },
         {
           "speaker": "hayes",
-          "text": "Chris, Detroit. Justin, Green Bay. Jay, the Chargers. Nick... Baltimore.",
+          "text": "Chris, Detroit. Justin, Green Bay. Jay, the Chargers. Nick, Baltimore.",
           "hl": [
             "chris",
             "justin",
@@ -475,7 +500,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Seattle... twenty-nine. New England... thirteen.",
+          "text": "Seattle twenty-nine. New England thirteen.",
           "reveal": true
         },
         {
@@ -484,9 +509,9 @@
         },
         {
           "speaker": "hayes",
-          "text": "Everybody wears it. Four L's. Ties share... and this is a four-way tie for last.",
+          "text": "Everybody wears it. Four L's. Four-way tie for last. What a night.",
           "final": true,
-          "caption": "Everybody wears it. Four L's. Ties share... and this is a 4-way tie for last."
+          "caption": "Everybody wears it. Four L's. 4-way tie for last. What a night."
         }
       ]
     },
@@ -496,8 +521,8 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Last one. Chris, September twenty-ninth, eleven-oh-one in the morning, on the record. Quote... Too much smoke on a Robertson move for there not to be fire. We were all a year too late.",
-          "caption": "Last one. Chris, September 29, 11:01 a.m., on the record. Quote... Too much smoke on a Robertson move for there not to be fire. We were all a year too late."
+          "text": "Last one. Chris. September twenty-ninth. Eleven-oh-one in the morning. On the record. Here's the quote. Too much smoke on a Robertson move for there not to be fire. We were all a year too late.",
+          "caption": "Last one. Chris. September 29. 11:01 a.m. On the record. Here's the quote. Too much smoke on a Robertson move for there not to be fire. We were all a year too late."
         },
         {
           "speaker": "odog",
@@ -505,11 +530,11 @@
         },
         {
           "speaker": "hayes",
-          "text": "Justin's reply, nine minutes later. [sarcastic] You have some insider news, Elliott?",
+          "text": "Justin's reply. Nine minutes later. You have some insider news, Elliott?",
           "hl": [
             "justin"
           ],
-          "caption": "Justin's reply, 9 minutes later. You have some insider news, Elliotte?"
+          "caption": "Justin's reply. 9 minutes later. You have some insider news, Elliotte?"
         },
         {
           "speaker": "odog",
@@ -524,9 +549,9 @@
         },
         {
           "speaker": "hayes",
-          "text": "And on July first... Robertson was traded to Pittsburgh. For a twenty twenty-eight fourth.",
+          "text": "July first. Robertson. Traded to Pittsburgh. For a twenty twenty-eight fourth.",
           "reveal": true,
-          "caption": "And on July 1... Robertson was traded to Pittsburgh. For a 2028 4th."
+          "caption": "July 1. Robertson. Traded to Pittsburgh. For a 2028 4th."
         },
         {
           "speaker": "odog",
@@ -535,7 +560,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "Chris takes the W... unless the Marshal wants to argue the calendar. Nobody else was in the room for it.",
+          "text": "Chris takes the W. Unless the Marshal wants to argue the calendar. Nobody else was in the room.",
           "final": true
         }
       ]
@@ -546,7 +571,7 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "That's the envelope. Every take on the record for twenty twenty-five... opened, called, and stamped."
+          "text": "That's the envelope. Every take on the record for 2025. Opened. Called. Stamped."
         },
         {
           "speaker": "odog",
@@ -554,11 +579,11 @@
         },
         {
           "speaker": "hayes",
-          "text": "And the Fraud tag for twenty twenty-five, worst score in the room... goes to Jay. One and seven.",
+          "text": "The Fraud tag for 2025. Worst score in the room. Jay. One and seven.",
           "hl": [
             "jay"
           ],
-          "caption": "And the Fraud tag for 2025, worst score in the room... goes to Jay. 1 and 7."
+          "caption": "The Fraud tag for 2025. Worst score in the room. Jay. 1 and 7."
         },
         {
           "speaker": "odog",
@@ -567,7 +592,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "New envelope opens tonight. Whatever you put on the drum now... we're reading it back next September."
+          "text": "New envelope opens tonight. Whatever goes on the drum now, we read it back next September. That's the deal."
         },
         {
           "speaker": "odog",
@@ -575,7 +600,7 @@
         },
         {
           "speaker": "hayes",
-          "text": "[excited] For O'Dog, I'm Hayes. This has been the Firepit Hour. We'll be back next year, at..."
+          "text": "[excited] For O'Dog, I'm Hayes. This has been the Firepit Hour. We're back next year at..."
         },
         {
           "speaker": "odog",
