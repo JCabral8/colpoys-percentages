@@ -249,7 +249,10 @@ def snap(item_id, win=4.5, min_chunk=0.5):
 
 
 def stt(mp3):
-    """ElevenLabs Scribe: words with start/end seconds for a clip."""
+    """ElevenLabs Scribe: words with start/end seconds for a clip. Cached next to the clip so re-runs cost nothing."""
+    cache = mp3.with_suffix(".stt.json")
+    if cache.exists():
+        return json.loads(cache.read_text(encoding="utf-8"))
     boundary = "----firepit" + uuid.uuid4().hex
     fields = {"model_id": "scribe_v1", "timestamps_granularity": "word", "diarize": "false", "tag_audio_events": "false", "language_code": "eng"}
     body = b""
@@ -264,7 +267,9 @@ def stt(mp3):
             res = json.loads(r.read())
     except urllib.error.HTTPError as e:
         sys.exit(f"ElevenLabs {e.code} on /speech-to-text: {e.read().decode(errors='replace')[:800]}")
-    return [w for w in res.get("words", []) if w.get("type", "word") == "word" and w.get("start") is not None]
+    words = [w for w in res.get("words", []) if w.get("type", "word") == "word" and w.get("start") is not None]
+    cache.write_text(json.dumps(words), encoding="utf-8")
+    return words
 
 
 _WORDNUM = {w: i for i, w in enumerate("zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split())}
@@ -339,10 +344,28 @@ def align(item):
         if abs(s0 - e["start"]) > 0.25 or abs(e0 - e["end"]) > 0.25:
             moves.append((li, round(e["start"], 2), round(s0, 2), round(e["end"], 2), round(e0, 2)))
         e["start"], e["end"] = round(s0, 3), round(e0, 3)
-    # keep lines contiguous-ish: a line starts where the previous one ended (so the jaw hands over cleanly)
+    # hand-overs: a line starts where the previous one ended. Put the cut at the end of the last silence in the gap,
+    # so unmatched opening words (spelled letters, respellings) still belong to the right voice.
+    env, hz = d.get("env"), d.get("env_hz", 50)
     for k in range(1, len(L)):
-        if L[k]["start"] > L[k - 1]["end"]:
-            mid = round((L[k]["start"] + L[k - 1]["end"]) / 2, 3); L[k - 1]["end"] = mid; L[k]["start"] = mid
+        a, b = L[k - 1]["end"], L[k]["start"]
+        if b <= a:
+            continue
+        cut = round((a + b) / 2, 3)
+        if env:
+            i0, i1 = int(a * hz), int(b * hz); quiet = [i for i in range(i0, min(i1, len(env))) if env[i] < 0.05]
+            if quiet:
+                # last run of quiet frames of >= 0.2 s inside the gap
+                runs, start = [], quiet[0]
+                for prev, cur in zip(quiet, quiet[1:] + [None]):
+                    if cur != prev + 1:
+                        runs.append((start, prev)); start = cur
+                runs = [r for r in runs if (r[1] - r[0] + 1) / hz >= 0.2]
+                if runs:
+                    cut = round((runs[-1][1] + 1) / hz, 3)
+        L[k - 1]["end"] = cut; L[k]["start"] = cut
+        if L[k].get("wt") and L[k]["wt"][0][0] > cut:
+            L[k]["wt"][0][0] = cut
     d["aligned"] = True
     js.write_text(json.dumps(d, indent=1, ensure_ascii=False), encoding="utf-8")
     return ("ok", round(ratio, 2), moves)
