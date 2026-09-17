@@ -1,0 +1,411 @@
+{
+ "players": [
+  {
+   "id": "nick",
+   "name": "Nick"
+  },
+  {
+   "id": "jay",
+   "name": "Jay"
+  },
+  {
+   "id": "justin",
+   "name": "Justin"
+  },
+  {
+   "id": "chris",
+   "name": "Chris"
+  }
+ ],
+ "colours": {
+  "nick": "#ff4a4a",
+  "jay": "#ffd23f",
+  "justin": "#4aa8ff",
+  "chris": "#b56bff"
+ },
+ "archive": [
+  {
+   "id": "a21-matthews",
+   "year": 2021,
+   "kind": "lore",
+   "prompt": "Matthews goals, 2021-22 (the constellations edition)",
+   "body": "A campfire percentage was set. Nobody wrote it down. \"It was written in the constellations.\" Jay updated to 56 in March; Matthews finished with 60.",
+   "result": "60 G"
+  },
+  {
+   "id": "a24-baker",
+   "year": 2024,
+   "kind": "call",
+   "prompt": "Baker Mayfield finishes as a top-10 QB (2024)",
+   "stakes": "Nutrl Grape",
+   "stance": {
+    "justin": true,
+    "jay": false
+   },
+   "outcome": true,
+   "result": "4,500 yds, 41 TD, 106.8 rating (4th in NFL), Pro Bowl",
+   "note": "Jay: \"not going to have a repeat season.\" Jay drank the Nutrl."
+  },
+  {
+   "id": "a24-sb",
+   "year": 2024,
+   "kind": "pick",
+   "prompt": "Super Bowl LIX matchup",
+   "picks": {
+    "chris": "KC – SF",
+    "jay": "KC – DET",
+    "justin": "BUF – SF",
+    "nick": "KC – PHI"
+   },
+   "result": "PHI 40, KC 22",
+   "correct": [
+    "nick"
+   ],
+   "partial": [
+    "chris",
+    "jay"
+   ]
+  },
+  {
+   "id": "a24-bruins",
+   "year": 2024,
+   "kind": "call",
+   "prompt": "Bruins miss the playoffs (2024-25)",
+   "stance": {
+    "justin": true
+   },
+   "outcome": true,
+   "result": "33-39-10, eliminated Apr 5. First miss since 2016.",
+   "note": "\"They can f*** off with their regarded system and stupid coach.\""
+  },
+  {
+   "id": "a24-cowan",
+   "year": 2024,
+   "kind": "call",
+   "prompt": "Easton Cowan makes the Leafs (2024-25)",
+   "stance": {
+    "jay": true,
+    "nick": false,
+    "justin": false,
+    "chris": false
+   },
+   "outcome": false,
+   "result": "0 NHL games. Back to London: OHL title + Memorial Cup. Debuted 2025-26 (66 GP, 29 pts).",
+   "note": "Everybody else: \"you're an idiot.\""
+  },
+  {
+   "id": "a24-robertson",
+   "year": 2024,
+   "kind": "pick",
+   "prompt": "When does Nick Robertson get traded?",
+   "picks": {
+    "jay": "Before the season",
+    "nick": "At the deadline"
+   },
+   "result": "Not traded. Re-signed 1 yr, 69 GP. Finally dealt to PIT July 1, 2026.",
+   "correct": []
+  },
+  {
+   "id": "a24-camp",
+   "year": 2024,
+   "kind": "pick",
+   "prompt": "Leaf traded before camp (Sept 2024)",
+   "picks": {
+    "chris": "Kampf",
+    "jay": "Robertson",
+    "nick": "Jarnkrok",
+    "justin": "Kampf + Timmins"
+   },
+   "result": "Nobody. Timmins went to PIT at the March deadline.",
+   "correct": []
+  },
+  {
+   "id": "a24-matthews",
+   "year": 2024,
+   "kind": "num",
+   "prompt": "Matthews goals (2024-25)",
+   "guesses": {
+    "jay": 49,
+    "nick": 55,
+    "chris": 60,
+    "justin": 52
+   },
+   "actual": 33,
+   "note": "67 GP."
+  },
+  {
+   "id": "a24-bedard",
+   "year": 2024,
+   "kind": "num",
+   "prompt": "Bedard points (2024-25)",
+   "guesses": {
+    "jay": 82,
+    "chris": 85,
+    "justin": 70,
+    "nick": 70
+   },
+   "actual": 67
+  },
+  {
+   "id": "a24-celebrini",
+   "year": 2024,
+   "kind": "num",
+   "prompt": "Celebrini goals (2024-25)",
+   "guesses": {
+    "jay": 22,
+    "nick": 15,
+    "chris": 25,
+    "justin": 9
+   },
+   "actual": 25,
+   "note": "Chris on the number."
+  },
+  {
+   "id": "a24-woll",
+   "year": 2024,
+   "kind": "num",
+   "prompt": "Woll games started (2024-25)",
+   "guesses": {
+    "jay": 37,
+    "justin": 46,
+    "nick": 40,
+    "chris": 45
+   },
+   "actual": 41,
+   "note": "42 GP, 41 GS."
+  },
+  {
+   "id": "a24-noodles",
+   "year": 2024,
+   "kind": "call",
+   "prompt": "Noodles gets replaced on OverDrive within 12 months",
+   "stance": {},
+   "outcome": false,
+   "result": "Still hosting with Hayes and O-Dog in 2026.",
+   "note": "Chris asked it. Nobody recorded a side."
+  },
+  {
+   "id": "a24-jaytorade",
+   "year": 2024,
+   "kind": "call",
+   "prompt": "Jaytorades make a return in 2025",
+   "stance": {
+    "nick": true
+   },
+   "outcome": true,
+   "result": "\"Oh u know J-Torades will be present.\" — Sept 25, 2025"
+  },
+  {
+   "id": "a24-jones",
+   "year": 2024,
+   "kind": "call",
+   "prompt": "Daniel Jones gets 9 TDs (2024)",
+   "stance": {
+    "chris": true
+   },
+   "outcome": null,
+   "result": "8 passing + 2 rushing = 10 total, in 10 games with NYG.",
+   "note": "Needs a ruling: passing only, or total?"
+  },
+  {
+   "id": "a24-stolarz",
+   "year": 2024,
+   "kind": "lore",
+   "prompt": "\"Stolarz is going to be Patrick Roy\"",
+   "body": "Somebody said it. Nobody remembers who. Stolarz went 21-8-3, .926 in 2024-25.",
+   "result": "Unclaimed W"
+  },
+  {
+   "id": "a25-cdn",
+   "year": 2025,
+   "sealed": true,
+   "kind": "pick",
+   "prompt": "Gerry's %: Canadian teams winning a round-2 series (May 2025)",
+   "picks": {
+    "nick": "1 (75% on the board)",
+    "chris": "2 (Leafs + Oilers)",
+    "justin": "1 or 2, 50/50",
+    "jay": "3"
+   },
+   "result": "1. Oilers beat Vegas. Leafs lost G7 to Florida. Jets lost to Dallas.",
+   "note": "Nick's board: 0 → 15%, 1 → 75%, 2 → 25%, 3 → 0%.",
+   "correct": [
+    "nick"
+   ],
+   "partial": [
+    "justin"
+   ]
+  },
+  {
+   "id": "a25-afc",
+   "year": 2025,
+   "sealed": true,
+   "kind": "pick",
+   "prompt": "Which of KC, BAL, CIN make the playoffs? (2025)",
+   "picks": {
+    "nick": "KC, BAL",
+    "chris": "BAL, KC",
+    "jay": "None of the above",
+    "justin": "BAL, CIN"
+   },
+   "result": "None. AFC field: DEN, NE, JAX, PIT, HOU, BUF, LAC.",
+   "correct": [
+    "jay"
+   ],
+   "note": "\"I'M GONNA GO SPICY AND SAY NONE OF THE ABOVE.\""
+  },
+  {
+   "id": "a25-marner",
+   "year": 2025,
+   "sealed": true,
+   "kind": "num",
+   "prompt": "Marner points in Vegas (2025-26)",
+   "guesses": {
+    "jay": 101,
+    "chris": 100,
+    "justin": 92,
+    "nick": 95
+   },
+   "actual": 80,
+   "note": "24 G, 56 A, 81 GP."
+  },
+  {
+   "id": "a25-rocket",
+   "year": 2025,
+   "sealed": true,
+   "kind": "pick",
+   "prompt": "NHL goal leader (2025-26)",
+   "picks": {
+    "chris": "McDavid",
+    "jay": "Draisaitl",
+    "justin": "McDavid",
+    "nick": "MacKinnon"
+   },
+   "result": "MacKinnon 53. McDavid 48, Draisaitl 35.",
+   "correct": [
+    "nick"
+   ]
+  },
+  {
+   "id": "a25-malkin",
+   "year": 2025,
+   "sealed": true,
+   "kind": "call",
+   "prompt": "Malkin is a first-ballot Hall of Famer",
+   "stance": {
+    "chris": true,
+    "justin": true,
+    "nick": false
+   },
+   "outcome": null,
+   "result": "Still playing. Signed a 1-yr, $5.5M extension for 2026-27.",
+   "note": "Open until he retires, plus three years."
+  },
+  {
+   "id": "a25-matthews",
+   "year": 2025,
+   "sealed": true,
+   "kind": "num",
+   "prompt": "Matthews goals (2025-26)",
+   "guesses": {
+    "jay": 42,
+    "justin": 48,
+    "chris": 40,
+    "nick": 48
+   },
+   "actual": 27,
+   "note": "60 GP. Season ended by MCL injury Mar 13."
+  },
+  {
+   "id": "a25-willy-g",
+   "year": 2025,
+   "sealed": true,
+   "kind": "num",
+   "prompt": "Nylander goals (2025-26)",
+   "guesses": {
+    "jay": 42,
+    "justin": 38,
+    "chris": 40,
+    "nick": 46
+   },
+   "actual": 30,
+   "note": "65 GP."
+  },
+  {
+   "id": "a25-willy-p",
+   "year": 2025,
+   "sealed": true,
+   "kind": "num",
+   "prompt": "Nylander points (2025-26)",
+   "guesses": {
+    "jay": 87,
+    "justin": 90,
+    "chris": 80,
+    "nick": 94
+   },
+   "actual": 79
+  },
+  {
+   "id": "a25-sb",
+   "year": 2025,
+   "sealed": true,
+   "kind": "pick",
+   "prompt": "Super Bowl LX winner",
+   "picks": {
+    "chris": "Detroit",
+    "justin": "Green Bay",
+    "jay": "Chargers",
+    "nick": "Baltimore"
+   },
+   "result": "Seattle 29, New England 13.",
+   "correct": []
+  },
+  {
+   "id": "a25-robertson",
+   "year": 2025,
+   "sealed": true,
+   "kind": "call",
+   "prompt": "\"Too much smoke on a Robertson move for there not to be fire\"",
+   "stance": {
+    "chris": true
+   },
+   "outcome": true,
+   "result": "Traded to Pittsburgh July 1, 2026 for a 2028 4th.",
+   "note": "Posted Sept 29, 2025. Only ten months late."
+  }
+ ],
+ "sources": [
+  [
+   "Hockey-Reference (Matthews, Bedard, Celebrini, Woll, Marner, Nylander, 2025-26 leaders)",
+   "https://www.hockey-reference.com/"
+  ],
+  [
+   "Pro-Football-Reference (Mayfield, Murray, Jones, Young)",
+   "https://www.pro-football-reference.com/"
+  ],
+  [
+   "2025 Stanley Cup playoffs",
+   "https://en.wikipedia.org/wiki/2025_Stanley_Cup_playoffs"
+  ],
+  [
+   "2025-26 NFL playoffs",
+   "https://en.wikipedia.org/wiki/2025%E2%80%9326_NFL_playoffs"
+  ],
+  [
+   "Super Bowl LX",
+   "https://www.espn.com/nfl/game/_/gameId/401772988/seahawks-patriots"
+  ],
+  [
+   "Robertson to Pittsburgh",
+   "https://www.nhl.com/news/nicholas-robertson-traded-to-pittsburgh-penguins-by-toronto-maple-leafs"
+  ],
+  [
+   "Easton Cowan",
+   "https://en.wikipedia.org/wiki/Easton_Cowan"
+  ],
+  [
+   "OverDrive hosts",
+   "https://en.wikipedia.org/wiki/OverDrive_(radio_show)"
+  ]
+ ]
+}

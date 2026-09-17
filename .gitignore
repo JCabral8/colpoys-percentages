@@ -1,0 +1,9 @@
+# private / not for a public site
+whatsapp-export.txt
+ref/
+*.mp3
+!audio/*.mp3
+dist/
+.playwright-mcp/
+.impeccable/
+__smoke.html
