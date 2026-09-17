@@ -5,7 +5,8 @@
     "Written for Eleven v3 text-to-dialogue. Rules: [bracketed tags] are delivery cues and are not spoken; put them at the start of the line or right before the phrase they shape, one or two per line max. Ellipses (...) are pauses/beats; v3 has no <break> tag. CAPITALS are emphasis, so only cap the one word that carries the line. Numbers stay spelled out; hard names are respelled phonetically (Dry-sightle, Eye-kel, Elliott).",
     "Cue fields (hl, reveal, final) are for the app's take card, not for TTS. Reveal lines carry the beat: setup ... number.",
     "2025 items are sealed until Audit Night. Do not let the app show these scripts before an item is audited.",
-    "Settings: stability 0.5 = Natural. Drop to 0.3 if a clip sounds flat, raise to 0.7 if tags cause hallucinated words. seed keeps delivery close across re-renders."
+    "Settings: stability 0.5 = Natural. Drop to 0.3 if a clip sounds flat, raise to 0.7 if tags cause hallucinated words. seed keeps delivery close across re-renders.",
+    "Optional `caption` per line = what the captions show (real names, digits); otherwise tts.py derives it from `text` (tags stripped, respellings undone, number words to digits)."
   ],
   "voices": {
     "hayes": "YAh2lLBFBT83t45DliiP",
@@ -62,7 +63,8 @@
           "text": "Justin came in at... nine.",
           "hl": [
             "justin"
-          ]
+          ],
+          "caption": "Justin came in at... 9."
         },
         {
           "speaker": "odog",
@@ -81,7 +83,8 @@
           "text": "And Chris. Twenty-five.",
           "hl": [
             "chris"
-          ]
+          ],
+          "caption": "And Chris. 25."
         },
         {
           "speaker": "odog",
@@ -120,7 +123,8 @@
           "text": "Nick put a whole BOARD on it. Zero teams, fifteen percent. One team... seventy-five. Two teams, twenty-five. Three... zero.",
           "hl": [
             "nick"
-          ]
+          ],
+          "caption": "Nick put a whole BOARD on it. 0 teams, 15%. 1 team... 75%. 2 teams, 25%. 3... 0%."
         },
         {
           "speaker": "odog",
@@ -133,7 +137,8 @@
             "chris",
             "justin",
             "jay"
-          ]
+          ],
+          "caption": "Chris said 2, Leafs and Oilers. Justin said 1 or 2, 50/50. Jay... said 3."
         },
         {
           "speaker": "odog",
@@ -142,7 +147,8 @@
         {
           "speaker": "hayes",
           "text": "The answer... one. The Oilers beat Vegas. The Leafs lost game seven to Florida. The Jets lost to Dallas.",
-          "reveal": true
+          "reveal": true,
+          "caption": "The answer... 1. The Oilers beat Vegas. The Leafs lost game 7 to Florida. The Jets lost to Dallas."
         },
         {
           "speaker": "odog",
@@ -151,7 +157,8 @@
         {
           "speaker": "hayes",
           "text": "Nick had seventy-five on one. Nick takes the W. Justin... fifty-fifty doesn't count in this room. Everybody else... L.",
-          "final": true
+          "final": true,
+          "caption": "Nick had 75% on 1. Nick takes the W. Justin... 50/50 doesn't count in this room. Everybody else... L."
         }
       ]
     },
@@ -236,7 +243,8 @@
         },
         {
           "speaker": "odog",
-          "text": "Eighty. He didn't get WORSE, boys. He just stopped playing with Matthews. It's a moot point how good he is... the number was never gonna be a hundred."
+          "text": "Eighty. He didn't get WORSE, boys. He just stopped playing with Matthews. It's a moot point how good he is... the number was never gonna be a hundred.",
+          "caption": "80. He didn't get WORSE, boys. He just stopped playing with Matthews. It's a moot point how good he is... the number was never gonna be 100."
         },
         {
           "speaker": "hayes",
@@ -261,7 +269,8 @@
             "justin",
             "jay",
             "nick"
-          ]
+          ],
+          "caption": "Chris and Justin, McDavid. Jay, Draisaitl. Nick... MacKinnon."
         },
         {
           "speaker": "odog",
@@ -302,7 +311,8 @@
         },
         {
           "speaker": "odog",
-          "text": "[appalled] Nick said NO to Geno. Three Cups, a Hart, a Conn Smythe... and Nick's over here like, [thoughtful] I dunno, let's see the resume."
+          "text": "[appalled] Nick said NO to Geno. Three Cups, a Hart, a Conn Smythe... and Nick's over here like, [thoughtful] I dunno, let's see the resume.",
+          "caption": "Nick said NO to Geno. 3 Cups, a Hart, a Conn Smythe... and Nick's over here like, I dunno, let's see the resume."
         },
         {
           "speaker": "hayes",
@@ -311,7 +321,8 @@
         },
         {
           "speaker": "odog",
-          "text": "[chuckles] So this stays open until he retires, PLUS three years. Nick, you're gonna be defending this at the fire in twenty-thirty."
+          "text": "[chuckles] So this stays open until he retires, PLUS three years. Nick, you're gonna be defending this at the fire in twenty-thirty.",
+          "caption": "So this stays open until he retires, PLUS 3 years. Nick, you're gonna be defending this at the fire in 2030."
         },
         {
           "speaker": "hayes",
@@ -330,7 +341,8 @@
         },
         {
           "speaker": "odog",
-          "text": "Twenty-one was the constellations year. Nobody wrote it down. THIS time, they wrote it down."
+          "text": "Twenty-one was the constellations year. Nobody wrote it down. THIS time, they wrote it down.",
+          "caption": "2021 was the constellations year. Nobody wrote it down. THIS time, they wrote it down."
         },
         {
           "speaker": "hayes",
@@ -444,7 +456,8 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Super Bowl sixty. Who wins it?"
+          "text": "Super Bowl sixty. Who wins it?",
+          "caption": "Super Bowl LX. Who wins it?"
         },
         {
           "speaker": "hayes",
@@ -472,7 +485,8 @@
         {
           "speaker": "hayes",
           "text": "Everybody wears it. Four L's. Ties share... and this is a four-way tie for last.",
-          "final": true
+          "final": true,
+          "caption": "Everybody wears it. Four L's. Ties share... and this is a 4-way tie for last."
         }
       ]
     },
@@ -482,7 +496,8 @@
       "lines": [
         {
           "speaker": "hayes",
-          "text": "Last one. Chris, September twenty-ninth, eleven-oh-one in the morning, on the record. Quote... Too much smoke on a Robertson move for there not to be fire. We were all a year too late."
+          "text": "Last one. Chris, September twenty-ninth, eleven-oh-one in the morning, on the record. Quote... Too much smoke on a Robertson move for there not to be fire. We were all a year too late.",
+          "caption": "Last one. Chris, September 29, 11:01 a.m., on the record. Quote... Too much smoke on a Robertson move for there not to be fire. We were all a year too late."
         },
         {
           "speaker": "odog",
@@ -493,7 +508,8 @@
           "text": "Justin's reply, nine minutes later. [sarcastic] You have some insider news, Elliott?",
           "hl": [
             "justin"
-          ]
+          ],
+          "caption": "Justin's reply, 9 minutes later. You have some insider news, Elliotte?"
         },
         {
           "speaker": "odog",
@@ -509,11 +525,13 @@
         {
           "speaker": "hayes",
           "text": "And on July first... Robertson was traded to Pittsburgh. For a twenty twenty-eight fourth.",
-          "reveal": true
+          "reveal": true,
+          "caption": "And on July 1... Robertson was traded to Pittsburgh. For a 2028 4th."
         },
         {
           "speaker": "odog",
-          "text": "Ten months late, for a FOURTH. But there was no clock on it, Hayesy. You can't lose a take with no clock on it. Fire is fire."
+          "text": "Ten months late, for a FOURTH. But there was no clock on it, Hayesy. You can't lose a take with no clock on it. Fire is fire.",
+          "caption": "10 months late, for a FOURTH. But there was no clock on it, Hayesy. You can't lose a take with no clock on it. Fire is fire."
         },
         {
           "speaker": "hayes",
@@ -539,11 +557,13 @@
           "text": "And the Fraud tag for twenty twenty-five, worst score in the room... goes to Jay. One and seven.",
           "hl": [
             "jay"
-          ]
+          ],
+          "caption": "And the Fraud tag for 2025, worst score in the room... goes to Jay. 1 and 7."
         },
         {
           "speaker": "odog",
-          "text": "[laughs] None of the above got him ONE W, and the other seven got him the stamp. That's the spiciest one and seven I've ever seen."
+          "text": "[laughs] None of the above got him ONE W, and the other seven got him the stamp. That's the spiciest one and seven I've ever seen.",
+          "caption": "None of the above got him ONE W, and the other 7 got him the stamp. That's the spiciest 1 and 7 I've ever seen."
         },
         {
           "speaker": "hayes",

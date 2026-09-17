@@ -52,7 +52,9 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .cap .prev{display:none}
 .cap .now{display:flex;align-items:flex-start;gap:8px}
 .cap .now .tag{flex:none;margin:2px 0 0}
-.cap .now p{font-family:var(--body);font-weight:500;font-size:15px;line-height:1.3;letter-spacing:0;text-wrap:pretty;color:var(--bone);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.cap .now p{position:relative;font-family:var(--body);font-weight:500;font-size:15px;line-height:1.3;letter-spacing:0;text-wrap:pretty;color:var(--bone);overflow:hidden;max-height:2.6em}
+.cap .now p span{color:var(--mute);transition:color .12s}
+.cap .now p span.said{color:var(--bone)}
 .cap .tag{display:inline-block;font-family:var(--cond);font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--c,var(--gold));border:1px solid currentColor;border-radius:3px;padding:1px 6px 0;margin-bottom:6px}
 .cap p{margin:0;font-family:var(--display);font-size:clamp(24px,6.6vw,32px);line-height:1.02;letter-spacing:.015em;text-wrap:balance;color:var(--bone)}
 
@@ -182,7 +184,7 @@ async function loadClip(id){
   if(clipCache[id]) return clipCache[id];
   const r=await fetch(`audio/${id}.json`); if(!r.ok) throw new Error(`no timing for ${id}`);
   const j=await r.json();
-  const lines=j.lines.map(l=>({w:SPK[l.speaker]||"host",t:l.text,hl:l.hl,reveal:!!l.reveal,final:!!l.final,start:l.start,end:l.end}));
+  const lines=j.lines.map(l=>({w:SPK[l.speaker]||"host",t:l.text,hl:l.hl,reveal:!!l.reveal,final:!!l.final,start:l.start,end:l.end,wt:l.wt||null}));
   return clipCache[id]={id,src:`audio/${id}.mp3`,duration:j.duration,lines,env:j.env||null,envHz:j.env_hz||50};
 }
 const ACTUAL=25, WINNER="chris";
@@ -238,6 +240,18 @@ function liveLevel(){
   const rms=Math.sqrt(s/tbuf.length);
   return Math.min(1,Math.pow(rms*4.5,0.8));
 }
+function karaoke(){
+  if(!clip||lineIdx<0) return; const spans=lineEl.querySelectorAll("span"); if(!spans.length) return;
+  const l=clip.lines[lineIdx], t=player.currentTime; let p;
+  if(l.wt&&l.wt.length===spans.length){ let c=0; for(const w of l.wt){ if(w[0]<=t+0.05) c++; } p=c/spans.length; }
+  else if(clip.env){ const hz=clip.envHz, k0=Math.floor(l.start*hz), k1=Math.min(clip.env.length,Math.ceil(l.end*hz)), kt=Math.min(k1,Math.floor(t*hz)); let tot=0,acc=0; for(let k=k0;k<k1;k++){ const v=clip.env[k]; tot+=v; if(k<kt) acc+=v; } p=tot>0?acc/tot:(t-l.start)/Math.max(0.1,l.end-l.start); }
+  else p=(t-l.start)/Math.max(0.1,l.end-l.start);
+  if(t>=l.end) p=1;
+  const n=Math.max(0,Math.min(spans.length,Math.round(p*spans.length)));
+  spans.forEach((sp,k)=>sp.classList.toggle("said",k<n));
+  const cur=spans[Math.max(0,n-1)]; const lh=parseFloat(getComputedStyle(lineEl).lineHeight)||20; const row=Math.round(cur.offsetTop/lh);
+  const want=Math.max(0,row-1)*lh; if(Math.abs(lineEl.scrollTop-want)>1) lineEl.scrollTop=want;
+}
 function trackLine(){
   if(!clip||player.paused&&!player.ended) return;
   const ct=player.currentTime, L=clip.lines;
@@ -271,7 +285,7 @@ function showLine(l,prev){
   prevEl.textContent=prev?prev.t:"";
   tagEl.textContent=l.w==="host"?"Hayes":"O'Dog";
   tagEl.style.setProperty("--c",l.w==="host"?"var(--gold)":"var(--ember)");
-  lineEl.textContent=l.t;
+  lineEl.innerHTML=l.t.split(" ").map(w=>`<span>${w.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}</span>`).join(" "); lineEl.scrollTop=0;
   chips.forEach(c=>c.classList.toggle("lit",!!(l.hl&&l.hl.includes(c.dataset.p))));
   if(l.reveal) countUp();
   if(l.final){
@@ -494,7 +508,7 @@ function drawVU(fig,level){
 let last=performance.now();
 function frame(now){
   const t=now/1000, dt=Math.min(0.05,(now-last)/1000); last=now; 
-  if(clip&&playing){ trackLine(); live=liveLevel(); }
+  if(clip&&playing){ trackLine(); live=liveLevel(); karaoke(); }
   for(const ch of ["host","colour"]){
     const tg=target(ch,t); const k=tg>env[ch]?(clip?0.6:0.35):(clip?0.3:0.12); env[ch]+=(tg-env[ch])*(reduced?1:k);
   }

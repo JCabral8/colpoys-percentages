@@ -5,35 +5,45 @@
    "speaker": "hayes",
    "text": "Welcome IN to the Firepit Hour, live from the dock at Colpoy's Bay. I'm Hayes, that's O'Dog... and Noodles has the night off.",
    "start": 0.0,
-   "end": 8.159
+   "end": 8.24,
+   "seg_start": 0.0,
+   "seg_end": 8.159
   },
   {
    "i": 1,
    "speaker": "odog",
    "text": "He's not off, Hayesy. He wasn't INVITED. Four guys, one fire... and an envelope that's been sealed for a year.",
-   "start": 8.159,
-   "end": 16.96
+   "start": 8.24,
+   "end": 17.09,
+   "seg_start": 8.159,
+   "seg_end": 16.96
   },
   {
    "i": 2,
    "speaker": "hayes",
    "text": "It's the cottage edition of Gerry's Percentages. Every take these guys put on record last September gets opened tonight... and every one of them ends a W, or an L. No pushes.",
-   "start": 16.96,
-   "end": 28.159
+   "start": 17.09,
+   "end": 28.159,
+   "seg_start": 16.96,
+   "seg_end": 28.159
   },
   {
    "i": 3,
    "speaker": "odog",
    "text": "NO pushes. You said it, you own it. That's the whole show.",
    "start": 28.159,
-   "end": 33.04
+   "end": 33.04,
+   "seg_start": 28.159,
+   "seg_end": 33.04
   },
   {
    "i": 4,
    "speaker": "hayes",
    "text": "Marshal... when you're ready. Let's open it.",
    "start": 33.04,
-   "end": 36.16
+   "end": 36.16,
+   "seg_start": 33.04,
+   "seg_end": 36.16
   }
  ],
  "duration": 36.16,

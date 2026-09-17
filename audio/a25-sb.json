@@ -3,9 +3,11 @@
   {
    "i": 0,
    "speaker": "hayes",
-   "text": "Super Bowl sixty. Who wins it?",
+   "text": "Super Bowl LX. Who wins it?",
    "start": 0.0,
-   "end": 2.0
+   "end": 2.0,
+   "seg_start": 0.0,
+   "seg_end": 2.0
   },
   {
    "i": 1,
@@ -18,37 +20,47 @@
     "justin",
     "jay",
     "nick"
-   ]
+   ],
+   "seg_start": 2.0,
+   "seg_end": 9.279
   },
   {
    "i": 2,
    "speaker": "odog",
    "text": "Two NFC North teams, the Chargers, and Baltimore. Nobody in this room said Seattle. NOBODY said New England.",
    "start": 9.279,
-   "end": 16.879
+   "end": 17.77,
+   "seg_start": 9.279,
+   "seg_end": 16.879
   },
   {
    "i": 3,
    "speaker": "hayes",
-   "text": "Seattle... twenty-nine. New England... thirteen.",
-   "start": 16.879,
-   "end": 20.959,
-   "reveal": true
+   "text": "Seattle... 29. New England... 13.",
+   "start": 17.77,
+   "end": 21.09,
+   "reveal": true,
+   "seg_start": 16.879,
+   "seg_end": 20.959
   },
   {
    "i": 4,
    "speaker": "odog",
    "text": "Four guys, four picks, ZERO right. Not a single one of you had either team in the game. That's a clean sweep of L's.",
-   "start": 20.959,
-   "end": 32.0
+   "start": 21.09,
+   "end": 32.0,
+   "seg_start": 20.959,
+   "seg_end": 32.0
   },
   {
    "i": 5,
    "speaker": "hayes",
-   "text": "Everybody wears it. Four L's. Ties share... and this is a four-way tie for last.",
+   "text": "Everybody wears it. Four L's. Ties share... and this is a 4-way tie for last.",
    "start": 32.0,
    "end": 38.48,
-   "final": true
+   "final": true,
+   "seg_start": 32.0,
+   "seg_end": 38.48
   }
  ],
  "duration": 38.48,

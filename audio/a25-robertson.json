@@ -3,66 +3,82 @@
   {
    "i": 0,
    "speaker": "hayes",
-   "text": "Last one. Chris, September twenty-ninth, eleven-oh-one in the morning, on the record. Quote... Too much smoke on a Robertson move for there not to be fire. We were all a year too late.",
+   "text": "Last one. Chris, September 29, 11:01 a.m., on the record. Quote... Too much smoke on a Robertson move for there not to be fire. We were all a year too late.",
    "start": 0.0,
-   "end": 11.92
+   "end": 12.06,
+   "seg_start": 0.0,
+   "seg_end": 11.92
   },
   {
    "i": 1,
    "speaker": "odog",
    "text": "Nick Robertson trade rumours. The most reliable smoke in hockey. It shows up every October... like the leaves.",
-   "start": 11.92,
-   "end": 19.679
+   "start": 12.06,
+   "end": 19.88,
+   "seg_start": 11.92,
+   "seg_end": 19.679
   },
   {
    "i": 2,
    "speaker": "hayes",
-   "text": "Justin's reply, nine minutes later. You have some insider news, Elliott?",
-   "start": 19.679,
-   "end": 24.799,
+   "text": "Justin's reply, 9 minutes later. You have some insider news, Elliotte?",
+   "start": 19.88,
+   "end": 25.1,
    "hl": [
     "justin"
-   ]
+   ],
+   "seg_start": 19.679,
+   "seg_end": 24.799
   },
   {
    "i": 3,
    "speaker": "odog",
    "text": "Friedman over here. Only Chris put his name on it... and I notice he didn't put a DATE on it.",
-   "start": 24.799,
-   "end": 31.2
+   "start": 25.1,
+   "end": 31.56,
+   "seg_start": 24.799,
+   "seg_end": 31.2
   },
   {
    "i": 4,
    "speaker": "hayes",
    "text": "Only Chris weighed in.",
-   "start": 31.2,
+   "start": 31.56,
    "end": 32.96,
    "hl": [
     "chris"
-   ]
+   ],
+   "seg_start": 31.2,
+   "seg_end": 32.96
   },
   {
    "i": 5,
    "speaker": "hayes",
-   "text": "And on July first... Robertson was traded to Pittsburgh. For a twenty twenty-eight fourth.",
+   "text": "And on July 1... Robertson was traded to Pittsburgh. For a 2028 4th.",
    "start": 32.96,
-   "end": 38.56,
-   "reveal": true
+   "end": 38.9,
+   "reveal": true,
+   "seg_start": 32.96,
+   "seg_end": 38.56
   },
   {
    "i": 6,
    "speaker": "odog",
-   "text": "Ten months late, for a FOURTH. But there was no clock on it, Hayesy. You can't lose a take with no clock on it. Fire is fire.",
-   "start": 38.56,
-   "end": 47.12
+   "text": "10 months late, for a FOURTH. But there was no clock on it, Hayesy. You can't lose a take with no clock on it. Fire is fire.",
+   "start": 38.9,
+   "end": 47.51,
+   "seg_start": 38.56,
+   "seg_end": 47.12
   },
   {
    "i": 7,
    "speaker": "hayes",
    "text": "Chris takes the W... unless the Marshal wants to argue the calendar. Nobody else was in the room for it.",
-   "start": 47.12,
+   "start": 47.51,
    "end": 53.76,
-   "final": true
+   "final": true,
+   "seg_start": 47.12,
+   "seg_end": 53.76
   }
  ],
  "duration": 53.76,

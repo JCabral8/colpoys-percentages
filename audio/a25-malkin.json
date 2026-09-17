@@ -5,41 +5,51 @@
    "speaker": "hayes",
    "text": "Here's one that isn't closing tonight. Evgeni Malkin... first ballot Hall of Famer. Yes or no?",
    "start": 0.0,
-   "end": 5.28
+   "end": 5.28,
+   "seg_start": 0.0,
+   "seg_end": 5.28
   },
   {
    "i": 1,
    "speaker": "hayes",
    "text": "Chris, yes. Justin, yes. Nick... no.",
    "start": 5.28,
-   "end": 8.64,
+   "end": 8.85,
    "hl": [
     "chris",
     "justin",
     "nick"
-   ]
+   ],
+   "seg_start": 5.28,
+   "seg_end": 8.64
   },
   {
    "i": 2,
    "speaker": "odog",
-   "text": "Nick said NO to Geno. Three Cups, a Hart, a Conn Smythe... and Nick's over here like, I dunno, let's see the resume.",
-   "start": 8.64,
-   "end": 18.009
+   "text": "Nick said NO to Geno. 3 Cups, a Hart, a Conn Smythe... and Nick's over here like, I dunno, let's see the resume.",
+   "start": 8.85,
+   "end": 18.15,
+   "seg_start": 8.64,
+   "seg_end": 18.009
   },
   {
    "i": 3,
    "speaker": "hayes",
    "text": "Small problem... he's still playing. Signed a one year extension for next season.",
-   "start": 18.009,
-   "end": 22.489,
-   "reveal": true
+   "start": 18.15,
+   "end": 22.63,
+   "reveal": true,
+   "seg_start": 18.009,
+   "seg_end": 22.489
   },
   {
    "i": 4,
    "speaker": "odog",
-   "text": "So this stays open until he retires, PLUS three years. Nick, you're gonna be defending this at the fire in twenty-thirty.",
-   "start": 22.489,
-   "end": 31.208
+   "text": "So this stays open until he retires, PLUS 3 years. Nick, you're gonna be defending this at the fire in 2030.",
+   "start": 22.63,
+   "end": 31.208,
+   "seg_start": 22.489,
+   "seg_end": 31.208
   },
   {
    "i": 5,
@@ -47,7 +57,9 @@
    "text": "No W, no L. Carried over... moving on.",
    "start": 31.208,
    "end": 34.969,
-   "final": true
+   "final": true,
+   "seg_start": 31.208,
+   "seg_end": 34.969
   }
  ],
  "duration": 34.969,

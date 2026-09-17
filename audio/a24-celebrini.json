@@ -3,84 +3,104 @@
   {
    "i": 0,
    "speaker": "hayes",
-   "text": "Alright. The twenty twenty-four envelope. Macklin Celebrini, goals... rookie year in San Jose.",
+   "text": "Alright. The 2024 envelope. Macklin Celebrini, goals... rookie year in San Jose.",
    "start": 0.0,
-   "end": 6.48
+   "end": 6.78,
+   "seg_start": 0.0,
+   "seg_end": 6.48
   },
   {
    "i": 1,
    "speaker": "odog",
-   "text": "Eighteen years old, on a team that was BRUTAL. That's a tough number to put your name on.",
-   "start": 6.48,
-   "end": 12.56
+   "text": "18 years old, on a team that was BRUTAL. That's a tough number to put your name on.",
+   "start": 6.78,
+   "end": 12.7,
+   "seg_start": 6.48,
+   "seg_end": 12.56
   },
   {
    "i": 2,
    "speaker": "hayes",
-   "text": "Justin came in at... nine.",
-   "start": 12.56,
-   "end": 15.6,
+   "text": "Justin came in at... 9.",
+   "start": 12.7,
+   "end": 15.88,
    "hl": [
     "justin"
-   ]
+   ],
+   "seg_start": 12.56,
+   "seg_end": 15.6
   },
   {
    "i": 3,
    "speaker": "odog",
    "text": "NINE? He's got the first overall pick on the fourth line. I really don't know what he watched.",
-   "start": 15.6,
-   "end": 22.48
+   "start": 15.88,
+   "end": 22.76,
+   "seg_start": 15.6,
+   "seg_end": 22.48
   },
   {
    "i": 4,
    "speaker": "hayes",
-   "text": "Nick had him at fifteen. Jay... twenty-two.",
-   "start": 22.48,
+   "text": "Nick had him at 15. Jay... 22.",
+   "start": 22.76,
    "end": 26.799,
    "hl": [
     "nick",
     "jay"
-   ]
+   ],
+   "seg_start": 22.48,
+   "seg_end": 26.799
   },
   {
    "i": 5,
    "speaker": "hayes",
-   "text": "And Chris. Twenty-five.",
+   "text": "And Chris. 25.",
    "start": 26.799,
-   "end": 29.12,
+   "end": 29.71,
    "hl": [
     "chris"
-   ]
+   ],
+   "seg_start": 26.799,
+   "seg_end": 29.12
   },
   {
    "i": 6,
    "speaker": "odog",
-   "text": "Twenty-five, for a rookie on THAT roster. That's a man who actually watched the World Juniors.",
-   "start": 29.12,
-   "end": 35.76
+   "text": "25, for a rookie on THAT roster. That's a man who actually watched the World Juniors.",
+   "start": 29.71,
+   "end": 35.76,
+   "seg_start": 29.12,
+   "seg_end": 35.76
   },
   {
    "i": 7,
    "speaker": "hayes",
-   "text": "The actual... Macklin Celebrini... twenty-five goals.",
+   "text": "The actual... Macklin Celebrini... 25 goals.",
    "start": 35.76,
-   "end": 41.36,
-   "reveal": true
+   "end": 42.07,
+   "reveal": true,
+   "seg_start": 35.76,
+   "seg_end": 41.36
   },
   {
    "i": 8,
    "speaker": "odog",
    "text": "ON the number! Not close. Not in the neighbourhood. RIGHT on it. That's a scouting report, boys!",
-   "start": 41.36,
-   "end": 48.72
+   "start": 42.07,
+   "end": 48.72,
+   "seg_start": 41.36,
+   "seg_end": 48.72
   },
   {
    "i": 9,
    "speaker": "hayes",
-   "text": "Chris takes the W. Justin... sixteen off... wears the L. Back after this.",
+   "text": "Chris takes the W. Justin... 16 off... wears the L. Back after this.",
    "start": 48.72,
    "end": 55.2,
-   "final": true
+   "final": true,
+   "seg_start": 48.72,
+   "seg_end": 55.2
   }
  ],
  "duration": 55.2,

@@ -5,50 +5,62 @@
    "speaker": "hayes",
    "text": "Same guy... points.",
    "start": 0.0,
-   "end": 1.76
+   "end": 1.76,
+   "seg_start": 0.0,
+   "seg_end": 1.76
   },
   {
    "i": 1,
    "speaker": "hayes",
-   "text": "Nick, ninety-four. Justin, ninety. Jay, eighty-seven. Chris... eighty.",
+   "text": "Nick, 94. Justin, 90. Jay, 87. Chris... 80.",
    "start": 1.76,
-   "end": 10.56,
+   "end": 10.69,
    "hl": [
     "nick",
     "justin",
     "jay",
     "chris"
-   ]
+   ],
+   "seg_start": 1.76,
+   "seg_end": 10.56
   },
   {
    "i": 2,
    "speaker": "odog",
-   "text": "Chris at eighty is the low man AGAIN. He's turning into the only guy at this fire who watches the games sober.",
-   "start": 10.56,
-   "end": 18.08
+   "text": "Chris at 80 is the low man AGAIN. He's turning into the only guy at this fire who watches the games sober.",
+   "start": 10.69,
+   "end": 18.32,
+   "seg_start": 10.56,
+   "seg_end": 18.08
   },
   {
    "i": 3,
    "speaker": "hayes",
-   "text": "The actual... seventy-nine.",
-   "start": 18.08,
-   "end": 20.64,
-   "reveal": true
+   "text": "The actual... 79.",
+   "start": 18.32,
+   "end": 20.9,
+   "reveal": true,
+   "seg_start": 18.08,
+   "seg_end": 20.64
   },
   {
    "i": 4,
    "speaker": "odog",
-   "text": "ONE off! Chris said eighty, he got seventy-nine! Hayesy, Binnington called YOU a fraud... this guy's the real thing.",
-   "start": 20.64,
-   "end": 30.64
+   "text": "ONE off! Chris said 80, he got 79! Hayesy, Binnington called YOU a fraud... this guy's the real thing.",
+   "start": 20.9,
+   "end": 30.83,
+   "seg_start": 20.64,
+   "seg_end": 30.64
   },
   {
    "i": 5,
    "speaker": "hayes",
-   "text": "Chris takes the W. Nick, fifteen off... L. Justin and Jay, L.",
-   "start": 30.64,
+   "text": "Chris takes the W. Nick, 15 off... L. Justin and Jay, L.",
+   "start": 30.83,
    "end": 38.72,
-   "final": true
+   "final": true,
+   "seg_start": 30.64,
+   "seg_end": 38.72
   }
  ],
  "duration": 38.72,

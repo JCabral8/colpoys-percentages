@@ -302,14 +302,15 @@ ol.steps li{margin:6px 0}
 .gc td.best .n{border-color:var(--gold);color:var(--gold);box-shadow:0 0 12px rgba(230,182,79,.35)}
 .gc td.tot{font-family:var(--display);font-size:24px;color:var(--bone)}
 .gc td .nm{font-family:var(--display);font-size:18px;letter-spacing:.03em}
-.ltr{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:4px;font-family:var(--cond);font-weight:700;font-size:13px;line-height:1;padding-top:1px;background:var(--gold);color:#1a1205;box-shadow:inset 0 0 0 1px rgba(26,18,5,.35),inset 0 0 0 3px var(--gold),inset 0 0 0 4px rgba(26,18,5,.35)}
-.ltr.a{background:var(--panel2);color:var(--gold);box-shadow:inset 0 0 0 1.5px var(--gold),inset 0 0 0 3px var(--panel2),inset 0 0 0 4px rgba(230,182,79,.55)}
+/* the C and A: a jersey patch, white tackle twill with a black border */
+.ltr{display:inline-block;width:22px;height:22px;vertical-align:-5px;overflow:visible;filter:drop-shadow(0 1px 1px rgba(0,0,0,.6))}
+.ltr.a{width:22px;height:22px}
 .who-row{display:inline-flex;align-items:center;gap:8px}
 .who-row .nm{line-height:1}
 .who-row .ltr,.who-row .fraud{margin:0;vertical-align:0}
 .fraud{display:inline-block;margin-left:6px;vertical-align:2px;font-family:var(--display);font-size:12px;letter-spacing:.14em;line-height:1;padding:3px 6px 2px;border:2px solid var(--no);color:var(--no);border-radius:3px;transform:rotate(-6deg);text-transform:uppercase}
 .pick-grid .sub{display:flex;gap:8px;justify-content:center;margin-top:8px;font-size:0}
-.pick-grid .sub .ltr{width:24px;height:24px;font-size:15px;margin:0}
+.pick-grid .sub .ltr{width:26px;height:26px;margin:0}
 .pick-grid .sub .fraud{font-size:14px;margin:0}
 .badge{display:inline-block;font-family:var(--cond);font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#1a1205;background:var(--gold);border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:2px}
 .badge.dim{background:var(--panel2);color:var(--mute);border:1px solid var(--line)}
@@ -398,6 +399,27 @@ main.stackmode{display:flex;flex-direction:column;padding-bottom:10px}
 .bnote{display:none;margin-top:8px}
 .bnote.on{display:block}
 .bnote .sec{border-radius:10px;border:1px solid var(--line)}
+
+/* captions follow the voice; picks reveal like a lower-third when Hayes names them */
+.bcap p{position:relative;max-height:2.6em;overflow:hidden;display:block;-webkit-line-clamp:unset}
+.bcap p span{color:var(--mute);transition:color .12s}
+.bcap p span.said{color:var(--bone)}
+.pk{overflow:hidden}
+.pk .gw{overflow:hidden;margin-top:3px}
+.pk .gw .g{margin-top:0}
+.pk.veil::before{background:var(--line)}
+.pk.veil .nm{color:var(--mute)}
+.pk.veil .g{opacity:0;transform:translateY(120%)}
+.pk.rev .nm{color:var(--c)}
+.pk.rev .g{animation:pkin .55s cubic-bezier(.2,.9,.3,1.2) both}
+.pk.rev::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 25%,var(--c) 50%,transparent 75%);opacity:.55;transform:translateX(-130%);animation:pksweep .75s ease-out .05s both}
+.pk.rev.still .g,.pk.rev.still::after{animation:none}
+.pk.rev.still::after{display:none}
+.pk.out .nm,.pk.win .nm{color:var(--mute)}
+.pk.win .nm{color:var(--gold)}
+@keyframes pkin{from{opacity:0;transform:translateY(120%)}to{opacity:1;transform:none}}
+@keyframes pksweep{to{transform:translateX(130%)}}
+@media (prefers-reduced-motion:reduce){.pk.veil .g{opacity:1;transform:none}}
 </style>
 
 <div id="app"></div>
@@ -413,7 +435,7 @@ const FIREBASE_CONFIG = null; // e.g. {apiKey:"...", authDomain:"...", databaseU
 const SUPABASE_CONFIG = {supabaseUrl:"https://qggbflsetmxsmcbagwpd.supabase.co", supabaseKey:"sb_publishable_wC5J-hl2Nb1SLZJ1YZmf4g_woqk-GZI"}; // publishable key, meant to be public; access is governed by the table policy // e.g. {supabaseUrl:"https://xxxx.supabase.co", supabaseKey:"sb_publishable_..."}  (the anon/publishable key is meant to be public)
 const ROOM = "golf2026";
 const DEFAULT_PIN = "1234";
-const APP_VERSION = "28"; // bump on every publish: single-phone mode resets the audit + seen-reveals
+const APP_VERSION = "30"; // bump on every publish: single-phone mode resets the audit + seen-reveals
 
 const PLAYERS = [
   {id:"nick", name:"Nick"}, {id:"jay", name:"Jay"}, {id:"justin", name:"Justin"}, {id:"chris", name:"Chris"}
@@ -964,7 +986,8 @@ function renderAuditBooth(a,it,id,n,marshal,clipId){
   const show=a.show&&a.show.idx===a.idx&&BOOTH.has(a.show.clip)?a.show:null;
   const counts=stripCounts(it, done&&!played);
   const strip=`<div class="strip">${PLAYERS.map(p=>`<div class="chip" id="chip-${p.id}"><div class="nm" style="color:${PC[p.id]}">${p.name}</div><div class="rec"><b class="cw">${counts[p.id].w}</b>–<b class="cl">${counts[p.id].l}</b></div><span class="cst"></span></div>`).join("")}</div>`;
-  const picks=it.entries.length?`<div class="picks">${it.entries.map(e=>{ const st=done?(it.w.includes(e.id)?"win":it.l.includes(e.id)?"out":""):""; return `<div class="pk ${st}" id="pk-${e.id}" style="--c:${PC[e.id]}"><div class="nm">${P[e.id].name}</div><div class="g ${e.txt?"txt":""}">${esc(e.text)}</div><div class="wl">${done?(it.w.includes(e.id)?"W":it.l.includes(e.id)?"L":"–"):"–"}</div></div>`; }).join("")}</div>`:`<p class="muted small" style="text-align:center;margin:8px 0 0">${it.lore?esc(it.body||""):"Nobody weighed in."}</p>`;
+  const revd=ui.audAnim[a.idx+"-pk"]||{};
+  const picks=it.entries.length?`<div class="picks">${it.entries.map(e=>{ const st=done?(it.w.includes(e.id)?"win":it.l.includes(e.id)?"out":""):""; const vis=(done||revd[e.id])?"rev still":"veil"; return `<div class="pk ${st} ${vis}" id="pk-${e.id}" style="--c:${PC[e.id]}"><div class="nm">${P[e.id].name}</div><div class="gw"><div class="g ${e.txt?"txt":""}">${esc(e.text)}</div></div><div class="wl">${done?(it.w.includes(e.id)?"W":it.l.includes(e.id)?"L":"–"):"–"}</div></div>`; }).join("")}</div>`:`<p class="muted small" style="text-align:center;margin:8px 0 0">${it.lore?esc(it.body||""):"Nobody weighed in."}</p>`;
   const bigNum=it.big.n!=null;
   const who=done?(it.w.length?it.w.map(i=>P[i].name).join(" & ")+" take"+(it.w.length>1?"":"s")+" the W":it.entries.length&&it.l.length?"All L's":it.resolved?"":"Carried over"):"";
   const res=`<div class="bres ${numbered?"on":""}" id="bres"><span class="lbl">${bigNum?"Actual":"Call"}</span><span class="num ${bigNum?"":"txt"} ${it.big.c||""}" id="bnum" data-n="${bigNum?it.big.n:""}">${bigNum?(numbered?it.big.n:"––"):(numbered?esc(it.big.t||""):"––")}</span><span class="who" id="bverdict">${who}</span></div><div class="bnote ${done?"on":""}" id="bnote">${it.resultHtml}</div>`;
@@ -991,6 +1014,10 @@ function playAuditBooth(el,idx,it,a){
   const clipId=el.dataset.call;
   BOOTH.hook((l,i,cid,mode)=>{
     if(cid!==clipId||!document.querySelector(".booth-aud")||+document.getElementById("aud").dataset.idx!==idx) return;
+    const revd=ui.audAnim[idx+"-pk"]=ui.audAnim[idx+"-pk"]||{};
+    const unveil=pid=>{ if(revd[pid]) return; revd[pid]=true; const c=document.getElementById("pk-"+pid); if(!c) return; c.classList.remove("veil","still"); c.classList.add("rev"); SND.tone(660,.08,"triangle",.05); };
+    (l.hl||[]).forEach(unveil);
+    if(l.reveal||l.final) it.entries.forEach(e=>unveil(e.id));
     if(l.reveal) auditBoothReveal(idx,it);
     if(l.final) auditBoothFinal(idx,it,mode);
   });
@@ -1196,7 +1223,8 @@ function honours(){
   if(cy.length){ const y=cy[cy.length-1]; const ids=PLAYERS.map(p=>p.id).filter(i=>dec(i,y)>0); const sc=i=>t[i][y].w-t[i][y].l; const worst=Math.min(...ids.map(sc)); let f=ids.filter(i=>sc(i)===worst); if(f.length>1){ const minW=Math.min(...f.map(i=>t[i][y].w)); f=f.filter(i=>t[i][y].w===minW); } out.fraud=f; out.fraudYear=y; }
   return out;
 }
-function badges(id,h){ let b=""; if(h.captain.includes(id)) b+=`<span class="ltr c" title="Captain: best lifetime record">C</span>`; else if(h.assistant.includes(id)) b+=`<span class="ltr a" title="Assistant captain: second-best lifetime record">A</span>`; if(h.fraud.includes(id)) b+=`<span class="fraud" title="Worst score, ${h.fraudYear}">Fraud</span>`; return b; }
+function patch(ch,title){ return `<svg class="ltr ${ch.toLowerCase()}" viewBox="0 0 28 28" aria-label="${title}"><title>${title}</title><text x="14" y="22" text-anchor="middle" font-family="'Arial Black',Impact,'Franklin Gothic Heavy',sans-serif" font-weight="900" font-size="24" stroke="#f3e9d8" stroke-width="6" stroke-linejoin="round" paint-order="stroke" fill="#f3e9d8">${ch}</text><text x="14" y="22" text-anchor="middle" font-family="'Arial Black',Impact,'Franklin Gothic Heavy',sans-serif" font-weight="900" font-size="24" stroke="#14100c" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#f3e9d8">${ch}</text></svg>`; }
+function badges(id,h){ let b=""; if(h.captain.includes(id)) b+=patch("C","Captain: best lifetime record"); else if(h.assistant.includes(id)) b+=patch("A","Assistant captain: second-best lifetime record"); if(h.fraud.includes(id)) b+=`<span class="fraud" title="Worst score, ${h.fraudYear}">Fraud</span>`; return b; }
 function dynamicTitles(){
   const ys=yearStats(); const out={}; const lt=lifetime();
   const by=(k)=>PLAYERS.map(p=>[p.id,ys[p.id][k]]).sort((a,b)=>b[1]-a[1]);
@@ -1386,7 +1414,7 @@ const BOOTH=(()=>{
     if(cache[id]) return cache[id];
     const r=await fetch("audio/"+id+".json"); if(!r.ok) throw new Error("no clip "+id);
     const j=await r.json();
-    const lines=j.lines.map(l=>({w:SPKR[l.speaker]||"host",t:l.text,hl:l.hl||[],reveal:!!l.reveal,final:!!l.final,start:l.start,end:l.end}));
+    const lines=j.lines.map(l=>({w:SPKR[l.speaker]||"host",t:l.text,hl:l.hl||[],reveal:!!l.reveal,final:!!l.final,start:l.start,end:l.end,wt:l.wt||null}));
     return cache[id]={id,src:"audio/"+id+".mp3",duration:j.duration,lines,env:j.env||null,envHz:j.env_hz||50};
   }
   function now(){ if(!run) return 0; return mode==="local"?player.currentTime:Math.max(0,(Date.now()+SERVER_OFFSET-run.at)/1000); }
@@ -1418,16 +1446,31 @@ const BOOTH=(()=>{
     live=level();
     const snd=document.getElementById("bcap-snd"); if(snd) snd.hidden=mode==="local"||ended;
     for(const ch of ["host","colour"]){ const tg=speaking===ch?live:0; const k=tg>env[ch]?0.6:0.3; env[ch]+=(tg-env[ch])*(reduced?1:k); }
+    karaoke();
     if(!document.getElementById("booth")) return;
     puppets(performance.now()/1000);
     const vh=document.getElementById("vu-host"), vc=document.getElementById("vu-colour");
     if(vh){ drawVU(vh,env.host); vh.classList.toggle("talk",speaking==="host"); }
     if(vc){ drawVU(vc,env.colour); vc.classList.toggle("talk",speaking==="colour"); }
   }
+  function karaoke(){
+    // how far through the current line the voice is, by loudness so pauses don't advance the words
+    const line=document.getElementById("bcap-line"); if(!line||lineIdx<0||!clip) return;
+    const l=clip.lines[lineIdx], spans=line.querySelectorAll("span"); if(!spans.length) return;
+    const t=now(); let p;
+    if(l.wt&&l.wt.length===spans.length){ let c=0; for(const w of l.wt){ if(w[0]<=t+0.05) c++; } p=c/spans.length; }
+    else if(clip.env){ const hz=clip.envHz, k0=Math.floor(l.start*hz), k1=Math.min(clip.env.length,Math.ceil(l.end*hz)), kt=Math.min(k1,Math.floor(t*hz)); let tot=0,acc=0; for(let k=k0;k<k1;k++){ const v=clip.env[k]; tot+=v; if(k<kt) acc+=v; } p=tot>0?acc/tot:(t-l.start)/Math.max(0.1,l.end-l.start); }
+    else p=(t-l.start)/Math.max(0.1,l.end-l.start);
+    if(ended||t>=l.end) p=1;
+    const n=Math.max(0,Math.min(spans.length,Math.round(p*spans.length)));
+    spans.forEach((sp,k)=>sp.classList.toggle("said",k<n));
+    const cur=spans[Math.max(0,n-1)]; const lh=parseFloat(getComputedStyle(line).lineHeight)||20; const row=Math.round(cur.offsetTop/lh);
+    const want=Math.max(0,row-1)*lh; if(Math.abs(line.scrollTop-want)>1) line.scrollTop=want;
+  }
   function showLine(l,i){
     const tag=document.getElementById("bcap-tag"), line=document.getElementById("bcap-line");
     if(tag){ tag.textContent=l.w==="host"?"Hayes":"O'Dog"; tag.style.setProperty("--c",l.w==="host"?"var(--gold)":"var(--ember)"); }
-    if(line){ line.textContent=l.t; line.dataset.i=String(i); }
+    if(line){ line.innerHTML=l.t.split(" ").map(w=>`<span>${esc(w)}</span>`).join(" "); line.dataset.i=String(i); line.scrollTop=0; }
     document.querySelectorAll(".torch.hot, .pk.hot, .gl .g.hot").forEach(e=>{ e.classList.remove("hot"); e.style.boxShadow=""; });
     (l.hl||[]).forEach(pid=>{ document.querySelectorAll(`.aud #torch-${pid}, .aud #pk-${pid}, .bov .gl .g[data-p="${pid}"]`).forEach(e=>{ e.classList.add("hot"); e.style.boxShadow=`0 0 0 1px ${PC[pid]}, 0 0 18px -4px ${PC[pid]}`; }); });
     if(onLine&&clip) try{ onLine(l,i,clip.id,mode); }catch(e){}

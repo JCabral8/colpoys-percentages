@@ -3,21 +3,25 @@
   {
    "i": 0,
    "speaker": "hayes",
-   "text": "Auston Matthews, goals. This one's been in the envelope every year since twenty twenty-one.",
+   "text": "Auston Matthews, goals. This one's been in the envelope every year since 2021.",
    "start": 0.0,
-   "end": 5.04
+   "end": 5.04,
+   "seg_start": 0.0,
+   "seg_end": 5.04
   },
   {
    "i": 1,
    "speaker": "odog",
-   "text": "Twenty-one was the constellations year. Nobody wrote it down. THIS time, they wrote it down.",
+   "text": "2021 was the constellations year. Nobody wrote it down. THIS time, they wrote it down.",
    "start": 5.04,
-   "end": 10.799
+   "end": 10.799,
+   "seg_start": 5.04,
+   "seg_end": 10.799
   },
   {
    "i": 2,
    "speaker": "hayes",
-   "text": "Justin and Nick, forty-eight. Jay, forty-two. Chris... forty.",
+   "text": "Justin and Nick, 48. Jay, 42. Chris... 40.",
    "start": 10.799,
    "end": 15.919,
    "hl": [
@@ -25,37 +29,47 @@
     "nick",
     "jay",
     "chris"
-   ]
+   ],
+   "seg_start": 10.799,
+   "seg_end": 15.919
   },
   {
    "i": 3,
    "speaker": "odog",
-   "text": "Forty-eight, TWICE. Two guys independently landed on the same optimistic number. That's the cottage talking.",
+   "text": "48, TWICE. Two guys independently landed on the same optimistic number. That's the cottage talking.",
    "start": 15.919,
-   "end": 23.039
+   "end": 23.039,
+   "seg_start": 15.919,
+   "seg_end": 23.039
   },
   {
    "i": 4,
    "speaker": "hayes",
-   "text": "The actual... twenty-seven. Sixty games. Season ended by an M C L in March.",
+   "text": "The actual... 27. 60 games. Season ended by an MCL in March.",
    "start": 23.039,
-   "end": 28.879,
-   "reveal": true
+   "end": 29.2,
+   "reveal": true,
+   "seg_start": 23.039,
+   "seg_end": 28.879
   },
   {
    "i": 5,
    "speaker": "odog",
-   "text": "Twenty-seven. Look, the injury's the injury... but forty-eight was NEVER happening. If you're a Leaf fan, you gotta stop pricing in the sixty-goal guy.",
-   "start": 28.879,
-   "end": 39.52
+   "text": "27. Look, the injury's the injury... but 48 was NEVER happening. If you're a Leaf fan, you gotta stop pricing in the 60-goal guy.",
+   "start": 29.2,
+   "end": 39.52,
+   "seg_start": 28.879,
+   "seg_end": 39.52
   },
   {
    "i": 6,
    "speaker": "hayes",
-   "text": "Chris at forty is closest. Chris takes the W. Justin and Nick, twenty-one off... both L. Jay, L.",
+   "text": "Chris at 40 is closest. Chris takes the W. Justin and Nick, 21 off... both L. Jay, L.",
    "start": 39.52,
    "end": 47.68,
-   "final": true
+   "final": true,
+   "seg_start": 39.52,
+   "seg_end": 47.68
   }
  ],
  "duration": 47.68,

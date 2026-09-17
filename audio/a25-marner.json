@@ -5,57 +5,71 @@
    "speaker": "hayes",
    "text": "Mitch Marner. First year in Vegas... points.",
    "start": 0.0,
-   "end": 3.92
+   "end": 4.32,
+   "seg_start": 0.0,
+   "seg_end": 3.92
   },
   {
    "i": 1,
    "speaker": "odog",
-   "text": "Out of Toronto, on a line with Eye-kel, NO pressure. Everybody in this room had him going nuts.",
-   "start": 3.92,
-   "end": 11.919
+   "text": "Out of Toronto, on a line with Eichel, NO pressure. Everybody in this room had him going nuts.",
+   "start": 4.32,
+   "end": 12.1,
+   "seg_start": 3.92,
+   "seg_end": 11.919
   },
   {
    "i": 2,
    "speaker": "hayes",
-   "text": "Jay, one oh one. Chris, one hundred. Nick, ninety-five. Justin... ninety-two.",
-   "start": 11.919,
-   "end": 18.479,
+   "text": "Jay, 101. Chris, 100. Nick, 95. Justin... 92.",
+   "start": 12.1,
+   "end": 19.21,
    "hl": [
     "jay",
     "chris",
     "nick",
     "justin"
-   ]
+   ],
+   "seg_start": 11.919,
+   "seg_end": 18.479
   },
   {
    "i": 3,
    "speaker": "odog",
-   "text": "Four guys, ALL of them over ninety. Not one of them under. That tells you something.",
-   "start": 18.479,
-   "end": 24.64
+   "text": "Four guys, ALL of them over 90. Not one of them under. That tells you something.",
+   "start": 19.21,
+   "end": 26.02,
+   "seg_start": 18.479,
+   "seg_end": 24.64
   },
   {
    "i": 4,
    "speaker": "hayes",
-   "text": "The actual... eighty. Twenty-four goals, fifty-six assists, eighty-one games.",
-   "start": 24.64,
-   "end": 32.479,
-   "reveal": true
+   "text": "The actual... 80. 24 goals, 56 assists, 81 games.",
+   "start": 26.02,
+   "end": 33.92,
+   "reveal": true,
+   "seg_start": 24.64,
+   "seg_end": 32.479
   },
   {
    "i": 5,
    "speaker": "odog",
-   "text": "Eighty. He didn't get WORSE, boys. He just stopped playing with Matthews. It's a moot point how good he is... the number was never gonna be a hundred.",
-   "start": 32.479,
-   "end": 42.72
+   "text": "80. He didn't get WORSE, boys. He just stopped playing with Matthews. It's a moot point how good he is... the number was never gonna be 100.",
+   "start": 33.92,
+   "end": 44.69,
+   "seg_start": 32.479,
+   "seg_end": 42.72
   },
   {
    "i": 6,
    "speaker": "hayes",
-   "text": "Closest is Justin at ninety-two. Justin takes the W. Jay... twenty-one off, worst in the room. L.",
-   "start": 42.72,
+   "text": "Closest is Justin at 92. Justin takes the W. Jay... 21 off, worst in the room. L.",
+   "start": 44.69,
    "end": 52.24,
-   "final": true
+   "final": true,
+   "seg_start": 42.72,
+   "seg_end": 52.24
   }
  ],
  "duration": 52.24,

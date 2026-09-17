@@ -3,75 +3,93 @@
   {
    "i": 0,
    "speaker": "hayes",
-   "text": "First one out of the twenty twenty-five envelope, and it's a REAL Gerry's Percentages. How many Canadian teams win a second-round series in May?",
+   "text": "First one out of the 2025 envelope, and it's a REAL Gerry's Percentages. How many Canadian teams win a second-round series in May?",
    "start": 0.0,
-   "end": 11.599
+   "end": 11.9,
+   "seg_start": 0.0,
+   "seg_end": 11.599
   },
   {
    "i": 1,
    "speaker": "odog",
-   "text": "G, E, double R, Y. Somebody had to say it.",
-   "start": 11.599,
-   "end": 15.679
+   "text": "G-E-R-R-Y. Somebody had to say it.",
+   "start": 11.9,
+   "end": 15.679,
+   "seg_start": 11.599,
+   "seg_end": 15.679
   },
   {
    "i": 2,
    "speaker": "hayes",
-   "text": "Nick put a whole BOARD on it. Zero teams, fifteen percent. One team... seventy-five. Two teams, twenty-five. Three... zero.",
+   "text": "Nick put a whole BOARD on it. 0 teams, 15%. 1 team... 75%. 2 teams, 25%. 3... 0%.",
    "start": 15.679,
    "end": 28.0,
    "hl": [
     "nick"
-   ]
+   ],
+   "seg_start": 15.679,
+   "seg_end": 28.0
   },
   {
    "i": 3,
    "speaker": "odog",
    "text": "That's a man who brought a spreadsheet to a campfire. I respect it... and I hate it.",
    "start": 28.0,
-   "end": 33.52
+   "end": 33.52,
+   "seg_start": 28.0,
+   "seg_end": 33.52
   },
   {
    "i": 4,
    "speaker": "hayes",
-   "text": "Chris said two, Leafs and Oilers. Justin said one or two, fifty-fifty. Jay... said three.",
+   "text": "Chris said 2, Leafs and Oilers. Justin said 1 or 2, 50/50. Jay... said 3.",
    "start": 33.52,
    "end": 42.48,
    "hl": [
     "chris",
     "justin",
     "jay"
-   ]
+   ],
+   "seg_start": 33.52,
+   "seg_end": 42.48
   },
   {
    "i": 5,
    "speaker": "odog",
    "text": "THREE! Jay had the Jets, the Leafs AND the Oilers all winning a round. In the same spring. Buddy.",
    "start": 42.48,
-   "end": 50.48
+   "end": 50.71,
+   "seg_start": 42.48,
+   "seg_end": 50.48
   },
   {
    "i": 6,
    "speaker": "hayes",
-   "text": "The answer... one. The Oilers beat Vegas. The Leafs lost game seven to Florida. The Jets lost to Dallas.",
-   "start": 50.48,
-   "end": 59.92,
-   "reveal": true
+   "text": "The answer... 1. The Oilers beat Vegas. The Leafs lost game 7 to Florida. The Jets lost to Dallas.",
+   "start": 50.71,
+   "end": 60.24,
+   "reveal": true,
+   "seg_start": 50.48,
+   "seg_end": 59.92
   },
   {
    "i": 7,
    "speaker": "odog",
-   "text": "Of COURSE the Leafs lost a game seven. Ninety-five percent of the time, possibly higher... that's how it ends.",
-   "start": 59.92,
-   "end": 67.6
+   "text": "Of COURSE the Leafs lost a game seven. 95 percent of the time, possibly higher... that's how it ends.",
+   "start": 60.24,
+   "end": 67.86,
+   "seg_start": 59.92,
+   "seg_end": 67.6
   },
   {
    "i": 8,
    "speaker": "hayes",
-   "text": "Nick had seventy-five on one. Nick takes the W. Justin... fifty-fifty doesn't count in this room. Everybody else... L.",
-   "start": 67.6,
+   "text": "Nick had 75% on 1. Nick takes the W. Justin... 50/50 doesn't count in this room. Everybody else... L.",
+   "start": 67.86,
    "end": 78.16,
-   "final": true
+   "final": true,
+   "seg_start": 67.6,
+   "seg_end": 78.16
   }
  ],
  "duration": 78.16,

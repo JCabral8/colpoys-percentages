@@ -5,50 +5,62 @@
    "speaker": "hayes",
    "text": "Willy Nylander... goals.",
    "start": 0.0,
-   "end": 2.24
+   "end": 2.24,
+   "seg_start": 0.0,
+   "seg_end": 2.24
   },
   {
    "i": 1,
    "speaker": "hayes",
-   "text": "Nick, forty-six. Jay, forty-two. Chris, forty. Justin... thirty-eight.",
+   "text": "Nick, 46. Jay, 42. Chris, 40. Justin... 38.",
    "start": 2.24,
-   "end": 9.359,
+   "end": 9.45,
    "hl": [
     "nick",
     "jay",
     "chris",
     "justin"
-   ]
+   ],
+   "seg_start": 2.24,
+   "seg_end": 9.359
   },
   {
    "i": 2,
    "speaker": "odog",
-   "text": "Nick's got him at forty-six. Nick's got EVERYBODY at forty-six. He priced this team like it was twenty twenty-two.",
-   "start": 9.359,
-   "end": 18.16
+   "text": "Nick's got him at 46. Nick's got EVERYBODY at 46. He priced this team like it was 2022.",
+   "start": 9.45,
+   "end": 18.21,
+   "seg_start": 9.359,
+   "seg_end": 18.16
   },
   {
    "i": 3,
    "speaker": "hayes",
-   "text": "The actual... thirty. Sixty-five games.",
-   "start": 18.16,
+   "text": "The actual... 30. 65 games.",
+   "start": 18.21,
    "end": 22.08,
-   "reveal": true
+   "reveal": true,
+   "seg_start": 18.16,
+   "seg_end": 22.08
   },
   {
    "i": 4,
    "speaker": "odog",
-   "text": "Thirty. And that's with the team around him falling apart. I'll say this for Willy... he showed up. The numbers didn't.",
+   "text": "30. And that's with the team around him falling apart. I'll say this for Willy... he showed up. The numbers didn't.",
    "start": 22.08,
-   "end": 29.839
+   "end": 29.839,
+   "seg_start": 22.08,
+   "seg_end": 29.839
   },
   {
    "i": 5,
    "speaker": "hayes",
-   "text": "Justin at thirty-eight takes the W. Nick, sixteen off... L. Chris and Jay, L.",
+   "text": "Justin at 38 takes the W. Nick, 16 off... L. Chris and Jay, L.",
    "start": 29.839,
    "end": 36.64,
-   "final": true
+   "final": true,
+   "seg_start": 29.839,
+   "seg_end": 36.64
   }
  ],
  "duration": 36.64,

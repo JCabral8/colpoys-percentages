@@ -3,61 +3,77 @@
   {
    "i": 0,
    "speaker": "hayes",
-   "text": "That's the envelope. Every take on the record for twenty twenty-five... opened, called, and stamped.",
+   "text": "That's the envelope. Every take on the record for 2025... opened, called, and stamped.",
    "start": 0.0,
-   "end": 7.199
+   "end": 7.199,
+   "seg_start": 0.0,
+   "seg_end": 7.199
   },
   {
    "i": 1,
    "speaker": "odog",
    "text": "Four guys, one Super Bowl, ZERO right. That's the headline. The rest is on the scorecard.",
    "start": 7.199,
-   "end": 14.56
+   "end": 14.61,
+   "seg_start": 7.199,
+   "seg_end": 14.56
   },
   {
    "i": 2,
    "speaker": "hayes",
-   "text": "And the Fraud tag for twenty twenty-five, worst score in the room... goes to Jay. One and seven.",
-   "start": 14.56,
-   "end": 21.6,
+   "text": "And the Fraud tag for 2025, worst score in the room... goes to Jay. 1 and 7.",
+   "start": 14.61,
+   "end": 21.74,
    "hl": [
     "jay"
-   ]
+   ],
+   "seg_start": 14.56,
+   "seg_end": 21.6
   },
   {
    "i": 3,
    "speaker": "odog",
-   "text": "None of the above got him ONE W, and the other seven got him the stamp. That's the spiciest one and seven I've ever seen.",
-   "start": 21.6,
-   "end": 30.48
+   "text": "None of the above got him ONE W, and the other 7 got him the stamp. That's the spiciest 1 and 7 I've ever seen.",
+   "start": 21.74,
+   "end": 30.48,
+   "seg_start": 21.6,
+   "seg_end": 30.48
   },
   {
    "i": 4,
    "speaker": "hayes",
    "text": "New envelope opens tonight. Whatever you put on the drum now... we're reading it back next September.",
    "start": 30.48,
-   "end": 36.8
+   "end": 36.85,
+   "seg_start": 30.48,
+   "seg_end": 36.8
   },
   {
    "i": 5,
    "speaker": "odog",
    "text": "And Hayesy... lose the three-button undershirt before the golf tomorrow. For ALL of us.",
-   "start": 36.8,
-   "end": 42.879
+   "start": 36.85,
+   "end": 42.96,
+   "seg_start": 36.8,
+   "seg_end": 42.879
   },
   {
    "i": 6,
    "speaker": "hayes",
    "text": "For O'Dog, I'm Hayes. This has been the Firepit Hour. We'll be back next year, at...",
-   "start": 42.879,
-   "end": 47.919
+   "start": 42.96,
+   "end": 47.97,
+   "seg_start": 42.879,
+   "seg_end": 47.919
   },
   {
    "i": 7,
    "speaker": "odog",
-   "text": "Four p.m.! We'll chat then.",
-   "start": 47.919,
-   "end": 50.24
+   "text": "4 p.m.! We'll chat then.",
+   "start": 47.97,
+   "end": 50.24,
+   "seg_start": 47.919,
+   "seg_end": 50.24
   }
  ],
  "duration": 50.24,

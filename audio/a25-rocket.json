@@ -5,50 +5,62 @@
    "speaker": "hayes",
    "text": "Rocket Richard. Who leads the league in goals?",
    "start": 0.0,
-   "end": 2.159
+   "end": 2.159,
+   "seg_start": 0.0,
+   "seg_end": 2.159
   },
   {
    "i": 1,
    "speaker": "hayes",
-   "text": "Chris and Justin, McDavid. Jay, Dry-sightle. Nick... MacKinnon.",
+   "text": "Chris and Justin, McDavid. Jay, Draisaitl. Nick... MacKinnon.",
    "start": 2.159,
-   "end": 6.079,
+   "end": 6.21,
    "hl": [
     "chris",
     "justin",
     "jay",
     "nick"
-   ]
+   ],
+   "seg_start": 2.159,
+   "seg_end": 6.079
   },
   {
    "i": 2,
    "speaker": "odog",
    "text": "Three guys on Edmonton. I said it ALL year, that team doesn't deserve the benefit of the doubt... and neither do their scorers.",
-   "start": 6.079,
-   "end": 14.319
+   "start": 6.21,
+   "end": 14.319,
+   "seg_start": 6.079,
+   "seg_end": 14.319
   },
   {
    "i": 3,
    "speaker": "hayes",
-   "text": "The answer... MacKinnon, fifty-three. McDavid, forty-eight. Dry-sightle... thirty-five.",
+   "text": "The answer... MacKinnon, 53. McDavid, 48. Draisaitl... 35.",
    "start": 14.319,
    "end": 19.679,
-   "reveal": true
+   "reveal": true,
+   "seg_start": 14.319,
+   "seg_end": 19.679
   },
   {
    "i": 4,
    "speaker": "odog",
-   "text": "Thirty-five for Leon. Jay picked the one guy who fell off a CLIFF. Nick picked the guy who never does.",
+   "text": "35 for Leon. Jay picked the one guy who fell off a CLIFF. Nick picked the guy who never does.",
    "start": 19.679,
-   "end": 26.72
+   "end": 26.85,
+   "seg_start": 19.679,
+   "seg_end": 26.72
   },
   {
    "i": 5,
    "speaker": "hayes",
    "text": "Nick takes the W. The Oracle strikes again. Chris, Justin, Jay... L.",
-   "start": 26.72,
+   "start": 26.85,
    "end": 32.24,
-   "final": true
+   "final": true,
+   "seg_start": 26.72,
+   "seg_end": 32.24
   }
  ],
  "duration": 32.24,
