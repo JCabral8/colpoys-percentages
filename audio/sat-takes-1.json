@@ -225,7 +225,8 @@
     ]
    ],
    "seg_start": 10.319,
-   "seg_end": 20.88
+   "seg_end": 20.88,
+   "take": "McKenna"
   },
   {
    "i": 3,
@@ -409,7 +410,8 @@
     ]
    ],
    "seg_start": 30.72,
-   "seg_end": 41.04
+   "seg_end": 41.04,
+   "take": "Matthews goals"
   },
   {
    "i": 5,
@@ -621,7 +623,8 @@
     ]
    ],
    "seg_start": 51.84,
-   "seg_end": 61.279
+   "seg_end": 61.279,
+   "take": "Bob wins"
   },
   {
    "i": 7,
@@ -841,7 +844,8 @@
     ]
    ],
    "seg_start": 71.28,
-   "seg_end": 83.439
+   "seg_end": 83.439,
+   "take": "leafs get"
   },
   {
    "i": 9,

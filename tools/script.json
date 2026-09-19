@@ -799,7 +799,8 @@
             "jay",
             "justin",
             "chris"
-          ]
+          ],
+          "take": "birdies"
         },
         {
           "speaker": "odog",
@@ -808,7 +809,8 @@
         {
           "speaker": "hayes",
           "text": "Three birdies. Three. Nick called it on the nose.",
-          "reveal": true
+          "reveal": true,
+          "take": "birdies"
         },
         {
           "speaker": "odog",
@@ -817,7 +819,8 @@
         {
           "speaker": "hayes",
           "text": "Nick takes the W. First one on the record for twenty twenty-six. Jay, Justin, Chris. L. Steaks are on the grill. Finally.",
-          "final": true
+          "final": true,
+          "take": "birdies"
         }
       ]
     },
@@ -842,7 +845,8 @@
             "jay",
             "justin",
             "chris"
-          ]
+          ],
+          "take": "McKenna"
         },
         {
           "speaker": "odog",
@@ -856,7 +860,8 @@
             "jay",
             "justin",
             "chris"
-          ]
+          ],
+          "take": "Matthews goals"
         },
         {
           "speaker": "odog",
@@ -870,7 +875,8 @@
             "jay",
             "justin",
             "chris"
-          ]
+          ],
+          "take": "Bob wins"
         },
         {
           "speaker": "odog",
@@ -884,7 +890,8 @@
             "jay",
             "justin",
             "chris"
-          ]
+          ],
+          "take": "leafs get"
         },
         {
           "speaker": "odog",
@@ -908,7 +915,8 @@
             "nick",
             "chris",
             "justin"
-          ]
+          ],
+          "take": "rory"
         },
         {
           "speaker": "odog",
@@ -922,7 +930,8 @@
             "jay",
             "justin",
             "chris"
-          ]
+          ],
+          "take": "Vladdy"
         },
         {
           "speaker": "odog",
@@ -935,7 +944,8 @@
             "nick",
             "jay",
             "justin"
-          ]
+          ],
+          "take": "NFL MVP"
         },
         {
           "speaker": "odog",
@@ -948,7 +958,8 @@
             "nick",
             "jay",
             "justin"
-          ]
+          ],
+          "take": "make the playoffs"
         },
         {
           "speaker": "odog",

@@ -441,7 +441,7 @@ def render(item, voices, settings, fmt):
             entry = {"i": base + j, "speaker": ln["speaker"], "text": caption(ln["text"], ln.get("caption")),
                      "start": None if s0 is None else round(offset + s0, 3),
                      "end": None if e0 is None else round(offset + e0, 3)}
-            for cue in ("hl", "reveal", "final"):
+            for cue in ("hl", "reveal", "final", "take"):
                 if cue in ln:
                     entry[cue] = ln[cue]
             timing.append(entry)

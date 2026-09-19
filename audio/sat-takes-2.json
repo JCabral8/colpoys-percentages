@@ -102,7 +102,8 @@
     ]
    ],
    "seg_start": 0.0,
-   "seg_end": 9.279
+   "seg_end": 9.279,
+   "take": "rory"
   },
   {
    "i": 1,
@@ -318,7 +319,8 @@
     ]
    ],
    "seg_start": 15.919,
-   "seg_end": 30.879
+   "seg_end": 30.879,
+   "take": "Vladdy"
   },
   {
    "i": 3,
@@ -617,7 +619,8 @@
     ]
    ],
    "seg_start": 42.479,
-   "seg_end": 62.399
+   "seg_end": 62.399,
+   "take": "NFL MVP"
   },
   {
    "i": 5,
@@ -928,7 +931,8 @@
     ]
    ],
    "seg_start": 72.399,
-   "seg_end": 92.719
+   "seg_end": 92.719,
+   "take": "make the playoffs"
   },
   {
    "i": 7,
