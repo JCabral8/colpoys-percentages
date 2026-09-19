@@ -420,6 +420,18 @@ main.stackmode{display:flex;flex-direction:column;padding-bottom:10px}
 @keyframes pkin{from{opacity:0;transform:translateY(120%)}to{opacity:1;transform:none}}
 @keyframes pksweep{to{transform:translateX(130%)}}
 @media (prefers-reduced-motion:reduce){.pk.veil .g{opacity:1;transform:none}}
+
+/* pick takes */
+.pill.pick{color:#b56bff;border-color:rgba(181,107,255,.5)}
+.optrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.optlist{display:flex;flex-direction:column;gap:8px;margin:12px 0;overflow-y:auto}
+.optlist .opt{font-family:var(--cond);font-weight:600;font-size:18px;text-align:left;padding:14px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--bone);cursor:pointer}
+.optlist .opt.on{border-color:var(--ember);background:rgba(240,116,42,.14);box-shadow:0 0 0 1px var(--ember)}
+.bar.pk-row{grid-template-columns:78px 1fr}
+.bar .choice{font-family:var(--cond);font-weight:600;font-size:16px;color:var(--bone)}
+.rs-opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.rs-opts .opt{font-family:var(--cond);font-weight:600;font-size:14px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);color:var(--bone);cursor:pointer}
+.rs-opts .opt.on{border-color:var(--gold);color:var(--gold)}
 </style>
 
 <div id="app"></div>
@@ -435,7 +447,7 @@ const FIREBASE_CONFIG = null; // e.g. {apiKey:"...", authDomain:"...", databaseU
 const SUPABASE_CONFIG = {supabaseUrl:"https://qggbflsetmxsmcbagwpd.supabase.co", supabaseKey:"sb_publishable_wC5J-hl2Nb1SLZJ1YZmf4g_woqk-GZI"}; // publishable key, meant to be public; access is governed by the table policy // e.g. {supabaseUrl:"https://xxxx.supabase.co", supabaseKey:"sb_publishable_..."}  (the anon/publishable key is meant to be public)
 const ROOM = "golf2026";
 const DEFAULT_PIN = "1234";
-const APP_VERSION = "35"; // bump on every publish: single-phone mode resets the audit + seen-reveals
+const APP_VERSION = "37"; // bump on every publish: single-phone mode resets the audit + seen-reveals
 
 const PLAYERS = [
   {id:"nick", name:"Nick"}, {id:"jay", name:"Jay"}, {id:"justin", name:"Justin"}, {id:"chris", name:"Chris"}
@@ -677,6 +689,9 @@ function me(){ try{return localStorage.getItem("firepit-me")||""}catch(e){return
 function setMe(id){ try{localStorage.setItem("firepit-me",id)}catch(e){} render(); }
 function isAdmin(){ try{return sessionStorage.getItem("firepit-admin")==="1"}catch(e){return false} }
 function setAdmin(v){ try{ v?sessionStorage.setItem("firepit-admin","1"):sessionStorage.removeItem("firepit-admin") }catch(e){} render(); }
+const pickKey=a=>[].concat(a==null?[]:a).map(Number).sort((x,y)=>x-y).join(",");
+const pickText=(t,a)=>[].concat(a==null?[]:a).map(i=>t.options&&t.options[i]!=null?t.options[i]:"?").join(" + ");
+function togglePick(i){ const d=ui.dial; if(!d) return; const t=state.takes[d.take]; let v=[].concat(d.val||[]); if(t.multi){ v=v.includes(i)?v.filter(x=>x!==i):[...v,i]; } else v=[i]; d.val=v; render(); }
 function takesList(){ return Object.values(state.takes).sort((a,b)=>b.createdAt-a.createdAt); }
 function median(a){ const s=[...a].sort((x,y)=>x-y); const m=Math.floor(s.length/2); return s.length%2?s[m]:(s[m-1]+s[m])/2; }
 function brier(p,outcome){ const o=outcome?100:0; return Math.round(100-Math.pow(p-o,2)/100); }
@@ -754,16 +769,24 @@ function renderAdd(){
   <label class="f">The take</label>
   <textarea id="draft" placeholder="${ui.draftKind==="pct"?"Leafs win a playoff round this season.":"Matthews goals this season"}" oninput="ui.draftText=this.value">${esc(ui.draftText||"")}</textarea>
   <label class="f">Everyone locks in a…</label>
-  <div class="seg"><button class="${ui.draftKind==="pct"?"on":""}" onclick="ui.draftKind='pct';render()">Percentage</button><button class="${ui.draftKind==="num"?"on":""}" onclick="ui.draftKind='num';render()">Number</button></div>
-  <p class="small muted" style="margin-top:8px">${ui.draftKind==="pct"?"A statement that will be true or false. Everyone spins their % it happens.":"A stat. Everyone guesses the number; closest wins when it resolves."}</p>
+  <div class="seg"><button class="${ui.draftKind==="pct"?"on":""}" onclick="ui.draftKind='pct';render()">Percentage</button><button class="${ui.draftKind==="num"?"on":""}" onclick="ui.draftKind='num';render()">Number</button><button class="${ui.draftKind==="pick"?"on":""}" onclick="ui.draftKind='pick';render()">Pick</button><button class="${ui.draftKind==="yn"?"on":""}" onclick="ui.draftKind='yn';render()">Yes / No</button></div>
+  <p class="small muted" style="margin-top:8px">${ui.draftKind==="pct"?"A statement that will be true or false. Everyone spins their % it happens.":ui.draftKind==="num"?"A stat. Everyone guesses the number; closest wins when it resolves.":ui.draftKind==="yn"?"A statement. Everyone says yes or no; the right side takes the W.":"A list to choose from. Everyone picks; only the exact answer takes the W."}</p>
   ${ui.draftKind==="num"?`<label class="f">Unit (optional)</label><input type="text" placeholder="goals, points, wins…" value="${esc(ui.draftUnit||"")}" oninput="ui.draftUnit=this.value">`:""}
+  ${ui.draftKind==="pick"?`<label class="f">The options, one per line</label><textarea id="opts" placeholder="Leafs
+Oilers
+Jets
+None of the above" oninput="ui.draftOpts=this.value">${esc(ui.draftOpts||"")}</textarea>
+  <label class="f">Everyone picks…</label><div class="seg"><button class="${!ui.draftMulti?"on":""}" onclick="ui.draftMulti=false;render()">One option</button><button class="${ui.draftMulti?"on":""}" onclick="ui.draftMulti=true;render()">Any number</button></div>
+  <p class="small muted" style="margin-top:8px">${ui.draftMulti?"Any number: you have to name the exact set. One extra or one missing is an L.":"One option each."}</p>`:""}
   <div style="margin-top:auto;padding-top:14px"><button class="btn primary big block" onclick="addTake()">Throw it on the fire</button></div>
   </div>`;
 }
 function addTake(){
   const text=(ui.draftText||"").trim(); if(text.length<4){toast("Write the take first");return;}
   const id=uid(); const t={id, author:me(), text, kind:ui.draftKind, unit:ui.draftKind==="num"?(ui.draftUnit||"").trim():"", createdAt:Date.now(), year:YEAR};
-  ui.draftText=""; ui.draftUnit=""; ui.adding=false;
+  if(ui.draftKind==="yn"){ t.kind="pick"; t.options=["Yes","No"]; t.multi=false; t.yn=true; }
+  if(ui.draftKind==="pick"){ const opts=[...new Set((ui.draftOpts||"").split("\n").map(x=>x.trim()).filter(Boolean))]; if(opts.length<2){toast("Give them at least two options");return;} t.options=opts; t.multi=!!ui.draftMulti; }
+  ui.draftText=""; ui.draftUnit=""; ui.draftOpts=""; ui.draftMulti=false; ui.adding=false;
   sync.set("takes/"+id,t); toast("On the fire"); ui.filter="open"; go("takes"); render();
 }
 function delTake(id){ sure("del-"+id,()=>{ sync.set("takes/"+id,null); sync.set("votes/"+id,null); sync.set("results/"+id,null); }); }
@@ -785,13 +808,19 @@ function renderFeed(){
 function renderTakeCard(t){
   const m=me(); const votes=state.votes[t.id]||{}; const mine=votes[m]; const res=state.results[t.id];
   const n=PLAYERS.filter(p=>votes[p.id]!=null).length;
-  const head=`<div class="row" style="justify-content:space-between;align-items:flex-start"><div><span class="pill ${t.kind}">${t.kind==="pct"?"Percentage":"Number"}</span> <span class="author" style="margin-left:6px">${esc(P[t.author]?.name||"?")}</span></div><span class="small muted">${ago(t.createdAt)}</span></div>
-  <div class="take-text sm" style="margin-top:8px">${esc(t.text)}</div>${t.unit?`<div class="muted small">${esc(t.unit)}</div>`:""}`;
-  if(res) return `<div class="card">${head}${renderVotesReveal(t,votes)}<div class="sec result" style="margin:12px -16px -14px;border-radius:0 0 12px 12px"><div class="lbl">Resolved · ${t.kind==="pct"?(res.outcome?"It happened":"Didn't happen"):"Actual"}</div>${t.kind==="num"?`<div class="big-actual">${res.actual}</div>`:""}${res.note?`<div class="note">${esc(res.note)}</div>`:""}${t.kind==="pct"?`<div class="gl" style="margin-top:8px">${PLAYERS.map(p=>votes[p.id]?`<div class="g"><div class="n">${p.name}</div><div class="v" style="color:var(--gold)">+${brier(votes[p.id].v,!!res.outcome)}</div></div>`:"").join("")}</div>`:""}</div></div>`;
+  const head=`<div class="row" style="justify-content:space-between;align-items:flex-start"><div><span class="pill ${t.kind}">${t.kind==="pct"?"Percentage":t.kind==="num"?"Number":t.yn?"Yes or no":t.multi?"Pick any":"Pick one"}</span> <span class="author" style="margin-left:6px">${esc(P[t.author]?.name||"?")}</span></div><span class="small muted">${ago(t.createdAt)}</span></div>
+  <div class="take-text sm" style="margin-top:8px">${esc(t.text)}</div>${t.unit?`<div class="muted small">${esc(t.unit)}</div>`:""}${t.kind==="pick"&&!t.yn?`<div class="optrow">${(t.options||[]).map(o=>`<span class="pill">${esc(o)}</span>`).join("")}</div>`:""}`;
+  if(res) return `<div class="card">${head}${renderVotesReveal(t,votes)}<div class="sec result" style="margin:12px -16px -14px;border-radius:0 0 12px 12px"><div class="lbl">Resolved · ${t.kind==="pct"?(res.outcome?"It happened":"Didn't happen"):t.kind==="pick"?"The answer":"Actual"}</div>${t.kind==="num"?`<div class="big-actual">${res.actual}</div>`:t.kind==="pick"?`<div class="big-actual" style="font-size:24px">${esc(pickText(t,res.correct))||"—"}</div>`:""}${res.note?`<div class="note">${esc(res.note)}</div>`:""}${t.kind==="pct"?`<div class="gl" style="margin-top:8px">${PLAYERS.map(p=>votes[p.id]?`<div class="g"><div class="n">${p.name}</div><div class="v" style="color:var(--gold)">+${brier(votes[p.id].v,!!res.outcome)}</div></div>`:"").join("")}</div>`:""}</div></div>`;
   if(mine!=null) return `<div class="card">${head}${renderVotesReveal(t,votes)}${isAdmin()?renderResolveCtl(t):""}</div>`;
-  return `<div class="card hot">${head}<p class="small muted" style="margin:10px 0 8px">${n} of 4 locked in. Numbers stay hidden until you lock yours.</p><button class="btn primary block" onclick="openDial('${t.id}')">Lock in your ${t.kind==="pct"?"percentage":"number"}</button>${isAdmin()?renderResolveCtl(t):""}</div>`;
+  return `<div class="card hot">${head}<p class="small muted" style="margin:10px 0 8px">${n} of 4 locked in. ${t.kind==="pick"?"Picks":"Numbers"} stay hidden until you lock yours.</p><button class="btn primary block" onclick="openDial('${t.id}')">Lock in your ${t.kind==="pct"?"percentage":t.kind==="num"?"number":t.yn?"call":"pick"}</button>${isAdmin()?renderResolveCtl(t):""}</div>`;
 }
 function renderVotesReveal(t,votes){
+  if(t.kind==="pick"){
+    const vals=PLAYERS.filter(p=>votes[p.id]!=null).map(p=>({id:p.id,name:p.name,v:[].concat(votes[p.id].v)}));
+    const missing=PLAYERS.filter(p=>votes[p.id]==null).map(p=>p.name);
+    const counts={}; vals.forEach(x=>x.v.forEach(i=>{ counts[i]=(counts[i]||0)+1; })); const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+    return `<div class="bars">${vals.map(x=>`<div class="bar pk-row"><span class="nm"><i style="background:${PC[x.id]}"></i>${x.name}</span><span class="choice">${esc(pickText(t,x.v))}</span></div>`).join("")}</div>${missing.length?`<p class="small muted" style="margin:0">Waiting on ${missing.join(", ")}.</p>`:""}${vals.length>=3&&top?`<div class="stats"><div class="stat" style="grid-column:1/-1"><div class="k">Most popular</div><div class="v" style="font-size:20px">${top[1]>1?esc(t.options[+top[0]]??"?")+" · "+top[1]:"Nobody agrees"}</div></div></div>`:""}`;
+  }
   const vals=PLAYERS.filter(p=>votes[p.id]!=null).map(p=>({id:p.id,name:p.name,v:votes[p.id].v}));
   const nums=vals.map(x=>x.v); const med=nums.length?median(nums):0;
   const max=t.kind==="pct"?100:Math.max(1,...nums.map(Math.abs));
@@ -802,11 +831,15 @@ function renderVotesReveal(t,votes){
   return `<div class="bars">${bars}</div>${missing.length?`<p class="small muted" style="margin:0">Waiting on ${missing.join(", ")}.</p>`:""}${vals.length>=3?`<div class="stats"><div class="stat"><div class="k">Median</div><div class="v">${Number.isInteger(med)?med:med.toFixed(1)}${t.kind==="pct"?"%":""}</div></div><div class="stat"><div class="k">Spread</div><div class="v">${Math.max(...nums)-Math.min(...nums)}</div></div><div class="stat"><div class="k">Outlier</div><div class="v gold">${outId&&outD>0?P[outId].name:"—"}</div></div></div>`:""}`;
 }
 function renderResolveCtl(t){
+  if(t.kind==="pick") return `<details style="margin:12px 0 0"><summary>Marshal</summary><p class="small muted" style="margin:8px 0 0">The answer${t.multi?" (tap every option that came true)":""}:</p><div class="rs-opts" id="rs-${t.id}">${(t.options||[]).map((o,i)=>`<button class="opt" data-i="${i}" onclick="${t.multi?"this.classList.toggle('on')":"[...this.parentNode.children].forEach(b=>b.classList.toggle('on',b===this))"}">${esc(o)}</button>`).join("")}</div><div class="row" style="margin-top:8px"><button class="btn ghost" onclick="resolve('${t.id}',{correct:[...document.querySelectorAll('#rs-${t.id} .opt.on')].map(b=>+b.dataset.i)})">Resolve</button></div><div class="row" style="margin-top:8px"><button class="btn ghost" onclick="sync.set('votes/${t.id}',null)">Clear picks</button><button class="btn danger" onclick="delTake('${t.id}')">${sureLbl("del-"+t.id,"Delete take")}</button></div></details>`;
   return `<details style="margin:12px 0 0"><summary>Marshal</summary>${t.kind==="pct"?`<div class="row" style="margin-top:8px"><button class="btn ghost" onclick="resolve('${t.id}',{outcome:true})">It happened</button><button class="btn ghost" onclick="resolve('${t.id}',{outcome:false})">Didn't</button></div>`:`<div class="row" style="margin-top:8px"><input type="number" id="act-${t.id}" placeholder="Actual" style="width:120px"><button class="btn ghost" onclick="resolve('${t.id}',{actual:+document.getElementById('act-${t.id}').value})">Resolve</button></div>`}<div class="row" style="margin-top:8px"><button class="btn ghost" onclick="sync.set('votes/${t.id}',null)">Clear numbers</button><button class="btn danger" onclick="delTake('${t.id}')">${sureLbl("del-"+t.id,"Delete take")}</button></div></details>`;
 }
-function openDial(id){ const t=state.takes[id]; ui.dial={take:id, val:t.kind==="pct"?50:0}; DRUM=null; render(); }
+function openDial(id){ const t=state.takes[id]; ui.dial={take:id, val:t.kind==="pct"?50:t.kind==="pick"?[]:0}; DRUM=null; render(); }
 function renderDialOverlay(t){
   const v=ui.dial;
+  if(t.kind==="pick"){ const sel=[].concat(v.val||[]); return `<div class="dialover"><div class="row" style="justify-content:space-between"><div class="author">${esc(P[t.author]?.name||"")}'s take</div><button class="x" onclick="ui.dial=null;render()" aria-label="Close">×</button></div><div class="q">${esc(t.text)}</div><p class="small muted" style="margin:4px 0 0">${t.yn?"Yes or no. Right side takes the W.":t.multi?"Pick as many as you like. You need the exact set to win.":"Pick one."}</p>
+    <div class="optlist">${(t.options||[]).map((o,i)=>`<button class="opt ${sel.includes(i)?"on":""}" onclick="togglePick(${i})">${esc(o)}</button>`).join("")}</div>
+    <div class="foot" style="margin-top:auto"><button class="btn ghost" onclick="ui.dial=null;render()">Cancel</button><button class="btn primary big" style="flex:1" onclick="lockVote()" ${sel.length?"":"disabled"}>Lock it in</button></div></div>`; }
   if(t.kind==="pct"){ setTimeout(initDrum,0); return `<div class="dialover"><div class="row" style="justify-content:space-between"><div class="author">${esc(P[t.author]?.name||"")}'s take</div><button class="snd" onclick="SND.toggle()" title="Sound">${SND.on()?"🔊":"🔇"}</button></div><div class="q">${esc(t.text)}</div>
     <div class="dialnum" id="dn">${v.val}<sup>%</sup></div>
     <div class="drum" id="drum" aria-label="Spin to pick a percentage"><div class="win"></div><div class="ptr"></div><div class="ptr l"></div><div class="hint">Flick to spin</div></div>
@@ -856,7 +889,7 @@ function initDrum(){
   draw();
 }
 function lockVote(){ const d=ui.dial; if(!d) return; SND.thud(); try{ if(navigator.vibrate) navigator.vibrate([20,30,40]); }catch(e){} sync.set(`votes/${d.take}/${me()}`,{v:d.val,t:Date.now()}); ui.dial=null; DRUM=null; toast("Locked in"); render(); }
-function resolve(id,r){ if(r.actual!=null&&isNaN(r.actual)){toast("Enter the actual");return;} sync.set("results/"+id,{...r,at:Date.now()}); toast("Resolved"); }
+function resolve(id,r){ if(r.actual!=null&&isNaN(r.actual)){toast("Enter the actual");return;} if(r.correct!=null&&!r.correct.length){toast("Pick the answer first");return;} sync.set("results/"+id,{...r,at:Date.now()}); toast("Resolved"); }
 
 /* ---- THE REVEAL: 4th number lands ---- */
 function completeIds(){ return takesList().filter(t=>!state.results[t.id]&&PLAYERS.every(p=>(state.votes[t.id]||{})[p.id]!=null)).map(t=>t.id); }
@@ -869,7 +902,12 @@ function checkReveals(){
   ui.reveal=fresh[0]; try{ localStorage.setItem("firepit-seen",JSON.stringify([...seen,...fresh])); }catch(e){}
 }
 function renderReveal(t){
-  const votes=state.votes[t.id]||{}; const vals=PLAYERS.map(p=>({id:p.id,name:p.name,v:votes[p.id].v})).sort((a,b)=>a.v-b.v);
+  const votes=state.votes[t.id]||{};
+  if(t.kind==="pick"){ const rows=PLAYERS.map(p=>({id:p.id,name:p.name,v:[].concat(votes[p.id].v)})); const counts={}; rows.forEach(x=>x.v.forEach(i=>{ counts[i]=(counts[i]||0)+1; })); const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0]; const lone=rows.filter(x=>x.v.length&&x.v.every(i=>counts[i]===1));
+    return `<div class="rev" id="rev" onclick="closeReveal()"><div class="eyebrow">All four are in</div><div class="q">${esc(t.text)}</div>
+  <div class="bars">${rows.map(x=>`<div class="bar pk-row" data-w="0"><span class="nm"><i style="background:${PC[x.id]}"></i>${x.name}</span><span class="choice">${esc(pickText(t,x.v))}</span></div>`).join("")}</div>
+  <div class="verdict">${top&&top[1]>1?`<b>${esc(t.options[+top[0]]??"?")}</b> has ${top[1]} of them.`:"Four guys, four different answers."}${lone.length===1?` <b>${lone[0].name}</b> is on his own.`:""}</div><div class="tap">Tap to go back to the fire</div></div>`; }
+  const vals=PLAYERS.map(p=>({id:p.id,name:p.name,v:votes[p.id].v})).sort((a,b)=>a.v-b.v);
   const max=t.kind==="pct"?100:Math.max(1,...vals.map(x=>Math.abs(x.v)));
   const med=median(vals.map(x=>x.v)); let out=null,od=-1; vals.forEach(x=>{const d=Math.abs(x.v-med); if(d>od){od=d;out=x.id;}});
   return `<div class="rev" id="rev" onclick="closeReveal()"><div class="eyebrow">All four are in</div><div class="q">${esc(t.text)}</div>
@@ -880,7 +918,7 @@ function playReveal(){
   const el=document.getElementById("rev"); if(!el||el._played) return; el._played=true;
   burst(innerWidth/2, innerHeight*0.42, 90); SND.whoosh(); try{ if(navigator.vibrate) navigator.vibrate([15,40,15]); }catch(e){}
   const bars=[...el.querySelectorAll(".bar")];
-  bars.forEach((b,i)=>setTimeout(()=>{ b.classList.add("in"); b.querySelector(".fl").style.width=b.dataset.w+"%"; SND.tone(300+i*90,.12,"triangle",.08); },500+i*520));
+  bars.forEach((b,i)=>setTimeout(()=>{ b.classList.add("in"); const fl=b.querySelector(".fl"); if(fl) fl.style.width=b.dataset.w+"%"; SND.tone(300+i*90,.12,"triangle",.08); },500+i*520));
   setTimeout(()=>{ el.querySelector(".verdict").classList.add("in"); const o=el.querySelector(".bar.out"); if(o){ const r=o.getBoundingClientRect(); burst(r.left+r.width*0.5,r.top+r.height/2,50,"#e6b64f"); SND.clack(); } },500+bars.length*520+300);
   setTimeout(()=>{ el.querySelector(".tap").classList.add("in"); },500+bars.length*520+1100);
 }
@@ -891,7 +929,7 @@ function auditDeck(){ const cutoff=Date.now()-180*864e5; const arc=ARCHIVE.filte
 function startAudit(){ const ids=auditDeck(); if(!ids.length){toast("Nothing to audit");return;} ui.audAnim={}; sync.set("audit",{active:true,order:ids,idx:0,revealed:false,startedAt:Date.now()}); ui.hideAudit=false; render(); }
 function endAudit(){ BOOTH.stop(); sync.set("audit",{active:false}); ui.hideAudit=false; ui.audAnim={}; render(); }
 function auditNext(){ const a=state.audit; const i=a.idx+1; if(i>=a.order.length){ endAudit(); toast("Audit complete"); return; } BOOTH.stop(); sync.set("audit/show",null); sync.set("audit/idx",i); sync.set("audit/revealed",false); }
-function auditReveal(r){ const a=state.audit; const id=a.order[a.idx]; if(id.startsWith("arc:")){ sync.set("audited/"+id.slice(4),Date.now()); sync.set("audit/revealed",true); return; } if(r.actual!=null&&isNaN(r.actual)){toast("Enter the actual");return;} sync.set("results/"+id,{...r,at:Date.now()}); sync.set("audit/revealed",true); }
+function auditReveal(r){ const a=state.audit; const id=a.order[a.idx]; if(id.startsWith("arc:")){ sync.set("audited/"+id.slice(4),Date.now()); sync.set("audit/revealed",true); return; } if(r.actual!=null&&isNaN(r.actual)){toast("Enter the actual");return;} if(r.correct!=null&&!r.correct.length){toast("Pick the answer first");return;} sync.set("results/"+id,{...r,at:Date.now()}); sync.set("audit/revealed",true); }
 function auditItem(id){
   // one shape for archive items and live takes
   if(id.startsWith("arc:")){
@@ -907,6 +945,14 @@ function auditItem(id){
     return {id,year:a.year,prompt:a.prompt,author:null,entries,w,l,resolved,big,resultHtml:resultSec,lore:a.kind==="lore",body:a.body};
   }
   const t=state.takes[id]; if(!t) return null; const votes=state.votes[id]||{}; const res=state.results[id];
+  if(t.kind==="pick"){
+    const sel=Object.fromEntries(PLAYERS.filter(p=>votes[p.id]).map(p=>[p.id,[].concat(votes[p.id].v)]));
+    let w=[],l=[]; if(res){ const ans=pickKey(res.correct); w=Object.keys(sel).filter(p=>pickKey(sel[p])===ans); l=Object.keys(sel).filter(p=>!w.includes(p)); }
+    const entries=PLAYERS.filter(p=>sel[p.id]).map(p=>({id:p.id,text:pickText(t,sel[p.id]),txt:true,sub:res?(w.includes(p.id)?"got it":"whiffed"):"",bad:1}));
+    const big=res?{t:w.length?w.map(i=>P[i].name).join(" & ").toUpperCase():"NOBODY",c:w.length?"hit":"miss"}:{};
+    const resultHtml=res?`<div class="sec result"><div class="lbl">The answer</div><div>${esc(pickText(t,res.correct))||"—"}${res.note?` <span class="note">${esc(res.note)}</span>`:""}</div></div>`:"";
+    return {id,year:t.year||YEAR,prompt:t.text,author:t.author,entries,w,l,resolved:!!res,big,resultHtml,live:t,res};
+  }
   const gu=Object.fromEntries(PLAYERS.filter(p=>votes[p.id]).map(p=>[p.id,votes[p.id].v]));
   let w=[],l=[],entries,big={},resultHtml="";
   if(res){ const fake=t.kind==="num"?{kind:"num",guesses:gu,actual:res.actual}:{kind:"pctv",guesses:gu,outcome:!!res.outcome}; w=archiveWinners(fake); l=archiveLosers(fake); }
@@ -929,7 +975,8 @@ function renderAudit(){
   const torches=`<div class="torches">${it.entries.length?it.entries.map(e=>{ const st=played?(it.w.includes(e.id)?"win":it.l.includes(e.id)?"out":""):""; return `<div class="torch ${dealt?"lit":""} ${st}" id="torch-${e.id}" style="--c:${PC[e.id]}"><div class="flame"></div><div class="nm">${P[e.id].name}</div><div data-p="${e.id}" class="g ${e.txt?"txt":""}">${esc(e.text)}</div><div class="sub">${esc(e.sub)}</div><span class="st ${it.w.includes(e.id)?"w":"l"} ${played?"on":""}">${it.w.includes(e.id)?"W":"L"}</span></div>`; }).join(""):`<p class="muted small" style="grid-column:1/-1;text-align:center">${it.lore?esc(it.body||""):"Nobody weighed in."}</p>`}</div>`;
   let ctl="";
   if(!rev){
-    if(marshal){ if(it.live&&!it.resolved) ctl=it.live.kind==="pct"?`<div class="mctl"><div class="lbl" style="margin-bottom:8px">Marshal: what happened?</div><div class="row"><button class="btn gold" style="flex:1" onclick="auditReveal({outcome:true})">It happened</button><button class="btn ghost" style="flex:1" onclick="auditReveal({outcome:false})">Didn't</button></div></div>`:`<div class="mctl"><div class="lbl" style="margin-bottom:8px">Marshal: the actual number</div><div class="row"><input type="number" id="audact" placeholder="Actual" style="flex:1"><button class="btn gold" onclick="auditReveal({actual:+document.getElementById('audact').value})">Reveal</button></div></div>`;
+    if(marshal){ if(it.live&&!it.resolved&&it.live.kind==="pick") ctl=`<div class="mctl"><div class="lbl" style="margin-bottom:8px">Marshal: the answer${it.live.multi?" (every option that came true)":""}</div><div class="rs-opts" id="rs-aud">${(it.live.options||[]).map((o,i)=>`<button class="opt" data-i="${i}" onclick="${it.live.multi?"this.classList.toggle('on')":"[...this.parentNode.children].forEach(b=>b.classList.toggle('on',b===this))"}">${esc(o)}</button>`).join("")}</div><div class="row" style="margin-top:8px"><button class="btn gold block" onclick="auditReveal({correct:[...document.querySelectorAll('#rs-aud .opt.on')].map(b=>+b.dataset.i)})">Reveal</button></div></div>`;
+      else if(it.live&&!it.resolved) ctl=it.live.kind==="pct"?`<div class="mctl"><div class="lbl" style="margin-bottom:8px">Marshal: what happened?</div><div class="row"><button class="btn gold" style="flex:1" onclick="auditReveal({outcome:true})">It happened</button><button class="btn ghost" style="flex:1" onclick="auditReveal({outcome:false})">Didn't</button></div></div>`:`<div class="mctl"><div class="lbl" style="margin-bottom:8px">Marshal: the actual number</div><div class="row"><input type="number" id="audact" placeholder="Actual" style="flex:1"><button class="btn gold" onclick="auditReveal({actual:+document.getElementById('audact').value})">Reveal</button></div></div>`;
       else if(it.resolved) ctl=`<div class="mctl"><button class="btn gold block" onclick="auditReveal({})">Reveal</button></div>`;
       else ctl=`<div class="mctl"><p class="small muted" style="text-align:center">Nothing to settle on this one.</p></div>`; }
     else ctl=`<p class="muted small" style="text-align:center;margin-top:14px">Waiting on the Marshal.</p>`;
@@ -1068,6 +1115,7 @@ function isSealed(a){ return !!a.sealed && !(state.audited&&state.audited[a.id])
 function visibleArchive(){ return ARCHIVE.filter(a=>!isSealed(a)); }
 function liveArchive(){
   return Object.keys(state.results).filter(id=>state.takes[id]).map(id=>{ const t=state.takes[id], r=state.results[id], v=state.votes[id]||{}; const g=Object.fromEntries(PLAYERS.filter(p=>v[p.id]).map(p=>[p.id,v[p.id].v]));
+    if(t.kind==="pick"){ const sel=Object.fromEntries(PLAYERS.filter(p=>v[p.id]).map(p=>[p.id,[].concat(v[p.id].v)])); const ans=pickKey(r.correct); return {id:"live-"+id, year:t.year||YEAR, kind:"pick", prompt:t.text, picks:Object.fromEntries(Object.keys(sel).map(p=>[p,pickText(t,sel[p])])), correct:Object.keys(sel).filter(p=>pickKey(sel[p])===ans), result:"Answer: "+(pickText(t,r.correct)||"—"), note:(r.note||"")+" — "+(P[t.author]?.name||"")+"'s take", author:t.author, live:true, at:t.createdAt}; }
     if(t.kind==="num") return {id:"live-"+id, year:t.year||YEAR, kind:"num", prompt:t.text+(t.unit?" ("+t.unit+")":""), guesses:g, actual:r.actual, note:(r.note||"")+" — "+(P[t.author]?.name||"")+"'s take", live:true, at:t.createdAt};
     return {id:"live-"+id, year:t.year||YEAR, kind:"pctv", prompt:t.text, guesses:g, outcome:!!r.outcome, note:(r.note||""), author:t.author, live:true, at:t.createdAt};
   }).sort((a,b)=>a.at-b.at);
@@ -1201,7 +1249,7 @@ function lifetime(){
 }
 function yearStats(){
   const s=Object.fromEntries(PLAYERS.map(p=>[p.id,{out:0,cons:0,avg:[],locked:0}]));
-  takesList().forEach(t=>{ const v=state.votes[t.id]||{}; PLAYERS.forEach(p=>{ if(v[p.id]) s[p.id].locked++; }); const vals=PLAYERS.filter(p=>v[p.id]).map(p=>({id:p.id,v:v[p.id].v})); if(vals.length<3) return; const med=median(vals.map(x=>x.v)); let mx=-1,mi=Infinity,o=null,c=null; vals.forEach(x=>{const d=Math.abs(x.v-med); if(d>mx){mx=d;o=x.id} if(d<mi){mi=d;c=x.id}}); if(mx>0) s[o].out++; s[c].cons++; if(t.kind==="pct") vals.forEach(x=>{s[x.id].avg.push(x.v)}); });
+  takesList().forEach(t=>{ const v=state.votes[t.id]||{}; PLAYERS.forEach(p=>{ if(v[p.id]) s[p.id].locked++; }); if(t.kind==="pick") return; const vals=PLAYERS.filter(p=>v[p.id]).map(p=>({id:p.id,v:v[p.id].v})); if(vals.length<3) return; const med=median(vals.map(x=>x.v)); let mx=-1,mi=Infinity,o=null,c=null; vals.forEach(x=>{const d=Math.abs(x.v-med); if(d>mx){mx=d;o=x.id} if(d<mi){mi=d;c=x.id}}); if(mx>0) s[o].out++; s[c].cons++; if(t.kind==="pct") vals.forEach(x=>{s[x.id].avg.push(x.v)}); });
   return s;
 }
 function yearWL(){
