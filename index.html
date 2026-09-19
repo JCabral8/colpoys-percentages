@@ -448,7 +448,7 @@ const FIREBASE_CONFIG = null; // e.g. {apiKey:"...", authDomain:"...", databaseU
 const SUPABASE_CONFIG = {supabaseUrl:"https://qggbflsetmxsmcbagwpd.supabase.co", supabaseKey:"sb_publishable_wC5J-hl2Nb1SLZJ1YZmf4g_woqk-GZI"}; // publishable key, meant to be public; access is governed by the table policy // e.g. {supabaseUrl:"https://xxxx.supabase.co", supabaseKey:"sb_publishable_..."}  (the anon/publishable key is meant to be public)
 const ROOM = "golf2026";
 const DEFAULT_PIN = "1234";
-const APP_VERSION = "39"; // bump on every publish: single-phone mode resets the audit + seen-reveals
+const APP_VERSION = "40"; // bump on every publish: single-phone mode resets the audit + seen-reveals
 
 const PLAYERS = [
   {id:"nick", name:"Nick"}, {id:"jay", name:"Jay"}, {id:"justin", name:"Justin"}, {id:"chris", name:"Chris"}
@@ -506,7 +506,7 @@ let state = defaultState();
 let mode = "local";
 let sync;
 let connected=false;
-function mergeDefaults(s){ const d=defaultState(); s=s||{}; return {settings:{...d.settings,...(s.settings||{})}, takes:s.takes||{}, votes:s.votes||{}, results:s.results||{}, rulings:s.rulings||{}, audit:s.audit||{active:false}, audited:s.audited||{}}; }
+function mergeDefaults(s){ const d=defaultState(); s=s||{}; return {settings:{...d.settings,...(s.settings||{})}, takes:s.takes||{}, votes:s.votes||{}, results:s.results||{}, rulings:s.rulings||{}, audit:s.audit||{active:false}, audited:s.audited||{}, show:s.show||null}; }
 
 function makeLocalSync(){
   const KEY="firepit-"+ROOM; let bc=null; try{bc=new BroadcastChannel(KEY)}catch(e){}
@@ -725,6 +725,7 @@ function render(){
   if(ui.reveal&&state.takes[ui.reveal]) { app.insertAdjacentHTML("beforeend",renderReveal(state.takes[ui.reveal])); setTimeout(playReveal,30); }
   const aud=state.audit; const showAud=aud&&aud.active&&!ui.hideAudit&&!ui.reveal&&!ui.dial; const ov=document.getElementById("ov"); if(showAud){ ov.innerHTML=renderAudit(); glStart(); setTimeout(playAudit,30); } else { ov.innerHTML=""; glStop(); if(!ui.booth&&BOOTH.running()) BOOTH.stop(); }
   if(ui.booth){ app.insertAdjacentHTML("beforeend",renderBooth(ui.booth)); setTimeout(()=>BOOTH.sync({clip:ui.booth,at:ui.boothAt},true),30); }
+  else { const sh=state.show; const showing=sh&&sh.clip&&BOOTH.has(sh.clip)&&ui.hideShow!==sh.at&&!showAud; if(showing){ app.insertAdjacentHTML("beforeend",renderShowOverlay(sh)); setTimeout(()=>BOOTH.sync(sh, ui.boothAt===sh.at),30); } else if(!showAud&&BOOTH.running()&&!ui.booth) BOOTH.stop(); }
 }
 function go(t){ if(tab===t) return; tab=t; render(); }
 
@@ -1347,6 +1348,7 @@ sb_publishable_...'></textarea><div style="margin-top:8px"><button class="btn pr
   <li>Copy the link for WhatsApp. Everyone opens it once and picks their name.</li></ol>
   <div class="row" style="margin:6px 0 8px"><button class="btn ghost" onclick="copyText(SUPABASE_SQL)">Copy the SQL</button></div><div class="code" style="max-height:160px">${esc(SUPABASE_SQL)}</div></details></div>
   <h3>Audit night</h3><div class="card">${state.audit&&state.audit.active?`<p class="small"><span class="pill yes">Live</span> take ${state.audit.idx+1} of ${state.audit.order.length}</p><div class="row"><button class="btn gold" onclick="ui.hideAudit=false;render()">Open the deck</button><button class="btn danger" onclick="sure('end',endAudit)">${sureLbl("end","End")}</button></div>`:`<p class="small muted" style="margin-top:0">Friday night at the fire. Deals last year's sealed takes one at a time to every phone that's open. Last year's answers are already loaded from the receipts, so you just tap Reveal; takes made in the app need you to call them. Revealed takes then join the Archive and the scorecard.</p><p class="small">In the deck now: <b>${ARCHIVE.filter(isSealed).length}</b> sealed from last September${(()=>{const c=Date.now()-180*864e5;const k=takesList().filter(t=>!state.results[t.id]&&t.createdAt<c).length;return k?` + <b>${k}</b> takes from the fire older than 6 months`:""})()}.</p><button class="btn gold" onclick="sure('start',startAudit)" ${auditDeck().length?"":"disabled"}>${sureLbl("start","Start audit night ("+auditDeck().length+")")}</button>${ARCHIVE.filter(isSealed).length?`<div style="margin-top:8px"><button class="btn ghost" onclick="sure('unseal',()=>{ARCHIVE.filter(isSealed).forEach(a=>sync.set('audited/'+a.id,Date.now()));toast('Unsealed')})">${sureLbl("unseal","Skip the show, just unseal")}</button></div>`:""}`}</div>
+  ${renderProgramming()}
   <h3>Rulings on old takes</h3><p class="small muted">Open items in the Archive (Malkin) get Hit/Miss buttons while you're unlocked.</p>
   <h3>Setup</h3>
   <div class="card"><label class="f">Change PIN</label><div class="row"><input type="text" id="newpin" placeholder="New PIN" style="flex:1"><button class="btn" onclick="const v=document.getElementById('newpin').value.trim(); if(v){sync.set('settings/pin',v);toast('PIN changed')}">Save</button></div>
@@ -1370,7 +1372,30 @@ function saveCfg(){ const c=parseCfg(document.getElementById("cfgin").value||"")
 function clearCfg(){ try{localStorage.removeItem("firepit-cfg")}catch(e){} location.reload(); }
 
 /* ---------- THE FIREPIT HOUR: Hayes & O'Dog call the take. Clips baked by tools/tts.py into audio/<id>.mp3 + .json ---------- */
-const BOOTH_CLIPS=new Set(["open-2026","a24-celebrini","a25-cdn","a25-afc","a25-marner","a25-rocket","a25-malkin","a25-matthews","a25-willy-g","a25-willy-p","a25-sb","a25-robertson","close-2026"]);
+const BOOTH_CLIPS=new Set(["open-2026","a24-celebrini","a25-cdn","a25-afc","a25-marner","a25-rocket","a25-malkin","a25-matthews","a25-willy-g","a25-willy-p","a25-sb","a25-robertson","close-2026","sat-open","sat-golf","sat-takes-1","sat-takes-2","sat-close"]);
+/* Programming the Marshal can run from his tab: each segment is a clip; `takes` are substrings that find the live takes to show under the booth. */
+const SHOWS=[{id:"sat",title:"Saturday night edition",segs:[
+  {clip:"sat-open",title:"Cold open · Friday"},
+  {clip:"sat-golf",title:"The golf and the birdie bet",takes:["birdies"]},
+  {clip:"sat-takes-1",title:"The new envelope · hockey",takes:["McKenna","Matthews goals","Bob wins","leafs get"]},
+  {clip:"sat-takes-2",title:"The new envelope · the rest",takes:["rory","Vladdy","NFL MVP","make the playoffs"]},
+  {clip:"sat-close",title:"Sign-off"}]}];
+function showSeg(sh){ if(!sh||!sh.clip) return null; for(const show of SHOWS){ const i=show.segs.findIndex(x=>x.clip===sh.clip); if(i>=0) return {show,i,seg:show.segs[i]}; } return null; }
+function showTakes(seg){ return (seg.takes||[]).map(k=>takesList().find(t=>t.text.toLowerCase().includes(k.toLowerCase()))).filter(Boolean); }
+function showCue(clip){ const at=Date.now()+SERVER_OFFSET; ui.boothAt=at; ui.hideShow=null; sync.set("show",{clip,at}); }
+function showStep(d){ const cur=showSeg(state.show); if(!cur) return; const n=cur.show.segs[cur.i+d]; if(n) showCue(n.clip); else showEnd(); }
+function showEnd(){ BOOTH.stop(); sync.set("show",null); ui.hideShow=null; render(); }
+function renderShowOverlay(sh){
+  const cur=showSeg(sh); if(!cur) return ""; const marshal=isAdmin(); const {show,i,seg}=cur;
+  const cards=showTakes(seg).map(t=>{ const votes=state.votes[t.id]||{}, res=state.results[t.id]; return `<div class="card" style="margin-top:10px"><div class="row" style="justify-content:space-between"><span class="pill ${t.kind}">${t.kind==="pct"?"Percentage":t.kind==="num"?"Number":t.kind==="text"?"Open answer":t.yn?"Yes or no":t.multi?"Pick any":"Pick one"}</span><span class="author">${esc(P[t.author]?.name||"")}</span></div><div class="take-text sm" style="margin-top:6px">${esc(t.text)}</div>${renderVotesReveal(t,votes)}${res?`<div class="sec result" style="margin-top:8px;border-radius:10px"><div class="lbl">Resolved</div><div class="big-actual">${t.kind==="num"?res.actual:t.kind==="pct"?(res.outcome?"It happened":"Didn't happen"):t.kind==="pick"?esc(pickText(t,res.correct)):(res.winners||[]).map(x=>esc(P[x]?.name||x)).join(" & ")||"Nobody"}</div>${res.note?`<div class="note">${esc(res.note)}</div>`:""}</div>`:""}</div>`; }).join("");
+  return `<div class="bov" id="bov"><div class="top"><span class="ttl">The Firepit Hour</span><span class="cnt">${i+1} of ${show.segs.length} · ${esc(seg.title)}</span><button class="x" onclick="ui.hideShow=state.show&&state.show.at;render()" aria-label="Hide">×</button></div>
+  <div class="body">${BOOTH.html()}${BOOTH.caption()}${cards}</div>
+  ${marshal?`<div class="row"><button class="btn ghost" onclick="showStep(-1)" ${i>0?"":"disabled"}>← Back</button><button class="btn ghost" onclick="showCue('${seg.clip}')">Replay</button><button class="btn primary" style="flex:1" onclick="showStep(1)">${i+1<show.segs.length?"Next segment →":"End the show"}</button></div>`:`<p class="muted small" style="text-align:center;margin:0">The Marshal runs the show. Sit back.</p>`}</div>`;
+}
+function renderProgramming(){
+  const live=state.show&&showSeg(state.show);
+  return `<h3>Programming</h3><div class="card">${SHOWS.map(show=>`<div class="lbl" style="font-family:var(--cond);font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:6px">${esc(show.title)}</div><div class="stack" style="gap:6px">${show.segs.map((sg,k)=>`<button class="btn ${live&&live.seg.clip===sg.clip?"gold":"ghost"}" style="justify-content:space-between" onclick="showCue('${sg.clip}')"><span>${k+1}. ${esc(sg.title)}</span><span>${live&&live.seg.clip===sg.clip?"On air":"▶"}</span></button>`).join("")}</div>`).join("")}<p class="small muted" style="margin:10px 0 0">Tap a segment and every open phone gets it. Sound plays on this phone; the others can tap the speaker to join.</p>${live?`<div class="row" style="margin-top:8px"><button class="btn danger" onclick="sure('endshow',showEnd)">${sureLbl("endshow","End the show")}</button></div>`:""}</div>`;
+}
 let SERVER_OFFSET=0;
 const BOOTH=(()=>{
   const SRC={host:"booth/hayes.png",colour:"booth/odog.png"}, SPKR={hayes:"host",odog:"colour"};

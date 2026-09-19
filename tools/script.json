@@ -704,6 +704,300 @@
           "caption": "4 p.m.! We'll chat then."
         }
       ]
+    },
+    {
+      "id": "sat-open",
+      "title": "Saturday night: cold open",
+      "show": "sat",
+      "lines": [
+        {
+          "speaker": "hayes",
+          "text": "[excited] All right, here we go. OverDrive, cottage edition, night two. CBAY 98.1, the dock, and whoever's phone is loudest. I'm Hayes. That's O'Dog. Noodles is still off. It's a professional show."
+        },
+        {
+          "speaker": "odog",
+          "text": "Night two, Hayesy. And I want to start with a crime. Friday, Carlisle Golf and Country. Somebody walked out of that clubhouse with a handful of Snickers bars."
+        },
+        {
+          "speaker": "hayes",
+          "text": "You walked out of that clubhouse with a handful of Snickers bars."
+        },
+        {
+          "speaker": "odog",
+          "text": "Allegedly. Anyway. The golf. Jay and Chris took a point in the scramble. Then the seven hole scramble, the short one, half a point. Nick and Justin took the high low, one and a half to one. So it's tight going into Saturday."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Then the steak dinner. Here's the thing, O'Dog. There was no steak dinner. Three hour drive up to the cottage, and they stopped at Taco Bell on the way."
+        },
+        {
+          "speaker": "odog",
+          "text": "[appalled] Taco Bell. On a three hour drive. To a COTTAGE. With a grill. I really don't understand these guys. You skip the steak for a Crunchwrap and then you sit in a car for two more hours with it. That's not a decision, that's a cry for help."
+        },
+        {
+          "speaker": "hayes",
+          "text": "The fire was good though. Hot dogs on the fire. Beers. The air had a certain smell to it. And the takes came in. Nine of them on the board by ten o'clock. We'll get to those."
+        },
+        {
+          "speaker": "odog",
+          "text": "And Nick. Tell them about Nick."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Nick crushed a bottle of wine, went in to use the bathroom, and never came back. Found him in his bed. Birthday boy. Down before eleven.",
+          "hl": [
+            "nick"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "[laughs] The Captain of the annual tournament, out cold with a bottle of red. Series isn't over yet, Hayesy. Series isn't over yet."
+        }
+      ]
+    },
+    {
+      "id": "sat-golf",
+      "title": "Saturday night: the golf and the birdies",
+      "show": "sat",
+      "lines": [
+        {
+          "speaker": "hayes",
+          "text": "Saturday morning. Rough. Rough for everybody, but let's be honest, rough for Justin.",
+          "hl": [
+            "justin"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "The responsible one. He suggested bed at nine on Friday and then he's the last man standing. Every year."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Bob Does Sports on the TV until they could stand up. Then out to Northern Dunes for round two. And O'Dog, this is where it turned."
+        },
+        {
+          "speaker": "odog",
+          "text": "Tell me."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Nick and Justin took the shamble on the front nine. Then they took the scramble. Final on the weekend, three to one and a half. Nick and Justin.",
+          "hl": [
+            "nick",
+            "justin"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "So the guy who was face down in a bottle of wine at eleven o'clock wakes up and wins the whole thing. Nick is still undefeated in this tournament. Has anybody checked whether he's actually good, or whether he's just lucky?"
+        },
+        {
+          "speaker": "hayes",
+          "text": "Both. Now, the birdie bet. Friday night, Jay puts it on the board. How many birdies do we get tomorrow. Nick said three. Jay said four. Justin said two. Chris said two.",
+          "hl": [
+            "nick",
+            "jay",
+            "justin",
+            "chris"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "Four guys, thirty-six holes, hungover. Two was the smart number."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Three birdies. Three. Nick called it on the nose.",
+          "reveal": true
+        },
+        {
+          "speaker": "odog",
+          "text": "[excited] Of course he did. He wins the tournament, he wins the bet, and he doesn't remember Friday. That's a hell of a weekend."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Nick takes the W. First one on the record for twenty twenty-six. Jay, Justin, Chris. L. Steaks are on the grill. Finally.",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "sat-takes-1",
+      "title": "Saturday night: the hockey takes",
+      "show": "sat",
+      "lines": [
+        {
+          "speaker": "hayes",
+          "text": "All right. The new envelope. Nine takes on the board Friday night, and they get opened next September. But we can talk about them now, O'Dog. Let's start with hockey."
+        },
+        {
+          "speaker": "odog",
+          "text": "Let's."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Chris put up Gavin McKenna. Points, rookie season. Nick forty-eight. Jay forty-nine. Justin fifty-five. Chris sixty-two.",
+          "hl": [
+            "nick",
+            "jay",
+            "justin",
+            "chris"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "Sixty-two for an eighteen year old. Chris watched one Penn State highlight and lost his mind. I like the kid. I really don't like sixty-two."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Then Matthews. Goals. After the twenty-seven. Nick forty. Jay thirty-four. Justin thirty-six. Chris forty-two.",
+          "hl": [
+            "nick",
+            "jay",
+            "justin",
+            "chris"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "Look at that. A year ago they had him at forty-eight. Now the high man is forty-two and the low man is thirty-four. That's a room that got burned, Hayesy. They learned something."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Jay put up Bobrovsky. Wins. Nick thirty. Jay nineteen. Justin twenty-nine. Chris twenty-one.",
+          "hl": [
+            "nick",
+            "jay",
+            "justin",
+            "chris"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "Nineteen wins for Bob. Jay's got him retiring at Christmas. The man's got two Cups and he turns thirty-eight tomorrow. Nineteen. Buddy."
+        },
+        {
+          "speaker": "hayes",
+          "text": "And Nick's own take. How many points do the Leafs get. The line is eighty-eight and a half. Nick ninety-two. Jay ninety-one. Justin ninety. Chris a hundred.",
+          "hl": [
+            "nick",
+            "jay",
+            "justin",
+            "chris"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "[laughs] A hundred! A hundred points for a team that got twenty-seven goals out of Matthews last year. Chris, ninety-five percent of the time, possibly higher, that team does not deserve the benefit of the doubt. You know that."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Written down. Sealed. We read it back next September."
+        }
+      ]
+    },
+    {
+      "id": "sat-takes-2",
+      "title": "Saturday night: the rest of the board",
+      "show": "sat",
+      "lines": [
+        {
+          "speaker": "hayes",
+          "text": "Rest of the board. Rory McIlroy. Does he win a major next year. Nick says yes. Chris says yes. Justin says no.",
+          "hl": [
+            "nick",
+            "chris",
+            "justin"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "Justin's the only one betting against Rory, and Justin's the guy who couldn't stand up this morning. I'm with Nick and Chris."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Vladdy. Jay's take. How many home runs does he have a year from now, September eighteenth, twenty twenty-seven. Nick eighteen. Jay twenty-one. Justin twenty-nine. Chris thirty-one.",
+          "hl": [
+            "nick",
+            "jay",
+            "justin",
+            "chris"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "Wait. Eighteen? Nick's got Vladimir Guerrero Junior, on a five hundred million dollar contract, hitting eighteen home runs. That's the wine talking. That's Friday night Nick."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Fair. And this one had to be reset once, so we're reading the second draft. Then Jay put up NFL MVP. Josh Allen, Lamar Jackson, Caleb Williams, Joe Burrow, Brock Purdy, Trevor Lawrence. Nick took Purdy. Jay, Josh Allen. Justin, Josh Allen.",
+          "hl": [
+            "nick",
+            "jay",
+            "justin"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "Purdy. Nick. Brock Purdy. The guy is a game manager with a movie star's name. Two guys on Allen, that's the chalk. Purdy's the swing."
+        },
+        {
+          "speaker": "hayes",
+          "text": "And the last one, also Jay. Jags, Ravens, Bengals, Chargers, Eagles. Which of those make the playoffs. Pick as many as you want, but you need the exact list. Nick took all five. Jay took four, everybody but the Chargers. Justin took three. Eagles, Ravens, Jags.",
+          "hl": [
+            "nick",
+            "jay",
+            "justin"
+          ]
+        },
+        {
+          "speaker": "odog",
+          "text": "All five. Nick took all five. That's not a pick, Hayesy, that's a shrug with extra steps. And Jay, after none of the above last year, is now the guy taking four. He learned the wrong lesson."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Chris still owes a pick on two of those. Chris. Clock's running."
+        }
+      ]
+    },
+    {
+      "id": "sat-close",
+      "title": "Saturday night: sign-off",
+      "show": "sat",
+      "lines": [
+        {
+          "speaker": "hayes",
+          "text": "That's the weekend. Two rounds. Two nights. One tournament, and it went the way it always goes."
+        },
+        {
+          "speaker": "odog",
+          "text": "Nick. Undefeated. Somebody check the scorecard for pencil."
+        },
+        {
+          "speaker": "hayes",
+          "text": "The birdie bet went to Nick. The wine went to Nick. The bed went to Nick, early. And the steaks, O'Dog, the steaks finally happened. Saturday. On the grill."
+        },
+        {
+          "speaker": "odog",
+          "text": "A day late. But I'll take it over a Crunchwrap. And Hayesy, the Snickers thing. I'm going to need you to stop bringing it up on air."
+        },
+        {
+          "speaker": "hayes",
+          "text": "Nine takes in the envelope. Sealed until next September. Whatever's left to pick, Chris, get it in before you drive home."
+        },
+        {
+          "speaker": "odog",
+          "text": "And lose the three-button undershirt for the drive. For all of us."
+        },
+        {
+          "speaker": "hayes",
+          "text": "[excited] For O'Dog, I'm Hayes. This has been the Firepit Hour, Saturday night edition. We're back next year at..."
+        },
+        {
+          "speaker": "odog",
+          "text": "[excited] Four p.m.! We'll chat then."
+        }
+      ]
     }
   ]
 }
