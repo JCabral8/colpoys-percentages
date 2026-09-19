@@ -423,6 +423,7 @@ main.stackmode{display:flex;flex-direction:column;padding-bottom:10px}
 
 /* pick takes */
 .pill.pick{color:#b56bff;border-color:rgba(181,107,255,.5)}
+.pill.text{color:var(--yes);border-color:rgba(124,196,127,.5)}
 .optrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .optlist{display:flex;flex-direction:column;gap:8px;margin:12px 0;overflow-y:auto}
 .optlist .opt{font-family:var(--cond);font-weight:600;font-size:18px;text-align:left;padding:14px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--bone);cursor:pointer}
@@ -447,7 +448,7 @@ const FIREBASE_CONFIG = null; // e.g. {apiKey:"...", authDomain:"...", databaseU
 const SUPABASE_CONFIG = {supabaseUrl:"https://qggbflsetmxsmcbagwpd.supabase.co", supabaseKey:"sb_publishable_wC5J-hl2Nb1SLZJ1YZmf4g_woqk-GZI"}; // publishable key, meant to be public; access is governed by the table policy // e.g. {supabaseUrl:"https://xxxx.supabase.co", supabaseKey:"sb_publishable_..."}  (the anon/publishable key is meant to be public)
 const ROOM = "golf2026";
 const DEFAULT_PIN = "1234";
-const APP_VERSION = "37"; // bump on every publish: single-phone mode resets the audit + seen-reveals
+const APP_VERSION = "39"; // bump on every publish: single-phone mode resets the audit + seen-reveals
 
 const PLAYERS = [
   {id:"nick", name:"Nick"}, {id:"jay", name:"Jay"}, {id:"justin", name:"Justin"}, {id:"chris", name:"Chris"}
@@ -456,6 +457,8 @@ const P = Object.fromEntries(PLAYERS.map(p=>[p.id,p]));
 const PC={nick:"#ff4a4a",jay:"#ffd23f",justin:"#4aa8ff",chris:"#b56bff"};
 const TITLES={nick:["The Oracle","KC–PHI on the nose, 2024"],jay:["None of the Above","AFC call of 2025"],chris:["Celebrini 25","On the number, 2024"],justin:["Nutrl Grape","Baker top-10, collected"]};
 const YEAR = 2026;
+const RETAKE_UNTIL = Date.parse("2026-09-21T04:00:00-04:00"); // you can change a locked-in answer until this moment (Monday 4 a.m. ET after the weekend)
+const canRetake=t=>Date.now()<RETAKE_UNTIL&&!state.results[t.id];
 
 /* ---------- ARCHIVE: pulled from the group chat, results verified Sept 2026 ---------- */
 const ARCHIVE = [
@@ -769,8 +772,8 @@ function renderAdd(){
   <label class="f">The take</label>
   <textarea id="draft" placeholder="${ui.draftKind==="pct"?"Leafs win a playoff round this season.":"Matthews goals this season"}" oninput="ui.draftText=this.value">${esc(ui.draftText||"")}</textarea>
   <label class="f">Everyone locks in a…</label>
-  <div class="seg"><button class="${ui.draftKind==="pct"?"on":""}" onclick="ui.draftKind='pct';render()">Percentage</button><button class="${ui.draftKind==="num"?"on":""}" onclick="ui.draftKind='num';render()">Number</button><button class="${ui.draftKind==="pick"?"on":""}" onclick="ui.draftKind='pick';render()">Pick</button><button class="${ui.draftKind==="yn"?"on":""}" onclick="ui.draftKind='yn';render()">Yes / No</button></div>
-  <p class="small muted" style="margin-top:8px">${ui.draftKind==="pct"?"A statement that will be true or false. Everyone spins their % it happens.":ui.draftKind==="num"?"A stat. Everyone guesses the number; closest wins when it resolves.":ui.draftKind==="yn"?"A statement. Everyone says yes or no; the right side takes the W.":"A list to choose from. Everyone picks; only the exact answer takes the W."}</p>
+  <div class="seg"><button class="${ui.draftKind==="pct"?"on":""}" onclick="ui.draftKind='pct';render()">Percentage</button><button class="${ui.draftKind==="num"?"on":""}" onclick="ui.draftKind='num';render()">Number</button><button class="${ui.draftKind==="pick"?"on":""}" onclick="ui.draftKind='pick';render()">Pick</button><button class="${ui.draftKind==="yn"?"on":""}" onclick="ui.draftKind='yn';render()">Yes / No</button><button class="${ui.draftKind==="text"?"on":""}" onclick="ui.draftKind='text';render()">Open answer</button></div>
+  <p class="small muted" style="margin-top:8px">${ui.draftKind==="pct"?"A statement that will be true or false. Everyone spins their % it happens.":ui.draftKind==="num"?"A stat. Everyone guesses the number; closest wins when it resolves.":ui.draftKind==="yn"?"A statement. Everyone says yes or no; the right side takes the W.":ui.draftKind==="text"?"An open question. Everyone types an answer; the Marshal decides who nailed it.":"A list to choose from. Everyone picks; only the exact answer takes the W."}</p>
   ${ui.draftKind==="num"?`<label class="f">Unit (optional)</label><input type="text" placeholder="goals, points, wins…" value="${esc(ui.draftUnit||"")}" oninput="ui.draftUnit=this.value">`:""}
   ${ui.draftKind==="pick"?`<label class="f">The options, one per line</label><textarea id="opts" placeholder="Leafs
 Oilers
@@ -808,13 +811,18 @@ function renderFeed(){
 function renderTakeCard(t){
   const m=me(); const votes=state.votes[t.id]||{}; const mine=votes[m]; const res=state.results[t.id];
   const n=PLAYERS.filter(p=>votes[p.id]!=null).length;
-  const head=`<div class="row" style="justify-content:space-between;align-items:flex-start"><div><span class="pill ${t.kind}">${t.kind==="pct"?"Percentage":t.kind==="num"?"Number":t.yn?"Yes or no":t.multi?"Pick any":"Pick one"}</span> <span class="author" style="margin-left:6px">${esc(P[t.author]?.name||"?")}</span></div><span class="small muted">${ago(t.createdAt)}</span></div>
+  const head=`<div class="row" style="justify-content:space-between;align-items:flex-start"><div><span class="pill ${t.kind}">${t.kind==="pct"?"Percentage":t.kind==="num"?"Number":t.kind==="text"?"Open answer":t.yn?"Yes or no":t.multi?"Pick any":"Pick one"}</span> <span class="author" style="margin-left:6px">${esc(P[t.author]?.name||"?")}</span></div><span class="small muted">${ago(t.createdAt)}</span></div>
   <div class="take-text sm" style="margin-top:8px">${esc(t.text)}</div>${t.unit?`<div class="muted small">${esc(t.unit)}</div>`:""}${t.kind==="pick"&&!t.yn?`<div class="optrow">${(t.options||[]).map(o=>`<span class="pill">${esc(o)}</span>`).join("")}</div>`:""}`;
-  if(res) return `<div class="card">${head}${renderVotesReveal(t,votes)}<div class="sec result" style="margin:12px -16px -14px;border-radius:0 0 12px 12px"><div class="lbl">Resolved · ${t.kind==="pct"?(res.outcome?"It happened":"Didn't happen"):t.kind==="pick"?"The answer":"Actual"}</div>${t.kind==="num"?`<div class="big-actual">${res.actual}</div>`:t.kind==="pick"?`<div class="big-actual" style="font-size:24px">${esc(pickText(t,res.correct))||"—"}</div>`:""}${res.note?`<div class="note">${esc(res.note)}</div>`:""}${t.kind==="pct"?`<div class="gl" style="margin-top:8px">${PLAYERS.map(p=>votes[p.id]?`<div class="g"><div class="n">${p.name}</div><div class="v" style="color:var(--gold)">+${brier(votes[p.id].v,!!res.outcome)}</div></div>`:"").join("")}</div>`:""}</div></div>`;
-  if(mine!=null) return `<div class="card">${head}${renderVotesReveal(t,votes)}${isAdmin()?renderResolveCtl(t):""}</div>`;
-  return `<div class="card hot">${head}<p class="small muted" style="margin:10px 0 8px">${n} of 4 locked in. ${t.kind==="pick"?"Picks":"Numbers"} stay hidden until you lock yours.</p><button class="btn primary block" onclick="openDial('${t.id}')">Lock in your ${t.kind==="pct"?"percentage":t.kind==="num"?"number":t.yn?"call":"pick"}</button>${isAdmin()?renderResolveCtl(t):""}</div>`;
+  if(res) return `<div class="card">${head}${renderVotesReveal(t,votes)}<div class="sec result" style="margin:12px -16px -14px;border-radius:0 0 12px 12px"><div class="lbl">Resolved · ${t.kind==="pct"?(res.outcome?"It happened":"Didn't happen"):t.kind==="pick"?"The answer":t.kind==="text"?"Who got it":"Actual"}</div>${t.kind==="num"?`<div class="big-actual">${res.actual}</div>`:t.kind==="pick"?`<div class="big-actual" style="font-size:24px">${esc(pickText(t,res.correct))||"—"}</div>`:t.kind==="text"?`<div class="big-actual" style="font-size:24px">${(res.winners||[]).length?(res.winners||[]).map(i=>esc(P[i]?.name||i)).join(" & "):"Nobody"}</div>`:""}${res.note?`<div class="note">${esc(res.note)}</div>`:""}${t.kind==="pct"?`<div class="gl" style="margin-top:8px">${PLAYERS.map(p=>votes[p.id]?`<div class="g"><div class="n">${p.name}</div><div class="v" style="color:var(--gold)">+${brier(votes[p.id].v,!!res.outcome)}</div></div>`:"").join("")}</div>`:""}</div></div>`;
+  if(mine!=null) return `<div class="card">${head}${renderVotesReveal(t,votes)}${canRetake(t)?`<button class="btn ghost block" style="margin-top:10px" onclick="openDial('${t.id}')">Change my ${t.kind==="pct"?"percentage":t.kind==="num"?"number":t.kind==="text"?"answer":t.yn?"call":"pick"}</button>`:""}${isAdmin()?renderResolveCtl(t):""}</div>`;
+  return `<div class="card hot">${head}<p class="small muted" style="margin:10px 0 8px">${n} of 4 locked in. ${t.kind==="pick"||t.kind==="text"?"Answers":"Numbers"} stay hidden until you lock yours.</p><button class="btn primary block" onclick="openDial('${t.id}')">Lock in your ${t.kind==="pct"?"percentage":t.kind==="num"?"number":t.kind==="text"?"answer":t.yn?"call":"pick"}</button>${isAdmin()?renderResolveCtl(t):""}</div>`;
 }
 function renderVotesReveal(t,votes){
+  if(t.kind==="text"){
+    const vals=PLAYERS.filter(p=>votes[p.id]!=null).map(p=>({id:p.id,name:p.name,v:String(votes[p.id].v)}));
+    const missing=PLAYERS.filter(p=>votes[p.id]==null).map(p=>p.name);
+    return `<div class="bars">${vals.map(x=>`<div class="bar pk-row"><span class="nm"><i style="background:${PC[x.id]}"></i>${x.name}</span><span class="choice">${esc(x.v)}</span></div>`).join("")}</div>${missing.length?`<p class="small muted" style="margin:0">Waiting on ${missing.join(", ")}.</p>`:""}`;
+  }
   if(t.kind==="pick"){
     const vals=PLAYERS.filter(p=>votes[p.id]!=null).map(p=>({id:p.id,name:p.name,v:[].concat(votes[p.id].v)}));
     const missing=PLAYERS.filter(p=>votes[p.id]==null).map(p=>p.name);
@@ -831,12 +839,16 @@ function renderVotesReveal(t,votes){
   return `<div class="bars">${bars}</div>${missing.length?`<p class="small muted" style="margin:0">Waiting on ${missing.join(", ")}.</p>`:""}${vals.length>=3?`<div class="stats"><div class="stat"><div class="k">Median</div><div class="v">${Number.isInteger(med)?med:med.toFixed(1)}${t.kind==="pct"?"%":""}</div></div><div class="stat"><div class="k">Spread</div><div class="v">${Math.max(...nums)-Math.min(...nums)}</div></div><div class="stat"><div class="k">Outlier</div><div class="v gold">${outId&&outD>0?P[outId].name:"—"}</div></div></div>`:""}`;
 }
 function renderResolveCtl(t){
+  if(t.kind==="text"){ const v=state.votes[t.id]||{}; return `<details style="margin:12px 0 0"><summary>Marshal</summary><p class="small muted" style="margin:8px 0 0">Tap everyone who nailed it (nobody is fine):</p><div class="rs-opts" id="rs-${t.id}">${PLAYERS.filter(p=>v[p.id]!=null).map(p=>`<button class="opt" data-i="${p.id}" onclick="this.classList.toggle('on')">${p.name}: ${esc(String(v[p.id].v))}</button>`).join("")||`<span class="small muted">No answers yet.</span>`}</div><div class="row" style="margin-top:8px"><button class="btn ghost" onclick="resolve('${t.id}',{winners:[...document.querySelectorAll('#rs-${t.id} .opt.on')].map(b=>b.dataset.i)})">Resolve</button></div><div class="row" style="margin-top:8px"><button class="btn ghost" onclick="sync.set('votes/${t.id}',null)">Clear answers</button><button class="btn danger" onclick="delTake('${t.id}')">${sureLbl("del-"+t.id,"Delete take")}</button></div></details>`; }
   if(t.kind==="pick") return `<details style="margin:12px 0 0"><summary>Marshal</summary><p class="small muted" style="margin:8px 0 0">The answer${t.multi?" (tap every option that came true)":""}:</p><div class="rs-opts" id="rs-${t.id}">${(t.options||[]).map((o,i)=>`<button class="opt" data-i="${i}" onclick="${t.multi?"this.classList.toggle('on')":"[...this.parentNode.children].forEach(b=>b.classList.toggle('on',b===this))"}">${esc(o)}</button>`).join("")}</div><div class="row" style="margin-top:8px"><button class="btn ghost" onclick="resolve('${t.id}',{correct:[...document.querySelectorAll('#rs-${t.id} .opt.on')].map(b=>+b.dataset.i)})">Resolve</button></div><div class="row" style="margin-top:8px"><button class="btn ghost" onclick="sync.set('votes/${t.id}',null)">Clear picks</button><button class="btn danger" onclick="delTake('${t.id}')">${sureLbl("del-"+t.id,"Delete take")}</button></div></details>`;
   return `<details style="margin:12px 0 0"><summary>Marshal</summary>${t.kind==="pct"?`<div class="row" style="margin-top:8px"><button class="btn ghost" onclick="resolve('${t.id}',{outcome:true})">It happened</button><button class="btn ghost" onclick="resolve('${t.id}',{outcome:false})">Didn't</button></div>`:`<div class="row" style="margin-top:8px"><input type="number" id="act-${t.id}" placeholder="Actual" style="width:120px"><button class="btn ghost" onclick="resolve('${t.id}',{actual:+document.getElementById('act-${t.id}').value})">Resolve</button></div>`}<div class="row" style="margin-top:8px"><button class="btn ghost" onclick="sync.set('votes/${t.id}',null)">Clear numbers</button><button class="btn danger" onclick="delTake('${t.id}')">${sureLbl("del-"+t.id,"Delete take")}</button></div></details>`;
 }
-function openDial(id){ const t=state.takes[id]; ui.dial={take:id, val:t.kind==="pct"?50:t.kind==="pick"?[]:0}; DRUM=null; render(); }
+function openDial(id){ const t=state.takes[id]; const mine=(state.votes[id]||{})[me()]; const cur=mine?mine.v:null; ui.dial={take:id, val:cur!=null?(t.kind==="pick"?[].concat(cur):cur):(t.kind==="pct"?50:t.kind==="pick"?[]:t.kind==="text"?"":0)}; DRUM=null; render(); }
 function renderDialOverlay(t){
   const v=ui.dial;
+  if(t.kind==="text"){ return `<div class="dialover"><div class="row" style="justify-content:space-between"><div class="author">${esc(P[t.author]?.name||"")}'s take</div><button class="x" onclick="ui.dial=null;render()" aria-label="Close">×</button></div><div class="q">${esc(t.text)}</div><p class="small muted" style="margin:4px 0 0">Type your answer. The Marshal decides who nailed it.</p>
+    <label class="f">Your answer</label><textarea id="ans" placeholder="Your answer" oninput="ui.dial.val=this.value">${esc(v.val||"")}</textarea>
+    <div class="foot" style="margin-top:auto"><button class="btn ghost" onclick="ui.dial=null;render()">Cancel</button><button class="btn primary big" style="flex:1" onclick="lockVote()">Lock it in</button></div></div>`; }
   if(t.kind==="pick"){ const sel=[].concat(v.val||[]); return `<div class="dialover"><div class="row" style="justify-content:space-between"><div class="author">${esc(P[t.author]?.name||"")}'s take</div><button class="x" onclick="ui.dial=null;render()" aria-label="Close">×</button></div><div class="q">${esc(t.text)}</div><p class="small muted" style="margin:4px 0 0">${t.yn?"Yes or no. Right side takes the W.":t.multi?"Pick as many as you like. You need the exact set to win.":"Pick one."}</p>
     <div class="optlist">${(t.options||[]).map((o,i)=>`<button class="opt ${sel.includes(i)?"on":""}" onclick="togglePick(${i})">${esc(o)}</button>`).join("")}</div>
     <div class="foot" style="margin-top:auto"><button class="btn ghost" onclick="ui.dial=null;render()">Cancel</button><button class="btn primary big" style="flex:1" onclick="lockVote()" ${sel.length?"":"disabled"}>Lock it in</button></div></div>`; }
@@ -888,7 +900,7 @@ function initDrum(){
   DRUM={ animateTo(n){ vel=0; dragging=false; const cur=((pos%(MAX+1))+(MAX+1))%(MAX+1); pos=cur; let diff=n-cur; if(diff>(MAX+1)/2) diff-=(MAX+1); if(diff<-(MAX+1)/2) diff+=(MAX+1); const from=pos; n=from+diff; const t0=performance.now(); const go=(t)=>{ const k=Math.min(1,(t-t0)/420); const ease=1-Math.pow(1-k,3); pos=from+(n-from)*ease; draw(); if(k<1) requestAnimationFrame(go); else { pos=((n%(MAX+1))+(MAX+1))%(MAX+1); ui.dial.val=pos; draw(); } }; if(raf){ cancelAnimationFrame(raf); raf=null; } requestAnimationFrame(go); } };
   draw();
 }
-function lockVote(){ const d=ui.dial; if(!d) return; SND.thud(); try{ if(navigator.vibrate) navigator.vibrate([20,30,40]); }catch(e){} sync.set(`votes/${d.take}/${me()}`,{v:d.val,t:Date.now()}); ui.dial=null; DRUM=null; toast("Locked in"); render(); }
+function lockVote(){ const d=ui.dial; if(!d) return; const tk=state.takes[d.take]; if(tk&&tk.kind==="text"){ d.val=String(d.val||"").trim(); if(!d.val){toast("Type an answer first");return;} } SND.thud(); try{ if(navigator.vibrate) navigator.vibrate([20,30,40]); }catch(e){} sync.set(`votes/${d.take}/${me()}`,{v:d.val,t:Date.now()}); ui.dial=null; DRUM=null; toast("Locked in"); render(); }
 function resolve(id,r){ if(r.actual!=null&&isNaN(r.actual)){toast("Enter the actual");return;} if(r.correct!=null&&!r.correct.length){toast("Pick the answer first");return;} sync.set("results/"+id,{...r,at:Date.now()}); toast("Resolved"); }
 
 /* ---- THE REVEAL: 4th number lands ---- */
@@ -903,6 +915,9 @@ function checkReveals(){
 }
 function renderReveal(t){
   const votes=state.votes[t.id]||{};
+  if(t.kind==="text"){ const rows=PLAYERS.map(p=>({id:p.id,name:p.name,v:String(votes[p.id].v)})); return `<div class="rev" id="rev" onclick="closeReveal()"><div class="eyebrow">All four are in</div><div class="q">${esc(t.text)}</div>
+  <div class="bars">${rows.map(x=>`<div class="bar pk-row" data-w="0"><span class="nm"><i style="background:${PC[x.id]}"></i>${x.name}</span><span class="choice">${esc(x.v)}</span></div>`).join("")}</div>
+  <div class="verdict">Four answers. The Marshal decides.</div><div class="tap">Tap to go back to the fire</div></div>`; }
   if(t.kind==="pick"){ const rows=PLAYERS.map(p=>({id:p.id,name:p.name,v:[].concat(votes[p.id].v)})); const counts={}; rows.forEach(x=>x.v.forEach(i=>{ counts[i]=(counts[i]||0)+1; })); const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0]; const lone=rows.filter(x=>x.v.length&&x.v.every(i=>counts[i]===1));
     return `<div class="rev" id="rev" onclick="closeReveal()"><div class="eyebrow">All four are in</div><div class="q">${esc(t.text)}</div>
   <div class="bars">${rows.map(x=>`<div class="bar pk-row" data-w="0"><span class="nm"><i style="background:${PC[x.id]}"></i>${x.name}</span><span class="choice">${esc(pickText(t,x.v))}</span></div>`).join("")}</div>
@@ -945,6 +960,14 @@ function auditItem(id){
     return {id,year:a.year,prompt:a.prompt,author:null,entries,w,l,resolved,big,resultHtml:resultSec,lore:a.kind==="lore",body:a.body};
   }
   const t=state.takes[id]; if(!t) return null; const votes=state.votes[id]||{}; const res=state.results[id];
+  if(t.kind==="text"){
+    const ans=Object.fromEntries(PLAYERS.filter(p=>votes[p.id]).map(p=>[p.id,String(votes[p.id].v)]));
+    let w=[],l=[]; if(res){ w=Object.keys(ans).filter(p=>(res.winners||[]).includes(p)); l=Object.keys(ans).filter(p=>!w.includes(p)); }
+    const entries=PLAYERS.filter(p=>ans[p.id]!=null).map(p=>({id:p.id,text:ans[p.id],txt:true,sub:res?(w.includes(p.id)?"got it":"whiffed"):"",bad:1}));
+    const big=res?{t:w.length?w.map(i=>P[i].name).join(" & ").toUpperCase():"NOBODY",c:w.length?"hit":"miss"}:{};
+    const resultHtml=res?`<div class="sec result"><div class="lbl">Who got it</div><div>${w.length?w.map(i=>esc(P[i].name)).join(" & "):"Nobody"}${res.note?` <span class="note">${esc(res.note)}</span>`:""}</div></div>`:"";
+    return {id,year:t.year||YEAR,prompt:t.text,author:t.author,entries,w,l,resolved:!!res,big,resultHtml,live:t,res};
+  }
   if(t.kind==="pick"){
     const sel=Object.fromEntries(PLAYERS.filter(p=>votes[p.id]).map(p=>[p.id,[].concat(votes[p.id].v)]));
     let w=[],l=[]; if(res){ const ans=pickKey(res.correct); w=Object.keys(sel).filter(p=>pickKey(sel[p])===ans); l=Object.keys(sel).filter(p=>!w.includes(p)); }
@@ -975,7 +998,8 @@ function renderAudit(){
   const torches=`<div class="torches">${it.entries.length?it.entries.map(e=>{ const st=played?(it.w.includes(e.id)?"win":it.l.includes(e.id)?"out":""):""; return `<div class="torch ${dealt?"lit":""} ${st}" id="torch-${e.id}" style="--c:${PC[e.id]}"><div class="flame"></div><div class="nm">${P[e.id].name}</div><div data-p="${e.id}" class="g ${e.txt?"txt":""}">${esc(e.text)}</div><div class="sub">${esc(e.sub)}</div><span class="st ${it.w.includes(e.id)?"w":"l"} ${played?"on":""}">${it.w.includes(e.id)?"W":"L"}</span></div>`; }).join(""):`<p class="muted small" style="grid-column:1/-1;text-align:center">${it.lore?esc(it.body||""):"Nobody weighed in."}</p>`}</div>`;
   let ctl="";
   if(!rev){
-    if(marshal){ if(it.live&&!it.resolved&&it.live.kind==="pick") ctl=`<div class="mctl"><div class="lbl" style="margin-bottom:8px">Marshal: the answer${it.live.multi?" (every option that came true)":""}</div><div class="rs-opts" id="rs-aud">${(it.live.options||[]).map((o,i)=>`<button class="opt" data-i="${i}" onclick="${it.live.multi?"this.classList.toggle('on')":"[...this.parentNode.children].forEach(b=>b.classList.toggle('on',b===this))"}">${esc(o)}</button>`).join("")}</div><div class="row" style="margin-top:8px"><button class="btn gold block" onclick="auditReveal({correct:[...document.querySelectorAll('#rs-aud .opt.on')].map(b=>+b.dataset.i)})">Reveal</button></div></div>`;
+    if(marshal){ if(it.live&&!it.resolved&&it.live.kind==="text") ctl=`<div class="mctl"><div class="lbl" style="margin-bottom:8px">Marshal: who nailed it?</div><div class="rs-opts" id="rs-aud">${it.entries.map(e=>`<button class="opt" data-i="${e.id}" onclick="this.classList.toggle('on')">${P[e.id].name}: ${esc(e.text)}</button>`).join("")}</div><div class="row" style="margin-top:8px"><button class="btn gold block" onclick="auditReveal({winners:[...document.querySelectorAll('#rs-aud .opt.on')].map(b=>b.dataset.i)})">Reveal</button></div></div>`;
+      else if(it.live&&!it.resolved&&it.live.kind==="pick") ctl=`<div class="mctl"><div class="lbl" style="margin-bottom:8px">Marshal: the answer${it.live.multi?" (every option that came true)":""}</div><div class="rs-opts" id="rs-aud">${(it.live.options||[]).map((o,i)=>`<button class="opt" data-i="${i}" onclick="${it.live.multi?"this.classList.toggle('on')":"[...this.parentNode.children].forEach(b=>b.classList.toggle('on',b===this))"}">${esc(o)}</button>`).join("")}</div><div class="row" style="margin-top:8px"><button class="btn gold block" onclick="auditReveal({correct:[...document.querySelectorAll('#rs-aud .opt.on')].map(b=>+b.dataset.i)})">Reveal</button></div></div>`;
       else if(it.live&&!it.resolved) ctl=it.live.kind==="pct"?`<div class="mctl"><div class="lbl" style="margin-bottom:8px">Marshal: what happened?</div><div class="row"><button class="btn gold" style="flex:1" onclick="auditReveal({outcome:true})">It happened</button><button class="btn ghost" style="flex:1" onclick="auditReveal({outcome:false})">Didn't</button></div></div>`:`<div class="mctl"><div class="lbl" style="margin-bottom:8px">Marshal: the actual number</div><div class="row"><input type="number" id="audact" placeholder="Actual" style="flex:1"><button class="btn gold" onclick="auditReveal({actual:+document.getElementById('audact').value})">Reveal</button></div></div>`;
       else if(it.resolved) ctl=`<div class="mctl"><button class="btn gold block" onclick="auditReveal({})">Reveal</button></div>`;
       else ctl=`<div class="mctl"><p class="small muted" style="text-align:center">Nothing to settle on this one.</p></div>`; }
@@ -1115,6 +1139,7 @@ function isSealed(a){ return !!a.sealed && !(state.audited&&state.audited[a.id])
 function visibleArchive(){ return ARCHIVE.filter(a=>!isSealed(a)); }
 function liveArchive(){
   return Object.keys(state.results).filter(id=>state.takes[id]).map(id=>{ const t=state.takes[id], r=state.results[id], v=state.votes[id]||{}; const g=Object.fromEntries(PLAYERS.filter(p=>v[p.id]).map(p=>[p.id,v[p.id].v]));
+    if(t.kind==="text"){ const ans=Object.fromEntries(PLAYERS.filter(p=>v[p.id]).map(p=>[p.id,String(v[p.id].v)])); const wn=(r.winners||[]).filter(p=>ans[p]!=null); return {id:"live-"+id, year:t.year||YEAR, kind:"pick", prompt:t.text, picks:ans, correct:wn, result:"Who got it: "+(wn.length?wn.map(i=>P[i]?.name||i).join(" & "):"Nobody"), note:(r.note||"")+" — "+(P[t.author]?.name||"")+"'s take", author:t.author, live:true, at:t.createdAt}; }
     if(t.kind==="pick"){ const sel=Object.fromEntries(PLAYERS.filter(p=>v[p.id]).map(p=>[p.id,[].concat(v[p.id].v)])); const ans=pickKey(r.correct); return {id:"live-"+id, year:t.year||YEAR, kind:"pick", prompt:t.text, picks:Object.fromEntries(Object.keys(sel).map(p=>[p,pickText(t,sel[p])])), correct:Object.keys(sel).filter(p=>pickKey(sel[p])===ans), result:"Answer: "+(pickText(t,r.correct)||"—"), note:(r.note||"")+" — "+(P[t.author]?.name||"")+"'s take", author:t.author, live:true, at:t.createdAt}; }
     if(t.kind==="num") return {id:"live-"+id, year:t.year||YEAR, kind:"num", prompt:t.text+(t.unit?" ("+t.unit+")":""), guesses:g, actual:r.actual, note:(r.note||"")+" — "+(P[t.author]?.name||"")+"'s take", live:true, at:t.createdAt};
     return {id:"live-"+id, year:t.year||YEAR, kind:"pctv", prompt:t.text, guesses:g, outcome:!!r.outcome, note:(r.note||""), author:t.author, live:true, at:t.createdAt};
@@ -1249,7 +1274,7 @@ function lifetime(){
 }
 function yearStats(){
   const s=Object.fromEntries(PLAYERS.map(p=>[p.id,{out:0,cons:0,avg:[],locked:0}]));
-  takesList().forEach(t=>{ const v=state.votes[t.id]||{}; PLAYERS.forEach(p=>{ if(v[p.id]) s[p.id].locked++; }); if(t.kind==="pick") return; const vals=PLAYERS.filter(p=>v[p.id]).map(p=>({id:p.id,v:v[p.id].v})); if(vals.length<3) return; const med=median(vals.map(x=>x.v)); let mx=-1,mi=Infinity,o=null,c=null; vals.forEach(x=>{const d=Math.abs(x.v-med); if(d>mx){mx=d;o=x.id} if(d<mi){mi=d;c=x.id}}); if(mx>0) s[o].out++; s[c].cons++; if(t.kind==="pct") vals.forEach(x=>{s[x.id].avg.push(x.v)}); });
+  takesList().forEach(t=>{ const v=state.votes[t.id]||{}; PLAYERS.forEach(p=>{ if(v[p.id]) s[p.id].locked++; }); if(t.kind==="pick"||t.kind==="text") return; const vals=PLAYERS.filter(p=>v[p.id]).map(p=>({id:p.id,v:v[p.id].v})); if(vals.length<3) return; const med=median(vals.map(x=>x.v)); let mx=-1,mi=Infinity,o=null,c=null; vals.forEach(x=>{const d=Math.abs(x.v-med); if(d>mx){mx=d;o=x.id} if(d<mi){mi=d;c=x.id}}); if(mx>0) s[o].out++; s[c].cons++; if(t.kind==="pct") vals.forEach(x=>{s[x.id].avg.push(x.v)}); });
   return s;
 }
 function yearWL(){
