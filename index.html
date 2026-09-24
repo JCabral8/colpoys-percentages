@@ -361,9 +361,8 @@ main.stackmode{display:flex;flex-direction:column;padding-bottom:10px}
 .bcap .snd[hidden]{display:none}
 .torch.hot{border-color:var(--c)}
 .gl .g.hot{border-radius:8px}
-.arc .callbtn{display:block;width:100%;margin-top:10px}
-.replays{margin-top:14px;display:grid;gap:8px}
-.replays .lbl{font-family:var(--cond);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);text-align:center}
+.replays{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.replays .btn{padding:10px 8px;font-size:14px}
 .bov{position:fixed;inset:0;z-index:47;background:var(--ground);display:flex;flex-direction:column;max-width:540px;margin:0 auto;padding:10px 14px max(10px,env(safe-area-inset-bottom))}
 .bov .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .bov .ttl{font-family:var(--display);font-size:24px;letter-spacing:.04em;color:var(--ember2)}
@@ -452,7 +451,7 @@ const FIREBASE_CONFIG = null; // e.g. {apiKey:"...", authDomain:"...", databaseU
 const SUPABASE_CONFIG = {supabaseUrl:"https://qggbflsetmxsmcbagwpd.supabase.co", supabaseKey:"sb_publishable_wC5J-hl2Nb1SLZJ1YZmf4g_woqk-GZI"}; // publishable key, meant to be public; access is governed by the table policy // e.g. {supabaseUrl:"https://xxxx.supabase.co", supabaseKey:"sb_publishable_..."}  (the anon/publishable key is meant to be public)
 const ROOM = "golf2026";
 const DEFAULT_PIN = "1234";
-const APP_VERSION = "43"; // bump on every publish: single-phone mode resets the audit + seen-reveals
+const APP_VERSION = "44"; // bump on every publish: single-phone mode resets the audit + seen-reveals
 
 const PLAYERS = [
   {id:"nick", name:"Nick"}, {id:"jay", name:"Jay"}, {id:"justin", name:"Justin"}, {id:"chris", name:"Chris"}
@@ -483,16 +482,16 @@ const ARCHIVE = [
  {id:"a24-jones", year:2024, kind:"call", prompt:"Daniel Jones gets 9 TDs (2024)", stance:{chris:true}, outcome:true, result:"8 passing + 2 rushing = 10 total, in 10 games with NYG.", note:"Ruled a hit on total touchdowns, Sept 2026."},
  {id:"a24-stolarz", year:2024, kind:"lore", prompt:"\"Stolarz is going to be Patrick Roy\"", body:"Somebody said it. Nobody remembers who. Stolarz went 21-8-3, .926 in 2024-25.", result:"Unclaimed W"},
 
- {id:"a25-cdn", year:2025, sealed:true, kind:"pick", prompt:"Gerry's %: Canadian teams winning a round-2 series (May 2025)", picks:{nick:"1 (75% on the board)", chris:"2 (Leafs + Oilers)", justin:"1 or 2, 50/50", jay:"3"}, result:"1. Oilers beat Vegas. Leafs lost G7 to Florida. Jets lost to Dallas.", note:"Nick's board: 0 → 15%, 1 → 75%, 2 → 25%, 3 → 0%.", correct:["nick"], partial:["justin"]},
- {id:"a25-afc", year:2025, sealed:true, kind:"pick", prompt:"Which of KC, BAL, CIN make the playoffs? (2025)", picks:{nick:"KC, BAL", chris:"BAL, KC", jay:"None of the above", justin:"BAL, CIN"}, result:"None. AFC field: DEN, NE, JAX, PIT, HOU, BUF, LAC.", correct:["jay"], note:"\"I'M GONNA GO SPICY AND SAY NONE OF THE ABOVE.\""},
- {id:"a25-marner", year:2025, sealed:true, kind:"num", prompt:"Marner points in Vegas (2025-26)", guesses:{jay:101, chris:100, justin:92, nick:95}, actual:80, note:"24 G, 56 A, 81 GP."},
- {id:"a25-rocket", year:2025, sealed:true, kind:"pick", prompt:"NHL goal leader (2025-26)", picks:{chris:"McDavid", jay:"Draisaitl", justin:"McDavid", nick:"MacKinnon"}, result:"MacKinnon 53. McDavid 48, Draisaitl 35.", correct:["nick"]},
- {id:"a25-malkin", year:2025, sealed:true, kind:"call", prompt:"Malkin is a first-ballot Hall of Famer", stance:{chris:true, justin:true, nick:false}, outcome:null, result:"Still playing. Signed a 1-yr, $5.5M extension for 2026-27.", note:"Open until he retires, plus three years."},
- {id:"a25-matthews", year:2025, sealed:true, kind:"num", prompt:"Matthews goals (2025-26)", guesses:{jay:42, justin:48, chris:40, nick:48}, actual:27, note:"60 GP. Season ended by MCL injury Mar 13."},
- {id:"a25-willy-g", year:2025, sealed:true, kind:"num", prompt:"Nylander goals (2025-26)", guesses:{jay:42, justin:38, chris:40, nick:46}, actual:30, note:"65 GP."},
- {id:"a25-willy-p", year:2025, sealed:true, kind:"num", prompt:"Nylander points (2025-26)", guesses:{jay:87, justin:90, chris:80, nick:94}, actual:79},
- {id:"a25-sb", year:2025, sealed:true, kind:"pick", prompt:"Super Bowl LX winner", picks:{chris:"Detroit", justin:"Green Bay", jay:"Chargers", nick:"Baltimore"}, result:"Seattle 29, New England 13.", correct:[]},
- {id:"a25-robertson", year:2025, sealed:true, kind:"call", prompt:"\"Too much smoke on a Robertson move for there not to be fire\"", stance:{chris:true}, outcome:true, result:"Traded to Pittsburgh July 1, 2026 for a 2028 4th.", note:"Posted Sept 29, 2025. Only ten months late."}
+ {id:"a25-cdn", year:2025, kind:"pick", prompt:"Gerry's %: Canadian teams winning a round-2 series (May 2025)", picks:{nick:"1 (75% on the board)", chris:"2 (Leafs + Oilers)", justin:"1 or 2, 50/50", jay:"3"}, result:"1. Oilers beat Vegas. Leafs lost G7 to Florida. Jets lost to Dallas.", note:"Nick's board: 0 → 15%, 1 → 75%, 2 → 25%, 3 → 0%.", correct:["nick"], partial:["justin"]},
+ {id:"a25-afc", year:2025, kind:"pick", prompt:"Which of KC, BAL, CIN make the playoffs? (2025)", picks:{nick:"KC, BAL", chris:"BAL, KC", jay:"None of the above", justin:"BAL, CIN"}, result:"None. AFC field: DEN, NE, JAX, PIT, HOU, BUF, LAC.", correct:["jay"], note:"\"I'M GONNA GO SPICY AND SAY NONE OF THE ABOVE.\""},
+ {id:"a25-marner", year:2025, kind:"num", prompt:"Marner points in Vegas (2025-26)", guesses:{jay:101, chris:100, justin:92, nick:95}, actual:80, note:"24 G, 56 A, 81 GP."},
+ {id:"a25-rocket", year:2025, kind:"pick", prompt:"NHL goal leader (2025-26)", picks:{chris:"McDavid", jay:"Draisaitl", justin:"McDavid", nick:"MacKinnon"}, result:"MacKinnon 53. McDavid 48, Draisaitl 35.", correct:["nick"]},
+ {id:"a25-malkin", year:2025, kind:"call", prompt:"Malkin is a first-ballot Hall of Famer", stance:{chris:true, justin:true, nick:false}, outcome:null, result:"Still playing. Signed a 1-yr, $5.5M extension for 2026-27.", note:"Open until he retires, plus three years."},
+ {id:"a25-matthews", year:2025, kind:"num", prompt:"Matthews goals (2025-26)", guesses:{jay:42, justin:48, chris:40, nick:48}, actual:27, note:"60 GP. Season ended by MCL injury Mar 13."},
+ {id:"a25-willy-g", year:2025, kind:"num", prompt:"Nylander goals (2025-26)", guesses:{jay:42, justin:38, chris:40, nick:46}, actual:30, note:"65 GP."},
+ {id:"a25-willy-p", year:2025, kind:"num", prompt:"Nylander points (2025-26)", guesses:{jay:87, justin:90, chris:80, nick:94}, actual:79},
+ {id:"a25-sb", year:2025, kind:"pick", prompt:"Super Bowl LX winner", picks:{chris:"Detroit", justin:"Green Bay", jay:"Chargers", nick:"Baltimore"}, result:"Seattle 29, New England 13.", correct:[]},
+ {id:"a25-robertson", year:2025, kind:"call", prompt:"\"Too much smoke on a Robertson move for there not to be fire\"", stance:{chris:true}, outcome:true, result:"Traded to Pittsburgh July 1, 2026 for a 2028 4th.", note:"Posted Sept 29, 2025. Only ten months late."}
 ];
 const SOURCES = [
  ["Hockey-Reference (Matthews, Bedard, Celebrini, Woll, Marner, Nylander, 2025-26 leaders)","https://www.hockey-reference.com/"],
@@ -719,19 +718,18 @@ function render(){
   else if(tab==="board") body=renderBoard();
   else if(tab==="admin") body=renderAdmin();
   const scrollTop=(app.querySelector("main")||{}).scrollTop||0; const sameTab=app.dataset.tab===tab;
-  app.innerHTML=`<header class="top"><div class="logo"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd166"/><stop offset=".5" stop-color="#ff9a4d"/><stop offset="1" stop-color="#e2531f"/></linearGradient></defs><line x1="45" y1="9" x2="45" y2="47" stroke="#f3e9d8" stroke-width="2.2" stroke-linecap="round"/><polygon points="45,9 59,14.5 45,20" fill="#e0574f"/><path d="M27 14c2 7 8 9 8 17 0 3-1 5-3 7 4-1 7-4 7-9 5 4 7 9 7 14a13 13 0 1 1-26 0c0-6 3-10 6-12 0 4 2 6 4 7-1-8 2-14 -3-24z" fill="url(#lg)"/><rect x="11" y="49" width="42" height="7" rx="3.5" fill="#7a4a2a" transform="rotate(-9 32 52.5)"/><rect x="11" y="49" width="42" height="7" rx="3.5" fill="#5c3720" transform="rotate(9 32 52.5)"/><circle cx="16" cy="52" r="2" fill="#a86a3f"/><circle cx="48" cy="52" r="2" fill="#a86a3f"/></svg><div class="wm"><span class="a">COLPOY'S</span><span class="b">Percentages</span></div></div>${m?`<button class="who" onclick="setMe('')">You are <b>${esc(P[m]?.name||"?")}</b></button>`:""}</header><main id="main" class="${tab==="archive"?"stackmode":""}">${body}</main><div class="mode">${mode!=="local"?(connected?"<b>Live sync</b> · all phones":"<b>Connecting…</b>"):"<b>This phone only</b> · not connected"}</div><div class="treeline"></div><div class="navwrap"><div class="navdial${navFresh()?" fresh":""}" id="navdial"><div class="ticks"></div><div class="ticks major"></div><div class="ticks bot"></div><div class="ticks major bot"></div><div class="win"></div><div class="lub"></div><div class="lubt"></div><span class="chev l">‹</span><span class="chev r">›</span>${navFresh()?`<div class="hint">Drag to steer</div>`:""}</div><div class="navlbl"><span>Port</span><span>Heading</span><span>Starboard</span></div></div>`;
+  app.innerHTML=`<header class="top"><div class="logo"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd166"/><stop offset=".5" stop-color="#ff9a4d"/><stop offset="1" stop-color="#e2531f"/></linearGradient></defs><line x1="45" y1="9" x2="45" y2="47" stroke="#f3e9d8" stroke-width="2.2" stroke-linecap="round"/><polygon points="45,9 59,14.5 45,20" fill="#e0574f"/><path d="M27 14c2 7 8 9 8 17 0 3-1 5-3 7 4-1 7-4 7-9 5 4 7 9 7 14a13 13 0 1 1-26 0c0-6 3-10 6-12 0 4 2 6 4 7-1-8 2-14 -3-24z" fill="url(#lg)"/><rect x="11" y="49" width="42" height="7" rx="3.5" fill="#7a4a2a" transform="rotate(-9 32 52.5)"/><rect x="11" y="49" width="42" height="7" rx="3.5" fill="#5c3720" transform="rotate(9 32 52.5)"/><circle cx="16" cy="52" r="2" fill="#a86a3f"/><circle cx="48" cy="52" r="2" fill="#a86a3f"/></svg><div class="wm"><span class="a">COLPOY'S</span><span class="b">Percentages</span></div></div>${m?`<button class="who" onclick="setMe('')">You are <b>${esc(P[m]?.name||"?")}</b></button>`:""}</header><main id="main" class="${tab==="archive"?"stackmode":""}">${body}</main><div class="treeline"></div><div class="navwrap"><div class="navdial${navFresh()?" fresh":""}" id="navdial"><div class="ticks"></div><div class="ticks major"></div><div class="ticks bot"></div><div class="ticks major bot"></div><div class="win"></div><div class="lub"></div><div class="lubt"></div><span class="chev l">‹</span><span class="chev r">›</span>${navFresh()?`<div class="hint">Drag to steer</div>`:""}</div><div class="navlbl"><span>Port</span><span>Heading</span><span>Starboard</span></div></div>`;
   app.dataset.tab=tab; if(sameTab) app.querySelector("main").scrollTop=scrollTop;
-  initNav(); if(NAV) NAV.sync(tab); if(tab==="archive") initStack();
+  initNav(); if(NAV) NAV.sync(tab); if(tab==="archive"){ initStack(); fitCards(); }
   if(ui.dial&&state.takes[ui.dial.take]) app.insertAdjacentHTML("beforeend",renderDialOverlay(state.takes[ui.dial.take]));
   if(ui.adding) app.insertAdjacentHTML("beforeend",renderAdd());
   if(!document.querySelector(".sky")){ document.body.insertAdjacentHTML("afterbegin",'<div class="sky"></div><div class="aurora"></div>'); }
   hearth(tab==="takes"&&!!m&&!ui.dial&&!ui.adding&&!ui.reveal);
   checkReveals();
   if(ui.reveal&&state.takes[ui.reveal]) { app.insertAdjacentHTML("beforeend",renderReveal(state.takes[ui.reveal])); setTimeout(playReveal,30); }
-  const aud=state.audit; const showAud=aud&&aud.active&&!ui.hideAudit&&!ui.reveal&&!ui.dial; const ov=document.getElementById("ov"); if(showAud){ ov.innerHTML=renderAudit(); glStart(); setTimeout(playAudit,30); } else { ov.innerHTML=""; glStop(); if(!ui.booth&&!ui.pl&&BOOTH.running()) BOOTH.stop(); }
-  if(ui.booth){ app.insertAdjacentHTML("beforeend",renderBooth(ui.booth)); setTimeout(()=>BOOTH.sync({clip:ui.booth,at:ui.boothAt},true),30); }
-  else if(ui.pl){ const clip=replayClip(); if(clip){ app.insertAdjacentHTML("beforeend",renderReplay()); BOOTH.hook(null); setTimeout(()=>BOOTH.sync({clip,at:ui.boothAt},true),30); } else ui.pl=null; }
-  else { const sh=state.show; const showing=sh&&sh.clip&&BOOTH.has(sh.clip)&&ui.hideShow!==sh.at&&!showAud; if(showing){ app.insertAdjacentHTML("beforeend",renderShowOverlay(sh)); BOOTH.hook(showHook); setTimeout(()=>BOOTH.sync(sh, ui.boothAt===sh.at),30); } else if(!showAud&&BOOTH.running()&&!ui.booth&&!ui.pl) BOOTH.stop(); }
+  const aud=state.audit; const showAud=aud&&aud.active&&!ui.hideAudit&&!ui.reveal&&!ui.dial; const ov=document.getElementById("ov"); if(showAud){ ov.innerHTML=renderAudit(); glStart(); setTimeout(playAudit,30); } else { ov.innerHTML=""; glStop(); if(!ui.pl&&BOOTH.running()) BOOTH.stop(); }
+  if(ui.pl){ const clip=replayClip(); if(clip){ app.insertAdjacentHTML("beforeend",renderReplay()); BOOTH.hook(null); setTimeout(()=>BOOTH.sync({clip,at:ui.boothAt},true),30); } else ui.pl=null; }
+  else { const sh=state.show; const showing=sh&&sh.clip&&BOOTH.has(sh.clip)&&ui.hideShow!==sh.at&&!showAud; if(showing){ app.insertAdjacentHTML("beforeend",renderShowOverlay(sh)); BOOTH.hook(showHook); setTimeout(()=>BOOTH.sync(sh, ui.boothAt===sh.at),30); } else if(!showAud&&BOOTH.running()&&!ui.pl) BOOTH.stop(); }
 }
 function go(t){ if(tab===t) return; tab=t; render(); }
 
@@ -958,7 +956,7 @@ function auditItem(id){
   // one shape for archive items and live takes
   if(id.startsWith("arc:")){
     const a=ARCHIVE.find(x=>x.id===id.slice(4)); if(!a) return null;
-    const full=renderArchiveItem(a); const cut=full.indexOf('<div class="sec result">'); const resultSec=(cut>0?full.slice(cut, full.lastIndexOf("</div>")):"").replace(/<div class="big-actual">[^<]*<\/div>/,"").replace(/<button class="btn gold callbtn"[^>]*>[^<]*<\/button>/,"");
+    const full=renderArchiveItem(a); const cut=full.indexOf('<div class="sec result">'); const resultSec=(cut>0?full.slice(cut, full.lastIndexOf("</div>")):"").replace(/<div class="big-actual">[^<]*<\/div>/,"");
     const w=archiveWinners(a), l=archiveLosers(a); const o=a.kind==="call"?outcomeOf(a):null;
     let entries=[];
     if(a.kind==="num") entries=PLAYERS.filter(p=>a.guesses[p.id]!=null).map(p=>({id:p.id,text:String(a.guesses[p.id]),sub:(w.includes(p.id)?"closest":(a.guesses[p.id]>a.actual?"+":"")+(a.guesses[p.id]-a.actual)),bad:Math.abs(a.guesses[p.id]-a.actual)}));
@@ -1160,14 +1158,16 @@ if(ui.arcIdx==null) ui.arcIdx=0;
 function yearLabel(y){ return y===2021?"Inaugural · the lost year":y===2024?"3rd annual · Sept 13–14":y===2025?"4th annual · Sept 26 + playoff thread":y===2026?"5th annual · Sept 18–20 · the app year":String(y); }
 function renderArchive(){
   ARC_ORDER=arcOrder(); const i=ui.arcIdx, n=ARC_ORDER.length;
-  const sealedN=ARCHIVE.filter(isSealed).length;
   if(i>=n) return `<div class="stackhead"><span class="y">Done</span><span class="s">The audit<b>${n} takes</b></span></div><div class="stackwrap"><div class="endcard"><div class="big">That's the whole audit.</div><p class="muted">Every take since the inaugural weekend, with receipts.</p><button class="btn gold" onclick="ui.arcIdx=0;render()">Deal it again</button></div></div>${renderReplayRow()}<div class="src">Sources: ${SOURCES.map(s=>`<a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a>`).join(" · ")}</div>`;
   const cards=[0,1,2].map(k=>{ const a=ARC_ORDER[i+k]; if(!a) return ""; return `<div class="sc ${k===0?"top":"b"+k}" data-k="${k}">${k===0?`<div class="stamp l">Next</div><div class="stamp r">${i>0?"Back":"Start"}</div>`:""}${renderArchiveItem(a)}</div>`; }).reverse().join("");
   const a=ARC_ORDER[i];
   return `<div class="stackhead"><span class="y">${a.year}</span><span class="s">${esc(yearLabel(a.year))}<b>${i+1} of ${n}</b></span></div>
-  <div class="stackwrap" id="stack">${cards}</div>${sealedN&&i===0?`<p class="small muted" style="margin:6px 0 0;text-align:center">🔒 ${sealedN} takes from last September are sealed until Audit Night.</p>`:""}
+  <div class="stackwrap" id="stack">${cards}</div>
   <div class="stackctl"><button class="btn ghost" onclick="stackFling(1)" ${i===0?"disabled":""}>← Back</button><span class="hintt">Swipe left for next</span><button class="btn ghost" onclick="stackFling(-1)">Next →</button></div>${renderReplayRow()}`;
 }
+// shrink a deck card's contents until the whole take fits without scrolling (small phones, long takes)
+function fitCards(){ document.querySelectorAll(".sc .arc").forEach(e=>{ const kids=[...e.children]; let z=1; kids.forEach(k=>k.style.zoom=""); while(e.scrollHeight>e.clientHeight+1&&z>0.62){ z-=0.02; kids.forEach(k=>k.style.zoom=z); } }); }
+addEventListener("resize",()=>{ if(tab==="archive") fitCards(); });
 function stackBack(){ if(ui.arcIdx>0){ ui.arcIdx--; render(); } }
 let STACK=null;
 function initStack(){
@@ -1270,7 +1270,7 @@ function renderArchiveItem(a){
     <div class="arc-head"><span class="kind">${kindLbl}</span>${verdict}</div>
     <div class="sec take"><div class="lbl">The take</div><div class="q">${esc(a.prompt)}</div></div>
     <div class="sec"><div class="lbl">${a.kind==="lore"?"The story":"The calls"}</div>${calls}</div>
-    <div class="sec result"><div class="lbl">${a.kind==="call"&&o==null?"Where it stands":"What happened"}</div>${result}${BOOTH.has(a.id)&&!isSealed(a)&&!ui.booth&&!ui.pl?`<button class="btn gold callbtn" onclick="openBooth('${a.id}')">▶ Watch the call · Hayes &amp; O'Dog</button>`:""}</div>
+    <div class="sec result"><div class="lbl">${a.kind==="call"&&o==null?"Where it stands":"What happened"}</div>${result}</div>
   </div>`;
 }
 function rule(id,o){ sync.set("rulings/"+id, o==null?null:{outcome:o, at:Date.now()}); }
@@ -1607,18 +1607,15 @@ const BOOTH=(()=>{
   return {html,caption,sync,stop,unmute,running:()=>!!run,ended:()=>ended,has:id=>BOOTH_CLIPS.has(id),hook:f=>{ onLine=f; },clipId:()=>clip&&clip.id,mode:()=>mode};
 })();
 function boothCue(clipId){ const a=state.audit; if(!a||!a.active) return; const at=Date.now()+SERVER_OFFSET; ui.boothAt=at; sync.set("audit/show",{clip:clipId,at,idx:a.idx}); }
-function openBooth(id){ if(!BOOTH.has(id)) return; ui.booth=id; ui.boothAt=Date.now()+SERVER_OFFSET; render(); }
-function closeBooth(){ ui.booth=null; BOOTH.stop(); render(); }
-function replayBooth(){ if(!ui.booth) return; ui.boothAt=Date.now()+SERVER_OFFSET; BOOTH.sync({clip:ui.booth,at:ui.boothAt},true); }
 /* Full-show replay from the Archive: every segment of a night back to back, on this phone only (no shared cue). */
 const REPLAYS=[
-  {id:"fri",title:"Friday night · Audit Night",clips:["open-2026","a25-cdn","a25-afc","a25-marner","a25-rocket","a25-malkin","a25-matthews","a25-willy-g","a25-willy-p","a25-sb","a25-robertson","close-2026"]},
-  {id:"sat",title:"Saturday night edition",clips:SHOWS[0].segs.map(sg=>sg.clip)}];
+  {id:"fri",title:"Friday night · Audit Night",btn:"Friday show",clips:["open-2026","a25-cdn","a25-afc","a25-marner","a25-rocket","a25-malkin","a25-matthews","a25-willy-g","a25-willy-p","a25-sb","a25-robertson","close-2026"]},
+  {id:"sat",title:"Saturday night edition",btn:"Saturday show",clips:SHOWS[0].segs.map(sg=>sg.clip)}];
 // a night can be replayed only once nothing in it is still sealed
 function replayOpen(r){ return r.clips.every(c=>{ const a=ARCHIVE.find(x=>x.id===c); return BOOTH.has(c)&&!(a&&isSealed(a)); }); }
 function replayClip(){ const r=ui.pl&&REPLAYS.find(x=>x.id===ui.pl.id); return r&&replayOpen(r)?r.clips[ui.pl.i]||null:null; }
 function replaySegTitle(c){ const a=ARCHIVE.find(x=>x.id===c); if(a) return a.prompt; const sg=SHOWS[0].segs.find(x=>x.clip===c); if(sg) return sg.title; return c==="open-2026"?"Cold open":c==="close-2026"?"Sign-off":c; }
-function renderReplayRow(){ const rs=REPLAYS.filter(replayOpen); if(!rs.length) return ""; return `<div class="replays"><div class="lbl">The Firepit Hour · full shows</div>${rs.map(r=>`<button class="btn gold block" onclick="openReplay('${r.id}')">▶ ${esc(r.title)}</button>`).join("")}</div>`; }
+function renderReplayRow(){ const rs=REPLAYS.filter(replayOpen); if(!rs.length) return ""; return `<div class="replays">${rs.map(r=>`<button class="btn gold" onclick="openReplay('${r.id}')">▶ ${esc(r.btn)}</button>`).join("")}</div>`; }
 function renderReplay(){
   const r=REPLAYS.find(x=>x.id===ui.pl.id), i=ui.pl.i, c=r.clips[i], a=ARCHIVE.find(x=>x.id===c);
   const sg=SHOWS[0].segs.find(x=>x.clip===c), live=liveArchive();
@@ -1628,18 +1625,12 @@ function renderReplay(){
   <div class="row"><button class="btn ghost" onclick="replayStep(-1)" ${i>0?"":"disabled"}>← Back</button><button class="btn ghost" onclick="replayStep(0)">Replay</button><button class="btn primary" style="flex:1" onclick="replayStep(1)">${i+1<r.clips.length?"Next segment →":"Done"}</button></div></div>`;
 }
 let REPLAY_T=0;
-function openReplay(id){ ui.booth=null; ui.pl={id,i:0}; ui.boothAt=Date.now()+SERVER_OFFSET; clearInterval(REPLAY_T);
+function openReplay(id){ ui.pl={id,i:0}; ui.boothAt=Date.now()+SERVER_OFFSET; clearInterval(REPLAY_T);
   // roll straight into the next segment 1.5 s after one ends
   REPLAY_T=setInterval(()=>{ if(!ui.pl){ clearInterval(REPLAY_T); return; } if(BOOTH.ended()&&BOOTH.clipId()===replayClip()){ if(!ui.pl.endAt) ui.pl.endAt=Date.now(); else if(Date.now()-ui.pl.endAt>1500) replayStep(1); } },400);
   render(); }
 function replayStep(d){ const r=ui.pl&&REPLAYS.find(x=>x.id===ui.pl.id); if(!r) return; const i=ui.pl.i+d; if(i>=r.clips.length){ closeReplay(); return; } if(i<0) return; BOOTH.stop(); ui.pl={id:r.id,i}; ui.boothAt=Date.now()+SERVER_OFFSET; render(); const b=document.querySelector(".bov .body"); if(b) b.scrollTop=0; }
 function closeReplay(){ ui.pl=null; clearInterval(REPLAY_T); BOOTH.stop(); render(); }
-function renderBooth(id){
-  const a=ARCHIVE.find(x=>x.id===id); if(!a||isSealed(a)) return "";
-  return `<div class="bov" id="bov"><div class="top"><span class="ttl">The Firepit Hour · ${a.year}</span><span class="cnt">The call</span><button class="x" onclick="closeBooth()" aria-label="Close">×</button></div>
-  <div class="body">${BOOTH.html()}${BOOTH.caption()}<div class="bcard">${renderArchiveItem(a)}</div></div>
-  <div class="row"><button class="btn gold" style="flex:1" onclick="replayBooth()">Play it again</button><button class="btn ghost" onclick="closeBooth()">Close</button></div></div>`;
-}
 
 const CFG=loadCfg();
 if(CFG&&CFG.supabaseUrl){ mode="supabase"; sync=makeSupabaseSync(); } else if(CFG){ mode="firebase"; sync=makeFirebaseSync(); } else { sync=makeLocalSync(); }

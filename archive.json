@@ -207,7 +207,6 @@
   {
    "id": "a25-cdn",
    "year": 2025,
-   "sealed": true,
    "kind": "pick",
    "prompt": "Gerry's %: Canadian teams winning a round-2 series (May 2025)",
    "picks": {
@@ -228,7 +227,6 @@
   {
    "id": "a25-afc",
    "year": 2025,
-   "sealed": true,
    "kind": "pick",
    "prompt": "Which of KC, BAL, CIN make the playoffs? (2025)",
    "picks": {
@@ -246,7 +244,6 @@
   {
    "id": "a25-marner",
    "year": 2025,
-   "sealed": true,
    "kind": "num",
    "prompt": "Marner points in Vegas (2025-26)",
    "guesses": {
@@ -261,7 +258,6 @@
   {
    "id": "a25-rocket",
    "year": 2025,
-   "sealed": true,
    "kind": "pick",
    "prompt": "NHL goal leader (2025-26)",
    "picks": {
@@ -278,7 +274,6 @@
   {
    "id": "a25-malkin",
    "year": 2025,
-   "sealed": true,
    "kind": "call",
    "prompt": "Malkin is a first-ballot Hall of Famer",
    "stance": {
@@ -293,7 +288,6 @@
   {
    "id": "a25-matthews",
    "year": 2025,
-   "sealed": true,
    "kind": "num",
    "prompt": "Matthews goals (2025-26)",
    "guesses": {
@@ -308,7 +302,6 @@
   {
    "id": "a25-willy-g",
    "year": 2025,
-   "sealed": true,
    "kind": "num",
    "prompt": "Nylander goals (2025-26)",
    "guesses": {
@@ -323,7 +316,6 @@
   {
    "id": "a25-willy-p",
    "year": 2025,
-   "sealed": true,
    "kind": "num",
    "prompt": "Nylander points (2025-26)",
    "guesses": {
@@ -337,7 +329,6 @@
   {
    "id": "a25-sb",
    "year": 2025,
-   "sealed": true,
    "kind": "pick",
    "prompt": "Super Bowl LX winner",
    "picks": {
@@ -352,7 +343,6 @@
   {
    "id": "a25-robertson",
    "year": 2025,
-   "sealed": true,
    "kind": "call",
    "prompt": "\"Too much smoke on a Robertson move for there not to be fire\"",
    "stance": {
