@@ -372,6 +372,13 @@ main.stackmode{display:flex;flex-direction:column;padding-bottom:10px}
 .bov .scard .picks{margin-top:8px}
 .bov .scard .pk .g.txt{font-size:11px}
 .bov .bcard .arc{margin:0;height:auto;box-shadow:none}
+.vov{position:fixed;inset:0;z-index:48;background:#000;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:10px 14px max(10px,env(safe-area-inset-bottom))}
+.vov .top{position:absolute;top:10px;left:14px;right:14px;display:flex;align-items:center;gap:8px}
+.vov .ttl{font-family:var(--display);font-size:24px;letter-spacing:.04em;color:var(--ember2);white-space:nowrap}
+.vov .cnt{font-family:var(--cond);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-left:auto}
+.vov video{width:100%;max-height:calc(100vh - 120px);aspect-ratio:16/9;background:#000;display:block}
+.vov p{text-align:center;margin:0}
+.vov .x{font-size:30px;color:var(--bone)}
 
 /* ---- Firepit Hour edition of the audit card ---- */
 .booth-aud .takebox{margin:8px 0 4px;min-height:0}
@@ -451,7 +458,7 @@ const FIREBASE_CONFIG = null; // e.g. {apiKey:"...", authDomain:"...", databaseU
 const SUPABASE_CONFIG = {supabaseUrl:"https://qggbflsetmxsmcbagwpd.supabase.co", supabaseKey:"sb_publishable_wC5J-hl2Nb1SLZJ1YZmf4g_woqk-GZI"}; // publishable key, meant to be public; access is governed by the table policy // e.g. {supabaseUrl:"https://xxxx.supabase.co", supabaseKey:"sb_publishable_..."}  (the anon/publishable key is meant to be public)
 const ROOM = "golf2026";
 const DEFAULT_PIN = "1234";
-const APP_VERSION = "44"; // bump on every publish: single-phone mode resets the audit + seen-reveals
+const APP_VERSION = "45"; // bump on every publish: single-phone mode resets the audit + seen-reveals
 
 const PLAYERS = [
   {id:"nick", name:"Nick"}, {id:"jay", name:"Jay"}, {id:"justin", name:"Justin"}, {id:"chris", name:"Chris"}
@@ -727,9 +734,8 @@ function render(){
   hearth(tab==="takes"&&!!m&&!ui.dial&&!ui.adding&&!ui.reveal);
   checkReveals();
   if(ui.reveal&&state.takes[ui.reveal]) { app.insertAdjacentHTML("beforeend",renderReveal(state.takes[ui.reveal])); setTimeout(playReveal,30); }
-  const aud=state.audit; const showAud=aud&&aud.active&&!ui.hideAudit&&!ui.reveal&&!ui.dial; const ov=document.getElementById("ov"); if(showAud){ ov.innerHTML=renderAudit(); glStart(); setTimeout(playAudit,30); } else { ov.innerHTML=""; glStop(); if(!ui.pl&&BOOTH.running()) BOOTH.stop(); }
-  if(ui.pl){ const clip=replayClip(); if(clip){ app.insertAdjacentHTML("beforeend",renderReplay()); BOOTH.hook(null); setTimeout(()=>BOOTH.sync({clip,at:ui.boothAt},true),30); } else ui.pl=null; }
-  else { const sh=state.show; const showing=sh&&sh.clip&&BOOTH.has(sh.clip)&&ui.hideShow!==sh.at&&!showAud; if(showing){ app.insertAdjacentHTML("beforeend",renderShowOverlay(sh)); BOOTH.hook(showHook); setTimeout(()=>BOOTH.sync(sh, ui.boothAt===sh.at),30); } else if(!showAud&&BOOTH.running()&&!ui.pl) BOOTH.stop(); }
+  const aud=state.audit; const showAud=aud&&aud.active&&!ui.hideAudit&&!ui.reveal&&!ui.dial; const ov=document.getElementById("ov"); if(showAud){ ov.innerHTML=renderAudit(); glStart(); setTimeout(playAudit,30); } else { ov.innerHTML=""; glStop(); if(BOOTH.running()) BOOTH.stop(); }
+  const sh=state.show; const showing=sh&&sh.clip&&BOOTH.has(sh.clip)&&ui.hideShow!==sh.at&&!showAud; if(showing){ app.insertAdjacentHTML("beforeend",renderShowOverlay(sh)); BOOTH.hook(showHook); setTimeout(()=>BOOTH.sync(sh, ui.boothAt===sh.at),30); } else if(!showAud&&BOOTH.running()) BOOTH.stop();
 }
 function go(t){ if(tab===t) return; tab=t; render(); }
 
@@ -1609,28 +1615,17 @@ const BOOTH=(()=>{
 function boothCue(clipId){ const a=state.audit; if(!a||!a.active) return; const at=Date.now()+SERVER_OFFSET; ui.boothAt=at; sync.set("audit/show",{clip:clipId,at,idx:a.idx}); }
 /* Full-show replay from the Archive: every segment of a night back to back, on this phone only (no shared cue). */
 const REPLAYS=[
-  {id:"fri",title:"Friday night · Audit Night",btn:"Friday show",clips:["open-2026","a25-cdn","a25-afc","a25-marner","a25-rocket","a25-malkin","a25-matthews","a25-willy-g","a25-willy-p","a25-sb","a25-robertson","close-2026"]},
-  {id:"sat",title:"Saturday night edition",btn:"Saturday show",clips:SHOWS[0].segs.map(sg=>sg.clip)}];
+  {id:"fri",title:"Friday night · Audit Night",btn:"Friday show",video:"shows/firepit-hour-fri.mp4",clips:["open-2026","a25-cdn","a25-afc","a25-marner","a25-rocket","a25-malkin","a25-matthews","a25-willy-g","a25-willy-p","a25-sb","a25-robertson","close-2026"]},
+  {id:"sat",title:"Saturday night edition",btn:"Saturday show",video:"shows/firepit-hour-sat.mp4",clips:SHOWS[0].segs.map(sg=>sg.clip)}];
 // a night can be replayed only once nothing in it is still sealed
-function replayOpen(r){ return r.clips.every(c=>{ const a=ARCHIVE.find(x=>x.id===c); return BOOTH.has(c)&&!(a&&isSealed(a)); }); }
-function replayClip(){ const r=ui.pl&&REPLAYS.find(x=>x.id===ui.pl.id); return r&&replayOpen(r)?r.clips[ui.pl.i]||null:null; }
-function replaySegTitle(c){ const a=ARCHIVE.find(x=>x.id===c); if(a) return a.prompt; const sg=SHOWS[0].segs.find(x=>x.clip===c); if(sg) return sg.title; return c==="open-2026"?"Cold open":c==="close-2026"?"Sign-off":c; }
+function replayOpen(r){ return r.clips.every(c=>{ const a=ARCHIVE.find(x=>x.id===c); return !(a&&isSealed(a)); }); }
 function renderReplayRow(){ const rs=REPLAYS.filter(replayOpen); if(!rs.length) return ""; return `<div class="replays">${rs.map(r=>`<button class="btn gold" onclick="openReplay('${r.id}')">▶ ${esc(r.btn)}</button>`).join("")}</div>`; }
-function renderReplay(){
-  const r=REPLAYS.find(x=>x.id===ui.pl.id), i=ui.pl.i, c=r.clips[i], a=ARCHIVE.find(x=>x.id===c);
-  const sg=SHOWS[0].segs.find(x=>x.clip===c), live=liveArchive();
-  const cards=a?`<div class="bcard">${renderArchiveItem(a)}</div>`:showTakes(sg||{}).map(t=>{ const la=live.find(x=>x.id==="live-"+t.id); return la?`<div class="bcard">${renderArchiveItem(la)}</div>`:`<div class="card scard" style="margin-top:10px"><div class="take-text sm">${esc(t.text)}</div>${renderVotesReveal(t,state.votes[t.id]||{})}</div>`; }).join("");
-  return `<div class="bov" id="bov"><div class="top"><span class="ttl">The Firepit Hour</span><span class="cnt">${i+1} of ${r.clips.length} · ${esc(r.title)}</span><button class="x" onclick="closeReplay()" aria-label="Close">×</button></div>
-  <div class="body"><p class="small muted" style="margin:0 0 6px">${esc(replaySegTitle(c))}</p>${BOOTH.html()}${BOOTH.caption()}${cards}</div>
-  <div class="row"><button class="btn ghost" onclick="replayStep(-1)" ${i>0?"":"disabled"}>← Back</button><button class="btn ghost" onclick="replayStep(0)">Replay</button><button class="btn primary" style="flex:1" onclick="replayStep(1)">${i+1<r.clips.length?"Next segment →":"Done"}</button></div></div>`;
-}
-let REPLAY_T=0;
-function openReplay(id){ ui.pl={id,i:0}; ui.boothAt=Date.now()+SERVER_OFFSET; clearInterval(REPLAY_T);
-  // roll straight into the next segment 1.5 s after one ends
-  REPLAY_T=setInterval(()=>{ if(!ui.pl){ clearInterval(REPLAY_T); return; } if(BOOTH.ended()&&BOOTH.clipId()===replayClip()){ if(!ui.pl.endAt) ui.pl.endAt=Date.now(); else if(Date.now()-ui.pl.endAt>1500) replayStep(1); } },400);
-  render(); }
-function replayStep(d){ const r=ui.pl&&REPLAYS.find(x=>x.id===ui.pl.id); if(!r) return; const i=ui.pl.i+d; if(i>=r.clips.length){ closeReplay(); return; } if(i<0) return; BOOTH.stop(); ui.pl={id:r.id,i}; ui.boothAt=Date.now()+SERVER_OFFSET; render(); const b=document.querySelector(".bov .body"); if(b) b.scrollTop=0; }
-function closeReplay(){ ui.pl=null; clearInterval(REPLAY_T); BOOTH.stop(); render(); }
+// The full show plays as one rendered video. It lives outside #app so a state change never restarts it.
+function openReplay(id){ const r=REPLAYS.find(x=>x.id===id); if(!r||!replayOpen(r)) return; closeReplay(); BOOTH.stop();
+  const el=document.createElement("div"); el.className="vov"; el.id="vov";
+  el.innerHTML=`<div class="top"><span class="ttl">The Firepit Hour</span><span class="cnt">${esc(r.title)}</span><button class="x" onclick="closeReplay()" aria-label="Close">×</button></div><video src="${r.video}" controls playsinline autoplay preload="metadata"></video><p class="small muted">Turn the phone sideways or go full screen. Cast or AirPlay it to the TV from the player.</p>`;
+  document.body.appendChild(el); }
+function closeReplay(){ const el=document.getElementById("vov"); if(el){ const v=el.querySelector("video"); if(v) v.pause(); el.remove(); } }
 
 const CFG=loadCfg();
 if(CFG&&CFG.supabaseUrl){ mode="supabase"; sync=makeSupabaseSync(); } else if(CFG){ mode="firebase"; sync=makeFirebaseSync(); } else { sync=makeLocalSync(); }
