@@ -551,7 +551,8 @@ function makeFirebaseSync(){
 const SUPABASE_SQL=`create table if not exists public.firepit (room text primary key, state jsonb not null default '{}'::jsonb, updated_at timestamptz not null default now());
 alter table public.firepit enable row level security;
 drop policy if exists "firepit open" on public.firepit;
-create policy "firepit open" on public.firepit for all to anon, authenticated using (true) with check (true);
+drop policy if exists "firepit read" on public.firepit;
+create policy "firepit read" on public.firepit for select to anon, authenticated using (true);
 alter table public.firepit replica identity full;
 do $$ begin
   if not exists (select 1 from pg_publication_tables where pubname='supabase_realtime' and schemaname='public' and tablename='firepit')
